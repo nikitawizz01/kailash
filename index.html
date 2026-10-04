@@ -1046,7 +1046,7 @@ const KAILASH_CONFIG = {
     next.textContent = labels[i]; next.disabled = false;
     if (i === steps.length - 1) next.textContent = user ? ((profile && profile.plan !== 'free') ? 'Done' : 'See full retreats') : 'Save my progress — free account';
     if (steps[i].dataset.kind === 'chant' && !mini.done){ next.disabled = true; next.textContent = `Tap the Om · 0 / ${CH}`; }
-    back.style.visibility = i === 0 || i === steps.length - 1 ? 'hidden' : 'visible';
+    back.style.display = i === 0 || i === steps.length - 1 ? 'none' : '';
     if (steps[i].dataset.kind === 'breath'){ document.getElementById('breathWord').textContent = 'Press begin'; document.getElementById('breathCount').textContent = 'In for 4, out for 6. Six slow breaths.'; }
   }
   function stopBreath(){ clearTimeout(breathTimer); breathing = false; const o = document.getElementById('orb'); o.classList.remove('in','out'); }
