@@ -583,6 +583,13 @@ footer{padding:40px clamp(20px,5vw,64px) 50px;display:flex;justify-content:space
       <p class="m-msg" id="payMsg" aria-live="polite"></p>
     </div>
 
+    <div class="m-view" data-v="soon">
+      <h3>Hi there :)</h3>
+      <p class="why">I'm Nikita, the only developer behind Kailash. Payments are exactly what I'm building right now, so this part isn't open yet. It's coming very soon :)</p>
+      <p class="why">Until then, your free evenings are waiting for you.</p>
+      <button class="btn btn-glow" type="button" id="soonOk">Got it</button>
+    </div>
+
     <div class="m-view" data-v="account">
       <h3>Your account</h3>
       <div style="margin-top:18px">
@@ -970,17 +977,19 @@ const KAILASH_CONFIG = {
   payTerms.addEventListener('change', () => payGo.disabled = !payTerms.checked);
   payGo.addEventListener('click', () => {
     const link = C.PAYMENT_LINKS[chosenPlan], m = document.getElementById('payMsg');
-    if (!link){ m.textContent = 'Payments open very soon. Your account is saved — we’ll let you know.'; m.classList.add('ok'); return; }
+    if (!link) return showModal('soon');
     const u = new URL(link);
     if (user && user.email) u.searchParams.set('checkout[email]', user.email);
     if (user && user.id) u.searchParams.set('checkout[custom][user_id]', user.id);
     location.href = u.toString();
   });
   function buy(plan){
+    if (!C.PAYMENT_LINKS[plan]) return showModal('soon');
     if (!user){ afterAuth = () => showModal('paywall', {plan, title:'Choose your retreat', text:'Your account is ready. One step left.'}); return showModal('signup', {why:'Create a free account first — your purchase will be linked to it.'}); }
     showModal('paywall', {plan, title:'Choose your retreat', text:'Unlock the full retreat on your account.'});
   }
   document.querySelectorAll('.js-buy').forEach(b => b.addEventListener('click', () => buy(b.dataset.plan)));
+  document.getElementById('soonOk').addEventListener('click', hideModal);
 
   /* account */
   function fillAccount(){
