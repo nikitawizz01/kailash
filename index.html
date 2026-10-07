@@ -113,7 +113,7 @@ h2{font-family:var(--serif);font-weight:500;font-size:clamp(2.2rem,5vw,4rem);lin
 
 /* ritual steps */
 .ritual-head{display:flex;justify-content:space-between;align-items:flex-end;gap:30px;flex-wrap:wrap}
-.steps{margin-top:70px;display:grid;grid-template-columns:repeat(4,1fr);border-top:1px solid rgba(154,166,214,.18)}
+.steps{margin-top:70px;display:grid;grid-template-columns:repeat(5,1fr);border-top:1px solid rgba(154,166,214,.18)}
 .step{padding:34px 26px 10px 0;position:relative}
 .step + .step{padding-left:26px;border-left:1px solid rgba(154,166,214,.12)}
 .step .n{font-family:var(--serif);font-style:italic;font-size:1.1rem;color:var(--ember)}
@@ -302,7 +302,9 @@ footer{padding:40px clamp(20px,5vw,64px) 50px;display:flex;justify-content:space
   background:radial-gradient(circle at 50% 40%,rgba(130,160,255,.55),rgba(40,64,190,.25) 60%,transparent 72%);transform:scale(.62);
   transition:transform 4s cubic-bezier(.45,0,.55,1)}
 .breath-orb.in{transform:scale(1)}
-.breath-orb.out{transform:scale(.62);transition-duration:6s}
+.breath-orb.out{transform:scale(.62)}
+.breath-orb.hold{transform:scale(1)}
+.breath-orb.holdlow{transform:scale(.62)}
 .breath-orb::after{content:"";position:absolute;inset:-14px;border-radius:50%;border:1px solid rgba(143,176,255,.22)}
 .breath-word{font-family:var(--serif);font-size:1.6rem;margin-top:26px;min-height:1.4em}
 .mini-mala{width:min(70vw,280px);margin:26px auto 0}
@@ -310,6 +312,94 @@ footer{padding:40px clamp(20px,5vw,64px) 50px;display:flex;justify-content:space
 .s-step textarea:focus{outline:none;border-color:var(--glow)}
 .s-done .omk{width:70px;color:var(--ember);margin:0 auto 18px;display:block;filter:drop-shadow(0 0 24px rgba(240,178,106,.6))}
 @keyframes stepIn{from{opacity:0;transform:translateY(18px);filter:blur(6px)}to{opacity:1;transform:none;filter:none}}
+
+@media (max-width:560px){.br-d{display:none}}
+/* no lonely words */
+h1,h2,h3,blockquote,.s-title,.s-verse,.v{text-wrap:balance}
+p,li,.s-text,.lede{text-wrap:pretty}
+
+/* hero kicker */
+.kicker{display:block;font-family:var(--serif);font-style:italic;color:var(--ember);font-size:clamp(1.05rem,1.8vw,1.3rem);margin-bottom:14px;opacity:0;animation:rise .9s ease .4s forwards}
+
+/* practice grid (visual completion, no streaks) */
+.practice{display:grid;grid-template-columns:1fr 1.15fr;gap:clamp(40px,6vw,90px);align-items:center}
+.grid-card{border-radius:28px;padding:clamp(22px,3vw,32px);background:rgba(7,11,36,.6);border:1px solid rgba(154,166,214,.16)}
+.pgrid{display:grid;grid-auto-flow:column;grid-template-rows:repeat(7,1fr);gap:6px}
+.pgrid i{aspect-ratio:1;border-radius:5px;background:rgba(154,166,214,.08)}
+.pgrid i.miss{background:rgba(240,178,106,.22)}
+.pgrid i.done{background:radial-gradient(circle at 50% 40%,#ffe6b8,#f0b26a 70%);box-shadow:0 0 12px rgba(240,178,106,.55)}
+.pgrid i.today{outline:1px solid rgba(240,178,106,.7);outline-offset:1px}
+.pstats{display:flex;gap:26px;margin-top:18px;font-size:.92rem;color:var(--mist)}
+.pstats b{color:var(--moon);font-weight:500;font-size:1.15rem;margin-right:4px}
+.legend{display:flex;gap:16px;margin-top:14px;font-size:.8rem;color:rgba(154,166,214,.8);flex-wrap:wrap}
+.legend span{display:inline-flex;align-items:center;gap:6px}
+.legend i{width:10px;height:10px;border-radius:3px;display:inline-block}
+.journal{margin-top:22px;display:grid;gap:12px}
+.journal div{padding:14px 16px;border-radius:16px;background:rgba(228,233,255,.04);border:1px solid rgba(154,166,214,.12);font-size:.92rem}
+.journal small{display:block;color:var(--ember);font-family:var(--serif);font-style:italic;font-size:.95rem;margin-bottom:4px}
+
+/* retreat journeys */
+.plan .who{font-size:.85rem;color:var(--ember);margin-top:4px}
+.journey{list-style:none;margin:22px 0 28px;display:grid;gap:0;position:relative}
+.journey li{position:relative;padding:0 0 18px 26px;font-size:.95rem;color:var(--mist)}
+.journey li::before{content:"";position:absolute;left:0;top:.45em;width:11px;height:11px;border-radius:50%;border:1px solid var(--glow);background:var(--void)}
+.journey li::after{content:"";position:absolute;left:5px;top:1.25em;bottom:0;width:1px;background:rgba(91,134,255,.35)}
+.journey li:last-child::after{display:none}
+.journey li:last-child::before{background:var(--ember);border-color:var(--ember)}
+.journey b{display:block;color:var(--moon);font-weight:500}
+.includes{margin-top:34px;text-align:center;color:var(--mist);font-size:.95rem}
+.includes b{color:var(--moon);font-weight:500}
+
+/* ask shiva demo */
+.demo-tag{display:inline-block;font-size:.75rem;letter-spacing:.08em;text-transform:uppercase;color:var(--ember);border:1px solid rgba(240,178,106,.4);border-radius:999px;padding:3px 10px;margin-bottom:14px;transition:opacity .4s}
+.demo-tag.off{opacity:0}
+.ask-in.typing{border-color:rgba(143,176,255,.7);box-shadow:0 0 24px -6px rgba(91,134,255,.7)}
+
+/* session additions */
+.mood{max-width:26rem;margin:30px auto 0;text-align:left}
+.mood label{display:block;font-family:var(--serif);font-size:1.2rem;text-align:center}
+.mood input[type=range]{width:100%;margin-top:16px;accent-color:#f0b26a;-webkit-appearance:none;appearance:none;height:6px;border-radius:6px;
+  background:linear-gradient(90deg,#3a3f5c,#8a7fc0 55%,#f0c58a)}
+.mood input[type=range]::-webkit-slider-thumb{-webkit-appearance:none;width:30px;height:30px;border-radius:50%;background:#fff3dc;box-shadow:0 0 18px rgba(255,220,160,.8);cursor:pointer}
+.mood input[type=range]::-moz-range-thumb{width:30px;height:30px;border:0;border-radius:50%;background:#fff3dc;box-shadow:0 0 18px rgba(255,220,160,.8);cursor:pointer}
+.mood .ends{display:flex;justify-content:space-between;font-size:.8rem;color:var(--mist);margin-top:8px}
+.mood .now{text-align:center;color:var(--ember);font-size:.95rem;margin-top:6px;min-height:1.3em}
+.intent{margin-top:26px}
+.intent p{font-size:.9rem;color:var(--mist)}
+.chips{display:flex;flex-wrap:wrap;gap:8px;justify-content:center;margin-top:10px}
+.chips button{padding:9px 15px;border-radius:999px;border:1px solid rgba(154,166,214,.25);font-size:.9rem;color:var(--mist);transition:all .25s}
+.chips button[aria-pressed="true"]{background:rgba(91,134,255,.2);border-color:var(--glow);color:var(--moon)}
+.eyes{display:inline-block;margin-top:14px;font-size:.88rem;color:var(--ember)}
+.s-tools{display:flex;gap:8px;justify-content:center;margin-top:14px}
+.prompts{display:flex;flex-wrap:wrap;gap:8px;justify-content:center;margin-top:18px}
+.prompts button{padding:8px 14px;border-radius:999px;border:1px dashed rgba(240,178,106,.45);font-size:.88rem;color:#ffd9ad}
+.prompts button:hover{background:rgba(240,178,106,.1)}
+.prompt-hint{font-size:.85rem;color:var(--mist);margin-top:14px}
+.done-grid{width:150px;margin:18px auto 0}
+.done-grid .pgrid{gap:4px}
+.done-grid .pgrid i{border-radius:3px}
+.today-card{margin:22px auto 0;max-width:30rem;text-align:left;padding:16px 18px;border-radius:16px;border:1px solid rgba(240,178,106,.3);background:rgba(240,178,106,.06)}
+.today-card small{display:block;letter-spacing:.14em;text-transform:uppercase;font-size:.72rem;color:var(--ember);margin-bottom:6px}
+.next-up{margin-top:14px;font-size:.92rem;color:var(--mist)}
+.next-up b{color:var(--moon);font-weight:500}
+.shift{margin-top:16px;color:var(--moon);min-height:1.3em}
+
+/* movement + silence */
+.pose{margin:26px auto 0;max-width:30rem}
+.pose-name{font-family:var(--serif);font-size:clamp(1.8rem,5vw,2.4rem);line-height:1.15}
+.pose-how{color:var(--mist);margin-top:10px;font-size:1.02rem;min-height:3.2em}
+.pose-ring{width:132px;height:132px;margin:22px auto 0;position:relative}
+.pose-ring svg{width:100%;height:100%;transform:rotate(-90deg)}
+.pose-ring circle{fill:none;stroke-width:4}
+.pose-ring .bg{stroke:rgba(154,166,214,.15)}
+.pose-ring .fg{stroke:var(--ember);stroke-linecap:round;transition:stroke-dashoffset 1s linear}
+.pose-ring b{position:absolute;inset:0;display:grid;place-items:center;font-family:var(--serif);font-size:2.4rem;font-weight:500}
+.pose-step{font-size:.85rem;color:var(--mist);margin-top:12px}
+.safe{display:block;font-size:.8rem;color:rgba(154,166,214,.75);margin-top:12px}
+.areas{display:flex;justify-content:center;gap:4px;margin-top:16px;flex-wrap:wrap}
+.areas button{padding:6px 12px;border-radius:999px;font-size:.82rem;color:var(--mist);border:1px solid transparent}
+.areas button[aria-pressed="true"]{color:var(--moon);border-color:rgba(154,166,214,.35);background:rgba(228,233,255,.06)}
+.optional{font-size:.8rem;color:rgba(154,166,214,.7);margin-top:10px}
 
 /* reveal */
 .rv{opacity:0;transform:translateY(24px);transition:opacity .7s ease, transform .7s cubic-bezier(.2,.7,.1,1)}
@@ -324,9 +414,9 @@ footer{padding:40px clamp(20px,5vw,64px) 50px;display:flex;justify-content:space
 @media (max-width:900px){
   .nav ul{display:none}
   .steps{grid-template-columns:1fr 1fr}
-  .step:nth-child(3){padding-left:0;border-left:0}
+  .step:nth-child(odd){padding-left:0;border-left:0}
   .plans{grid-template-columns:1fr;gap:34px}
-  .mala-grid,.ask,.final-grid{grid-template-columns:1fr}
+  .mala-grid,.ask,.final-grid,.practice{grid-template-columns:1fr}
   .ask-in{flex-direction:column;border-radius:22px}
   .ask-in input{padding:12px 14px}
 }
@@ -380,13 +470,14 @@ footer{padding:40px clamp(20px,5vw,64px) 50px;display:flex;justify-content:space
   </div>
 
   <div class="hero-copy">
-    <h1>A retreat to India,<br>ten minutes a day.</h1>
-    <p id="heroSub">Ancient wisdom for modern burnout. One verse, one breath, one quiet minute with Shiva — every evening after work.</p>
+    <span class="kicker">An evening retreat, wherever you are</span>
+    <h1>India's ancient stillness,<br class="br-d"> right at your desk.</h1>
+    <p id="heroSub">A 15-minute evening practice for burnout: a verse from the Bhagavad Gita, gentle movement, a guided breath, a mantra and a minute of silence. No flight to the Himalayas needed.</p>
     <div class="ctas">
       <button class="btn btn-glow js-start btn-big" type="button">Start</button>
       <a class="btn btn-ghost btn-big" href="#ritual">How it works</a>
     </div>
-    <p class="free-note">Free 10-minute practice · no sign-up</p>
+    <p class="free-note">Free 15-minute practice · no sign-up</p>
   </div>
   <div class="scroll-hint" aria-hidden="true"></div>
 </header>
@@ -394,7 +485,7 @@ footer{padding:40px clamp(20px,5vw,64px) 50px;display:flex;justify-content:space
 <main>
   <section class="manifesto">
     <div class="wrap">
-      <p id="manifesto">You can't fly to the Himalayas every time work burns you out. So we brought the retreat to you. Close the laptop. Sit for ten minutes. Let thousands of years of stillness do the rest.</p>
+      <p id="manifesto">You can't fly to the Himalayas every time work burns you out. So we brought the retreat to you. Close the laptop. Give it fifteen minutes. Let thousands of years of stillness do the rest.</p>
       <span class="sig rv">For people who work too much and rest too little.</span>
     </div>
   </section>
@@ -402,14 +493,30 @@ footer{padding:40px clamp(20px,5vw,64px) 50px;display:flex;justify-content:space
   <section id="ritual">
     <div class="wrap">
       <div class="ritual-head rv">
-        <h2>One evening.<br>Four quiet steps.</h2>
-        <p class="lede">Not a library of mantras you'll never open. A short ritual with a beginning and an end, built for the hour after work.</p>
+        <h2>Every evening.<br>Five quiet steps.</h2>
+        <p class="lede">Each retreat is a path of evenings. Every evening is the same short ritual — so the habit forms itself — while the verse, the movement, the breath and the mantra change and grow a little longer as you go.</p>
       </div>
       <div class="steps">
-        <div class="step rv"><span class="n">i.</span><h3>Verse</h3><p>One line from the Bhagavad Gita or the Ribhu Gita. Read it slowly, once.</p><span class="min">1 minute</span></div>
-        <div class="step rv"><span class="n">ii.</span><h3>Meaning</h3><p>What it says about your deadlines, your boss, your tired mind. In plain words.</p><span class="min">2 minutes</span></div>
-        <div class="step rv"><span class="n">iii.</span><h3>Practice</h3><p>Breathwork or a guided chant with a digital mala. Your body leaves the office.</p><span class="min">5 minutes</span></div>
-        <div class="step rv"><span class="n">iv.</span><h3>Reflection</h3><p>One question to write down. Then sleep lighter than you woke up.</p><span class="min">2 minutes</span></div>
+        <div class="step rv"><span class="n">i.</span><h3>Verse</h3><p>One line from the Gita or the Upanishads, and what it means for your day, in plain words.</p><span class="min">2 minutes</span></div>
+        <div class="step rv"><span class="n">ii.</span><h3>Move</h3><p>A few gentle stretches, guided pose by pose. The body leaves the day before the mind does.</p><span class="min">4 minutes</span></div>
+        <div class="step rv"><span class="n">iii.</span><h3>Breathe</h3><p>A breath guided by sound, so you can close your eyes, then a mantra on a digital mala.</p><span class="min">5 minutes</span></div>
+        <div class="step rv"><span class="n">iv.</span><h3>Silence</h3><p>A minute or two of doing nothing at all. A bell calls you back.</p><span class="min">2 minutes</span></div>
+        <div class="step rv"><span class="n">v.</span><h3>Reflect</h3><p>One question, with ideas from work, study, body or the heart — and one small thing for tomorrow.</p><span class="min">2 minutes</span></div>
+      </div>
+    </div>
+  </section>
+
+  <section id="practice">
+    <div class="wrap practice">
+      <div class="rv">
+        <h2>No streaks to break. Just evenings that glow.</h2>
+        <p class="lede">Each evening you practise, a square lights up. Miss one and it stays half-lit. That's all.</p>
+        <p class="lede" id="practiceNote" style="font-size:.95rem">Your first evening will light the first square.</p>
+      </div>
+      <div class="grid-card rv">
+        <div class="pgrid" id="pgrid" aria-label="Your practice over the last 12 weeks"></div>
+        <div class="pstats"><span><b id="pSessions">0</b>evenings</span><span><b id="pMinutes">0</b>minutes of stillness</span></div>
+        <div class="journal" id="journal"></div>
       </div>
     </div>
   </section>
@@ -447,33 +554,49 @@ footer{padding:40px clamp(20px,5vw,64px) 50px;display:flex;justify-content:space
   <section id="retreats">
     <div class="wrap">
       <div class="rv">
-        <h2>Choose your retreat.</h2>
-        <p class="lede">Every retreat has a beginning and an end. Your first evening is free, a free account adds three more — then go deeper when you're ready.</p>
+        <h2>Choose your path.</h2>
+        <p class="lede">A retreat isn't more content — it's a journey with a direction. Your first evening is free, a free account adds three more. When you want to go further, pick where you want to arrive.</p>
       </div>
       <div class="plans">
         <article class="plan rv">
           <h3>Burnout Reset</h3>
-          <p class="desc">Seven evenings to come back to yourself after a hard stretch at work.</p>
+          <p class="who">7 evenings · for after a hard stretch at work</p>
+          <p class="desc">From running on empty to sleeping lighter.</p>
           <div class="price">$19 <small>once</small></div>
-          <ul><li>7 verses with meanings</li><li>7 guided practices</li><li>Audio chants</li><li>Yours forever</li></ul>
+          <ul class="journey">
+            <li><b>Evenings 1–2 · Put the work down</b>Learn to end the workday on purpose.</li>
+            <li><b>Evenings 3–5 · Quiet the restless mind</b>Longer breaths, gentler thoughts.</li>
+            <li><b>Evenings 6–7 · Come back to yourself</b>Evenness, whatever tomorrow brings.</li>
+          </ul>
           <button class="btn btn-ghost js-buy" data-plan="reset" type="button">Begin Burnout Reset</button>
         </article>
         <article class="plan featured rv">
           <span class="tag">Most chosen</span>
           <h3>Kailash Membership</h3>
-          <p class="desc">Every retreat, a new verse each evening and Ask Shiva — your daily retreat.</p>
+          <p class="who">every evening · as long as you want</p>
+          <p class="desc">For people who want stillness to become part of their life, not a fix.</p>
           <div class="price">$7 <small>/ month</small></div>
-          <ul><li>All retreats, new ones monthly</li><li>Full chant library</li><li>Ask Shiva guide</li><li>Cancel anytime</li></ul>
+          <ul class="journey">
+            <li><b>Both retreats included</b>Burnout Reset and Silence of Mind.</li>
+            <li><b>A new path every month</b>New verses, breaths and mantras.</li>
+            <li><b>Your rhythm, kept</b>Practice and journal on every device. Cancel anytime.</li>
+          </ul>
           <button class="btn btn-glow js-buy" data-plan="member" type="button">Join Kailash</button>
         </article>
         <article class="plan rv">
           <h3>Silence of Mind</h3>
-          <p class="desc">Twenty-one evenings with the Ribhu Gita, for when rest is no longer enough.</p>
+          <p class="who">21 evenings · when rest is no longer enough</p>
+          <p class="desc">From needing rest to finding real stillness.</p>
           <div class="price">$29 <small>once</small></div>
-          <ul><li>21 verses with meanings</li><li>Longer chants and breathwork</li><li>Reflection journal</li><li>Yours forever</li></ul>
+          <ul class="journey">
+            <li><b>Week 1 · Calm the body</b>The breath grows a little longer each night.</li>
+            <li><b>Week 2 · Watch the mind</b>Ribhu Gita: you are not your thoughts.</li>
+            <li><b>Week 3 · Rest as awareness</b>Sitting in silence without effort.</li>
+          </ul>
           <button class="btn btn-ghost js-buy" data-plan="silence" type="button">Begin Silence of Mind</button>
         </article>
       </div>
+      <p class="includes rv">Every path includes <b>sound-guided breathing</b>, <b>mantras on the mala</b> and your <b>reflection journal</b> — every answer kept with the verse that prompted it, so you can see how you've changed. <b>Ask Shiva</b> is free for everyone.</p>
     </div>
   </section>
 
@@ -481,10 +604,11 @@ footer{padding:40px clamp(20px,5vw,64px) 50px;display:flex;justify-content:space
     <div class="wrap ask">
       <div class="rv">
         <h2>Ask Shiva.</h2>
-        <p class="lede">Tell him what weighs on you tonight. He answers with the verse written for exactly this feeling — what it means for your day, and a ten-minute evening built around it.</p>
-        <p class="lede" style="font-size:.95rem">Every answer comes from the Bhagavad Gita and the Ribhu Gita. Nothing you write leaves your device.</p>
+        <p class="lede">Tell him what weighs on you tonight. He answers with the verse written for exactly this feeling — what it means for your day, and a fifteen-minute evening built around it.</p>
+        <p class="lede" style="font-size:.95rem">Every answer comes from the Bhagavad Gita, the Upanishads and the Ribhu Gita. Free for everyone. Nothing you write leaves your device.</p>
       </div>
       <div class="ask-box rv" id="askBox">
+        <span class="demo-tag" id="demoTag">Watch how it works</span>
         <label id="feelLabel">How do you feel tonight?</label>
         <div class="feel" id="feel" role="group" aria-labelledby="feelLabel"></div>
         <p class="ask-or">or say it in your own words</p>
@@ -573,7 +697,7 @@ footer{padding:40px clamp(20px,5vw,64px) 50px;display:flex;justify-content:space
 
     <div class="m-view" data-v="paywall">
       <h3 id="pwTitle">Your free evenings are complete</h3>
-      <p class="why" id="pwWhy">You've felt what ten quiet minutes can do. Choose how to continue.</p>
+      <p class="why" id="pwWhy">You've felt what fifteen quiet minutes can do. Choose how to continue.</p>
       <div id="payOpts">
         <button class="pay-opt" type="button" data-plan="member" aria-pressed="true"><span><b>Kailash Membership</b><small>Every retreat, new verses nightly, Ask Shiva</small></span><span class="pr">$7<small>/mo</small></span></button>
         <button class="pay-opt" type="button" data-plan="reset" aria-pressed="false"><span><b>Burnout Reset</b><small>7 evenings · yours forever</small></span><span class="pr">$19</span></button>
@@ -615,12 +739,26 @@ footer{padding:40px clamp(20px,5vw,64px) 50px;display:flex;justify-content:space
   </div>
   <div class="s-stage">
     <div class="s-step" data-step>
-      <span class="s-kicker">Tonight's evening · 10 minutes</span>
+      <span class="s-kicker">Tonight's evening · about 15 minutes</span>
       <h2 class="s-title">Leave the office<br>at the door.</h2>
-      <p class="s-text">Sit somewhere comfortable. Put your phone on silent, but keep the sound of this page on — a temple bell will guide you. Four short steps, then you're free.</p>
+      <p class="s-text">Sit somewhere comfortable. Put your phone on silent, but keep the sound of this page on — a temple bell and soft tones will guide you. Move a little, breathe, chant, sit in silence — then you're free.</p>
+      <div class="mood">
+        <label for="moodIn">How do you feel right now?</label>
+        <input type="range" id="moodIn" min="0" max="4" step="1" value="1">
+        <div class="ends"><span>Drained</span><span>Calm</span></div>
+        <div class="now" id="moodNow"></div>
+      </div>
+      <div class="intent" id="intent">
+        <p>What do you want from these evenings?</p>
+        <div class="chips" id="intentChips">
+          <button type="button" data-v="calm" aria-pressed="false">Calmer evenings</button>
+          <button type="button" data-v="habit" aria-pressed="false">A steady habit</button>
+          <button type="button" data-v="deeper" aria-pressed="false">To go deeper</button>
+        </div>
+      </div>
     </div>
     <div class="s-step" data-step>
-      <span class="s-kicker" id="sSrc">Verse · Bhagavad Gita 2.47</span>
+      <span class="s-kicker" id="sSrc">Evening 1 · Bhagavad Gita 2.47</span>
       <p class="s-verse" id="sVerse">Your right is to the work alone — never to its fruits.</p>
       <p class="s-text">Read it slowly. Once more. Then continue.</p>
     </div>
@@ -629,31 +767,62 @@ footer{padding:40px clamp(20px,5vw,64px) 50px;display:flex;justify-content:space
       <h2 class="s-title" id="sMTitle">You did the work.<br>The rest isn't yours.</h2>
       <p class="s-text" id="sMText">The unanswered email, the review, the result — Krishna tells Arjuna to act fully and let go of the outcome. Tonight, that means: you showed up. What happens next can wait until morning.</p>
     </div>
+    <div class="s-step" data-step data-kind="body">
+      <span class="s-kicker" id="mvKick">Move · Desk release</span>
+      <div class="pose">
+        <div class="pose-name" id="pName">Let the body leave the day first</div>
+        <p class="pose-how" id="pHow">A few gentle poses, about four minutes. A bell marks each change; you can follow with your eyes half closed.</p>
+        <div class="pose-ring" id="pRing"><svg viewBox="0 0 100 100"><circle class="bg" cx="50" cy="50" r="46"/><circle class="fg" id="pArc" cx="50" cy="50" r="46" stroke-dasharray="289" stroke-dashoffset="0"/></svg><b id="pSec">·</b></div>
+        <div class="pose-step" id="pStep"></div>
+        <span class="safe">Move slowly. Skip anything that hurts.</span>
+      </div>
+    </div>
     <div class="s-step" data-step data-kind="breath">
-      <span class="s-kicker">Practice · one minute of breath</span>
+      <span class="s-kicker" id="bName">Practice · Calm breath</span>
       <div class="breath-orb" id="orb"></div>
       <div class="breath-word" id="breathWord" aria-live="polite">Press begin</div>
-      <p class="s-text" id="breathCount">In for 4, out for 6. Six slow breaths.</p>
+      <p class="s-text" id="breathCount">In for 4, out for 6.</p>
+      <span class="eyes" id="eyesNote">Close your eyes. A rising tone means breathe in, a falling tone means breathe out.</span>
+      <div class="s-tools"><button class="s-drone" id="sVoice" type="button" aria-pressed="true">Voice cues on</button></div>
     </div>
     <div class="s-step" data-step data-kind="chant">
-      <span class="s-kicker">Chant · 9 beads</span>
-      <h2 class="s-title" style="font-size:clamp(1.8rem,5vw,2.6rem)">Om Namah Shivaya</h2>
+      <span class="s-kicker" id="cKick">Chant · 9 beads</span>
+      <h2 class="s-title" id="cName" style="font-size:clamp(1.8rem,5vw,2.6rem)">Om Namah Shivaya</h2>
+      <p class="s-text" id="cMean" style="margin-top:4px;font-style:italic">“I bow to the stillness within.”</p>
       <p class="s-text" style="margin-top:8px">Say it softly and <b style="color:var(--moon);font-weight:500">tap the Om</b> with each repetition.</p>
       <button class="mala mini-mala nudge" id="miniMala" type="button" aria-label="Tap to count one repetition">
         <svg viewBox="0 0 400 400" aria-hidden="true"></svg>
         <div class="core"><span class="omk" aria-hidden="true"></span><div class="count"><span class="c">0</span> <small>/ 9</small></div></div>
       </button>
     </div>
+    <div class="s-step" data-step data-kind="silence">
+      <span class="s-kicker">Silence</span>
+      <h2 class="s-title">Nothing to do.<br>Nowhere to be.</h2>
+      <p class="s-text" id="silText">Close your eyes. Don't meditate, don't try. Just sit. A bell will call you back.</p>
+      <div class="pose-ring" id="sRing"><svg viewBox="0 0 100 100"><circle class="bg" cx="50" cy="50" r="46"/><circle class="fg" id="sArc" cx="50" cy="50" r="46" stroke-dasharray="289" stroke-dashoffset="0"/></svg><b id="sSec">·</b></div>
+    </div>
     <div class="s-step" data-step>
       <span class="s-kicker">Reflection</span>
       <h2 class="s-title" id="sQ">What did you carry home today that isn't yours to carry?</h2>
+      <p class="prompt-hint">Not sure where to start? Pick what your day was about, then tap an idea:</p>
+      <div class="areas" id="areas"></div>
+      <div class="prompts" id="prompts"></div>
       <textarea id="reflect" placeholder="Write a line or two. It stays on this device."></textarea>
+      <p class="optional">Writing is optional. You can also just sit with the question and press Finish.</p>
     </div>
     <div class="s-step s-done" data-step>
       <span class="omk" aria-hidden="true"></span>
-      <h2 class="s-title">Your evening is complete.</h2>
-      <p class="s-text">Notice how you feel compared to ten minutes ago. That's the retreat. Tomorrow there's a new verse waiting — we can send it to you so you don't have to remember.</p>
+      <h2 class="s-title" id="doneTitle">Your evening is complete.</h2>
+      <div class="mood" style="margin-top:18px">
+        <label for="moodOut">And how do you feel now?</label>
+        <input type="range" id="moodOut" min="0" max="4" step="1" value="1">
+        <div class="ends"><span>Drained</span><span>Calm</span></div>
+      </div>
+      <p class="shift" id="shift"></p>
+      <div class="done-grid"><div class="pgrid" id="doneGrid"></div></div>
       <p class="s-stat" id="sStat"></p>
+      <div class="today-card"><small>Tomorrow, try this</small><span id="todayAct"></span></div>
+      <p class="next-up" id="nextUp"></p>
     </div>
   </div>
   <div class="s-foot">
@@ -789,60 +958,257 @@ const KAILASH_CONFIG = {
     () => done.textContent = 'One full mala. Sit in the silence for a moment before you move.');
   document.getElementById('malaReset').addEventListener('click', () => { big.reset(); done.textContent = ''; });
 
-  /* wisdom library — own renderings of the verses */
+  /* ===== content — own renderings of public-domain texts ===== */
+  const BREATH = {
+    calm:{name:'Calm breath', seq:[['in',4],['out',6]], tip:'In for 4, out for 6.'},
+    box:{name:'Box breath', seq:[['in',4],['hold',4],['out',4],['holdlow',4]], tip:'In 4, hold 4, out 4, hold 4.'},
+    long:{name:'Long exhale', seq:[['in',4],['hold',4],['out',8]], tip:'In 4, hold 4, then a long, slow 8 out.'},
+    bee:{name:'Humming bee breath', seq:[['in',4],['hum',8]], tip:'Breathe in, then hum softly all the way out, like a bee. Feel it in your face and chest.'}
+  };
+  const CHANT = {
+    ons:{name:'Om Namah Shivaya', mean:'“I bow to the stillness within.”'},
+    om:{name:'Om', mean:'The oldest sound. One long, low tone on each breath out.'},
+    sohum:{name:'So Hum', mean:'“I am that.” Think So as you breathe in, Hum as you breathe out.'},
+    shanti:{name:'Om Shanti', mean:'“Peace.” Let each one be a little quieter than the last.'}
+  };
+  // gentle movement sets — simple, chair- and floor-friendly
+  const MOVES = {
+    desk:{name:'Desk release', poses:[
+      ['Neck release','Let your right ear fall toward your right shoulder. Breathe. Halfway through, switch sides.',40],
+      ['Shoulder rolls','Roll both shoulders slowly up, back and down. Let them drop a little lower each time.',30],
+      ['Shake out the hands','Shake your hands and wrists loosely, like flicking off water. Let the fingers go soft.',20],
+      ['Seated twist','Sit tall, turn gently to the right, hand on the chair back. Halfway, turn to the left.',40],
+      ['Fold forward','Let your chest fall toward your knees, arms hanging. Head heavy. Breathe into your back.',40],
+      ['Palming the eyes','Rub your palms until warm, then cup them over closed eyes. Rest in the dark.',40]]},
+    stand:{name:'Standing release', poses:[
+      ['Reach up','Stand, reach both arms up and stretch long through the fingertips. Sway a little.',30],
+      ['Hang forward','Soften the knees and fold down. Let the head and arms hang. Nod yes, shake no.',40],
+      ['Side bend','Right arm over your head, lean left. Halfway, switch sides.',40],
+      ['Hip circles','Hands on hips, draw slow circles. Halfway, change direction.',40],
+      ['Shake the whole body','Bounce gently on your heels and let everything shake loose — arms, shoulders, jaw.',30],
+      ['Stand still','Feet heavy, arms by your sides. Feel your whole body at once.',40]]},
+    floor:{name:'Floor rest', poses:[
+      ['Child’s pose','Kneel, sit back on your heels and fold forward, forehead down, arms long or by your sides.',50],
+      ['Cat and cow','On hands and knees: round the back as you breathe out, let it dip as you breathe in.',40],
+      ['Lying twist','On your back, knees bent, let them fall to the right. Halfway, to the left.',50],
+      ['Knees to chest','Hug your knees in and rock gently side to side.',30],
+      ['Lie still','Arms and legs slightly apart, palms up. Let the floor hold all of you.',60]]},
+    shake:{name:'Shake it off', poses:[
+      ['Shake the hands','Shake your hands hard, then the arms, as if throwing the day off your fingers.',30],
+      ['Shake the legs','Shake one leg, then the other. Let the knees go loose.',30],
+      ['Whole-body shake','Bounce on your heels and shake everything at once. Let a sound out if you want.',40],
+      ['Stomp','Stamp your feet slowly, ten times each, feeling the ground.',30],
+      ['Fold and hang','Fold forward and hang. Let the shaking settle.',40],
+      ['Stand still','Eyes closed. Feel the buzz in your body slowly fade.',40]]}
+  };
+  const AREAS = [['work','Work'],['study','Study'],['labor','Physical work'],['people','People'],['inside','Just tired inside']];
+  const PROMPTS = [
+    {work:['An email I can’t answer yet','A result I can’t control','Tomorrow’s meeting'],
+     study:['An exam I can’t change tonight','A grade that isn’t out yet','Comparing myself to classmates'],
+     labor:['The ache from today’s shift','Tomorrow’s early start','A job someone else left unfinished'],
+     people:['Someone else’s mood','An argument that isn’t mine','A friend’s problem I can’t fix'],
+     inside:['A feeling with no name','Worry about money','Everything at once']},
+    {work:['My to-do list','Something I said in a meeting','A deadline'],
+     study:['Everything I haven’t learned yet','A presentation','Whether I chose the right path'],
+     labor:['Tomorrow’s workload','Pain I keep noticing','Whether I’m paid enough'],
+     people:['A message I haven’t answered','What someone thinks of me','A conversation I keep replaying'],
+     inside:['The future in general','Money','A mistake from years ago']},
+    {work:['Too many hours, too little rest','Too many meetings, too little focus','Too much coffee, too little food'],
+     study:['Too much screen, too little sleep','Too much sitting, too little moving','Too much pressure, too little play'],
+     labor:['Too much lifting, too little stretching','Too little water','Too little sleep between shifts'],
+     people:['Too much giving, too little receiving','Too many people, too little silence','Too little time with people I love'],
+     inside:['Too much scrolling, too little sky','Too much thinking, too little feeling','Too much “should”, too little “want”']},
+    {work:['Notifications','Other people’s urgency','New tasks on top of old ones'],
+     study:['Deadlines','Group chats','More information than I can hold'],
+     labor:['Noise','Orders from everyone','Heat, cold, tiredness'],
+     people:['Other people’s needs','Opinions about my life','Drama that isn’t mine'],
+     inside:['Bad news','Wants I can’t satisfy','Restlessness']},
+    {work:['My inbox','My boss','Honestly, me'],
+     study:['My phone','The fear of failing','My curiosity'],
+     labor:['The clock','My tired body','My will to get through it'],
+     people:['Someone else’s expectations','Wanting to please','My own choice'],
+     inside:['My habits','My mood','Something quieter than both']},
+    {work:['Praise from someone','A mistake I made','A plan that fell apart'],
+     study:['A good grade','Not understanding something','A small breakthrough'],
+     labor:['Finishing the job','Getting hurt or worn out','A kind word from someone'],
+     people:['A warm moment','A sharp word','Feeling unseen'],
+     inside:['A good memory','A heavy feeling','Nothing much — and that’s okay']},
+    {work:['I leave work at work','I react less','I breathe before replying'],
+     study:['I study calmer','I sleep better','I compare less'],
+     labor:['My body feels lighter','I rest better after shifts','I notice tension sooner'],
+     people:['I listen better','I take things less personally','I’m kinder to myself around others'],
+     inside:['I notice my thoughts sooner','I feel a bit quieter','Not much yet — and that’s okay']}
+  ];
+  const WISP = {
+    tired:{work:['An evening with no laptop','Saying no to one extra task','A real lunch break'],
+      study:['A night off from studying','Sleeping before midnight','One subject at a time'],
+      labor:['A long shower after the shift','Feet up for twenty minutes','A day with nothing heavy'],
+      people:['An evening alone','Asking someone for help','Seeing a friend who asks nothing of me'],
+      inside:['An evening with no screens','Going to bed an hour earlier','A walk without my phone']},
+    angry:{work:['Something a colleague said','An unfair decision','A message I haven’t answered'],
+      study:['A teacher’s comment','A group member who didn’t help','A grade that felt unfair'],
+      labor:['Being shouted at','Doing someone else’s share','Being treated like a machine'],
+      people:['Something my partner said','A family argument','Something I should have said'],
+      inside:['I’m angry at myself','I don’t even know why','Everything annoyed me today']},
+    doubt:{work:['“You did more than enough.”','“One bad day isn’t who you are.”','“Your worth isn’t your output.”'],
+      study:['“You’re still learning — that’s the point.”','“One grade isn’t your future.”','“Rest. Try again tomorrow.”'],
+      labor:['“You carried a lot today.”','“Your body did its best.”','“Hard work counts, even unseen.”'],
+      people:['“You’re allowed to be imperfect with people.”','“Not everyone has to like you.”','“You showed up for them.”'],
+      inside:['“I’m proud of you.”','“Be gentle tonight.”','“You don’t have to fix everything.”']},
+    lost:{work:['Work I’d do for free','A skill I love using','A value I won’t trade'],
+      study:['The subject I lose time in','Why I started','What I’d learn if no one graded it'],
+      labor:['Being good with my hands','Seeing a finished job','Providing for people I love'],
+      people:['The people who feel like home','Who I am around them','Who I want to become'],
+      inside:['Something I loved as a kid','A quiet morning','A place that calms me']},
+    anxious:{work:['A deadline that isn’t today','What my boss might think','A mistake that hasn’t happened'],
+      study:['An exam next week','Falling behind','What comes after'],
+      labor:['Whether the work will last','My body holding up','Tomorrow’s shift'],
+      people:['Whether they’re angry with me','Being left out','Someone’s health'],
+      inside:['It’s about the future','It keeps repeating','It feels smaller when I breathe']}
+  };
+
+  // the free path: evening n of Burnout Reset; breaths and beads grow evening by evening
+  const PATH = [
+    {src:'Bhagavad Gita 2.47', verse:'Your right is to the work alone — never to its fruits.', title:"You did the work.<br>The rest isn't yours.",
+     text:"The unanswered email, the review, the result — Krishna tells Arjuna to act fully and let go of the outcome. Tonight that means: you showed up. What happens next can wait until morning.",
+     q:"What did you carry home today that isn't yours to carry?", prompts:['An email I can’t answer yet','Someone else’s mood','A result I can’t control','Tomorrow’s meeting'],
+     act:'When you close the laptop, say out loud: “Done for today.”', breath:'calm', chant:'ons', beads:9, nm:'Put the work down'},
+    {src:'Bhagavad Gita 6.35', verse:'Yes, the mind is restless and hard to hold. But with practice and letting go, it can be stilled.', title:'Even Arjuna<br>couldn’t switch off.',
+     text:"He told Krishna the mind is as hard to hold as the wind. Krishna didn't argue — he agreed, then gave two tools: practice and letting go. Tonight's breath is the practice. Closing the laptop is the letting go.",
+     q:'Which thought keeps coming back tonight — and can it wait until tomorrow?', prompts:['A conversation I keep replaying','My to-do list','Money','Something I said'],
+     act:'Write tomorrow’s three tasks on paper before bed, so your mind doesn’t have to hold them.', breath:'calm', chant:'om', beads:9, nm:'The restless mind'},
+    {src:'Bhagavad Gita 6.16–17', verse:'Yoga is not for one who works too much or rests too little. For one who is measured in work, food and sleep, it ends sorrow.', title:'Burnout is a<br>measurement problem.',
+     text:"Two thousand years ago the Gita already knew: too much of anything — even good work — wears you down. Peace isn't a reward after the overload. It's the measure you keep inside the day.",
+     q:'Where in your day is there too much — and where too little?', prompts:['Too much screen, too little sky','Too much work, too little sleep','Too much coffee, too little food','Too many people, too little silence'],
+     act:'Take one real break tomorrow — five minutes, away from every screen.', breath:'box', chant:'ons', beads:12, nm:'The measured day'},
+    {src:'Bhagavad Gita 2.70', verse:'As rivers keep pouring into the ocean and it stays full and still, so the one at peace lets every wish flow in — and stays unmoved.', title:'Be the ocean,<br>not the river.',
+     text:"Messages, requests, wants — they will keep flowing in. The ocean doesn't stop the rivers. It just doesn't rise and fall with each one. You don't need fewer demands tonight. You need more depth.",
+     q:'What kept pouring in today — and what stayed still in you anyway?', prompts:['Notifications','Other people’s urgency','My own ambitions','Bad news'],
+     act:'Turn off one notification you don’t really need.', breath:'bee', chant:'sohum', beads:12, nm:'The ocean'},
+    {src:'Katha Upanishad 1.3.3–4', verse:'The body is the chariot, the senses are the horses, the mind is the reins — and you are the one who rides.', title:'Who held the<br>reins today?',
+     text:"In the Katha Upanishad the horses are the senses — always pulling toward the next thing. The mind is the reins. When the reins go slack, the horses run the day. Tonight you take the reins back, one breath at a time.",
+     q:'Who held the reins today — you, or something else?', prompts:['My inbox','My phone','My boss','Honestly, me'],
+     act:'Before you open your phone tomorrow morning, take three slow breaths first.', breath:'long', chant:'ons', beads:18, nm:'The chariot'},
+    {src:'Bhagavad Gita 2.48', verse:'Steady in yoga, do your work. Let go of clinging. Be the same in success and in failure — this evenness is yoga.', title:'Evenness is<br>the practice.',
+     text:"Not happiness, not calm all the time — evenness. A good day doesn't lift you away, a bad one doesn't sink you. That's not coldness. It's the steadiness that lets you keep going for years, not weeks.",
+     q:'What lifted you today, and what pulled you down — and can you hold both lightly?', prompts:['Praise from someone','A mistake I made','A small win','A plan that fell apart'],
+     act:'When something goes very well or very badly tomorrow, notice it — and take one breath before reacting.', breath:'box', chant:'om', beads:18, nm:'Evenness'},
+    {src:'Inspired by the Ribhu Gita', verse:'Clouds of thought come and go. The sky is never stained by them. You are the sky.', title:'You were never<br>the storm.',
+     text:"The Ribhu Gita returns to one idea again and again: you are the awareness, not the noise inside it. Seven evenings in, you've watched your thoughts come and go. Notice what stayed the same while they moved.",
+     q:'After these evenings, what feels different — even slightly?', prompts:['I sleep better','I notice my thoughts sooner','I leave work at work','Not much yet — and that’s okay'],
+     act:'Once tomorrow, stop for ten seconds and look at the sky.', breath:'calm', chant:'ons', beads:27, nm:'You are the sky'}
+  ];
+  const PATH_MOVES = ['desk','stand','desk','floor','stand','floor','desk'];
+  const WIS_MOVES = {tired:'floor', angry:'shake', racing:'stand', behind:'desk', doubt:'stand', lost:'desk', anxious:'floor'};
   const WIS = {
-    behind:{chip:'Behind on everything', src:'Bhagavad Gita 2.47', verse:'Your right is to the work alone — never to its fruits.',
-      title:"You did the work.<br>The rest isn't yours.",
-      text:"The unanswered email, the review, the result — Krishna tells Arjuna to act fully and let go of the outcome. Tonight, that means: you showed up. What happens next can wait until morning.",
-      q:"What did you carry home today that isn't yours to carry?", k:['behind','deadline','late','result','boss','review','task','todo','list','pressure']},
-    racing:{chip:"Can't switch off", src:'Bhagavad Gita 6.35', verse:'Yes, the mind is restless and hard to hold. But with practice and letting go, it can be stilled.',
-      title:'Even Arjuna<br>couldn’t switch off.',
-      text:"He told Krishna the mind is as hard to hold as the wind. Krishna didn't argue — he agreed, then gave two tools: practice and letting go. Tonight's breath is the practice. Closing the laptop is the letting go.",
-      q:'Which thought keeps coming back tonight — and can it wait until tomorrow?', k:['switch','off','racing','think','thoughts','sleep','mind','stop','overthink','night']},
+    behind:{chip:'Behind on everything', ...PATH[0], k:['behind','deadline','late','result','boss','review','task','todo','list','pressure','work']},
+    racing:{chip:"Can't switch off", ...PATH[1], k:['switch','off','racing','think','thoughts','sleep','mind','stop','overthink','night']},
     tired:{chip:'Exhausted', src:'Bhagavad Gita 2.14', verse:'Heat and cold, pleasure and pain — they arrive and they leave. They do not last. Bear them patiently.',
       title:'This tiredness<br>is weather, not climate.',
       text:"Krishna calls these feelings visitors: they come and they go. You're not broken, you're tired — and tired passes. You don't need to fix anything tonight. Only rest through it.",
-      q:'What would real rest look like for you this week — one small thing?', k:['tired','exhausted','drained','burn','burnout','energy','sleep','fatigue','empty','dead']},
+      q:'What would real rest look like for you this week — one small thing?', prompts:['An evening with no screens','Going to bed an hour earlier','A walk without my phone','Saying no to one thing'],
+      act:'Go to bed 20 minutes earlier than usual.', breath:'long', chant:'shanti', beads:9, k:['tired','exhausted','drained','burn','burnout','energy','fatigue','empty','dead']},
     angry:{chip:'Angry or irritated', src:'Bhagavad Gita 2.62–63', verse:'Dwelling on things breeds attachment; attachment, desire; desire, anger; and anger clouds the mind.',
       title:'Anger is the end<br>of a long chain.',
       text:"The Gita traces anger back to its start: something you kept replaying. You can't always stop the feeling — but you can stop replaying the conversation. Tonight, let the loop run out.",
-      q:'What conversation are you still replaying — and what would letting it go feel like?', k:['angry','anger','mad','annoyed','irritated','furious','rage','hate','unfair','colleague']},
+      q:'What conversation are you still replaying — and what would letting it go feel like?', prompts:['Something a colleague said','Something I should have said','An unfair decision','A message I haven’t answered'],
+      act:'When the replay starts tomorrow, name it quietly: “replaying” — and come back to your breath.', breath:'bee', chant:'om', beads:9, k:['angry','anger','mad','annoyed','irritated','furious','rage','hate','unfair','colleague']},
     doubt:{chip:'Not good enough', src:'Bhagavad Gita 6.5', verse:'Lift yourself by your own self; do not let yourself sink. You are your own friend — and your own enemy.',
       title:'Be on your<br>own side tonight.',
       text:"Krishna says the same mind that pulls you down can lift you up. You've been your own critic all day. For ten minutes, try being your own friend instead.",
-      q:'What would you say to a friend who had the day you just had?', k:['enough','fail','failure','stupid','useless','worth','doubt','imposter','bad','mistake']},
+      q:'What would you say to a friend who had the day you just had?', prompts:['“You did more than enough.”','“One bad day isn’t who you are.”','“Rest. Try again tomorrow.”','“I’m proud of you.”'],
+      act:'Write down one thing you did well today — however small.', breath:'calm', chant:'ons', beads:9, k:['enough','fail','failure','stupid','useless','worth','doubt','imposter','bad','mistake']},
     lost:{chip:'Lost or comparing', src:'Bhagavad Gita 3.35', verse:'Better your own path, walked imperfectly, than another’s path walked perfectly.',
       title:'Their path<br>isn’t your path.',
       text:"Scrolling through other people's lives makes your own look small. The Gita is clear: walking your own way badly beats walking someone else's way well. You're allowed to be unfinished.",
-      q:"What part of your path is truly yours — not borrowed from someone else's?", k:['lost','compare','comparing','purpose','meaning','why','direction','others','career','point']},
-    anxious:{chip:'Anxious', src:'Inspired by the Ribhu Gita', verse:'You are not the storm of thoughts. You are the stillness in which they rise and fade.',
-      title:'Watch the storm<br>from the shore.',
-      text:"The Ribhu Gita returns to one idea again and again: you are the awareness, not the noise inside it. Anxiety is real, but it's something you see — not something you are.",
-      q:"If you could watch tonight's worry from a distance, what would you notice about it?", k:['anxious','anxiety','worry','worried','scared','fear','panic','nervous','stress','stressed']},
+      q:"What part of your path is truly yours — not borrowed from someone else's?", prompts:['Something I loved as a kid','Work I’d do for free','A value I won’t trade','A person I want to become'],
+      act:'Spend one hour tomorrow without social media.', breath:'box', chant:'sohum', beads:9, k:['lost','compare','comparing','purpose','meaning','why','direction','others','career','point']},
+    anxious:{chip:'Anxious', ...PATH[6], q:"If you could watch tonight's worry from a distance, what would you notice about it?",
+      prompts:['It’s about the future','It keeps repeating','It feels smaller when I breathe','It isn’t happening right now'],
+      act:'When worry comes tomorrow, label it “a cloud” — and let it pass.', breath:'long', chant:'shanti', beads:9, k:['anxious','anxiety','worry','worried','scared','fear','panic','nervous','stress','stressed']},
   };
-  let theme = 'behind';
+  let theme = null;  // null = follow the path; set by Ask Shiva
   const store = {
     get(){ try{ return JSON.parse(localStorage.getItem('kailash') || '{}'); }catch(e){ return {}; } },
     set(v){ try{ localStorage.setItem('kailash', JSON.stringify(v)); }catch(e){} }
   };
   const past = store.get().evenings || 0;
-  if (past > 0) document.getElementById('heroSub').textContent = `Welcome back. ${past} evening${past > 1 ? 's' : ''} completed — tonight's is waiting. One verse, one breath, ten quiet minutes.`;
+  if (past > 0) document.getElementById('heroSub').textContent = `Welcome back. ${past} evening${past > 1 ? 's' : ''} completed. Tonight: “${PATH[past % PATH.length].nm}” — one verse, one breath, fifteen quiet minutes.`;
+
+  /* no lonely last words */
+  function noWidow(el){
+    if (!el) return;
+    const walk = n => { for (let i = n.childNodes.length - 1; i >= 0; i--){ const c = n.childNodes[i];
+      if (c.nodeType === 3 && c.nodeValue.trim()){ c.nodeValue = c.nodeValue.replace(/ (\S+\s*)$/, ' $1'); return true; }
+      if (c.nodeType === 1 && walk(c)) return true; } return false; };
+    walk(el);
+  }
+  document.querySelectorAll('p, h1, h2, h3, blockquote, li').forEach(noWidow);
+
+  /* practice grid — visual completion, no streaks */
+  const dayKey = d => d.toISOString().slice(0,10);
+  function renderGrid(el, weeks){
+    const s = store.get(), days = new Set(s.days || []), first = (s.days || []).slice().sort()[0];
+    const today = new Date(); today.setHours(12,0,0,0);
+    const end = new Date(today); end.setDate(end.getDate() + (6 - (today.getDay() + 6) % 7));
+    const start = new Date(end); start.setDate(start.getDate() - weeks*7 + 1);
+    let h = '';
+    for (let d = new Date(start); d <= end; d.setDate(d.getDate()+1)){
+      const k = dayKey(d), cls = days.has(k) ? 'done' : (first && k > first && d < today ? 'miss' : '');
+      h += `<i class="${cls}${k === dayKey(today) ? ' today' : ''}"></i>`;
+    }
+    el.innerHTML = h;
+  }
+  function renderPractice(){
+    const s = store.get();
+    renderGrid(document.getElementById('pgrid'), 12);
+    document.getElementById('pSessions').textContent = s.evenings || 0;
+    document.getElementById('pMinutes').textContent = s.minutes || 0;
+    if (s.evenings) document.getElementById('practiceNote').textContent = `${s.evenings} evening${s.evenings > 1 ? 's' : ''} so far. Tonight's square is waiting.`;
+    const j = (s.journal || []).slice(-3).reverse();
+    document.getElementById('journal').innerHTML = j.map(r => `<div><small>${r.d} · ${r.q.replace(/</g,'&lt;')}</small>${r.a.replace(/</g,'&lt;')}</div>`).join('');
+  }
+  renderPractice();
 
   /* ask shiva */
   const feel = document.getElementById('feel'), ans = document.getElementById('answer');
   feel.innerHTML = Object.entries(WIS).map(([id,v]) => `<button type="button" data-id="${id}" aria-pressed="false">${v.chip}</button>`).join('');
-  function answer(id){
-    theme = id; const v = WIS[id];
+  function answer(id, demo){
+    if (!demo) theme = id; const v = WIS[id];
     feel.querySelectorAll('button').forEach(b => b.setAttribute('aria-pressed', b.dataset.id === id));
     document.getElementById('aSrc').textContent = v.src;
     document.getElementById('aVerse').textContent = v.verse;
     document.getElementById('aMeaning').innerHTML = v.text;
     ans.classList.remove('on'); void ans.offsetWidth; ans.classList.add('on');
-    bell(false);
+    noWidow(document.getElementById('aVerse')); noWidow(document.getElementById('aMeaning'));
+    if (!demo) bell(false);
   }
-  feel.addEventListener('click', e => { const b = e.target.closest('button'); if (b) answer(b.dataset.id); });
+  feel.addEventListener('click', e => { const b = e.target.closest('button'); if (b){ stopDemo(); answer(b.dataset.id); } });
+  /* live demo: types a real question and shows the answer, until the visitor takes over */
+  let demoOn = false, demoDone = false, demoT = null;
+  const askText = document.getElementById('askText'), askForm = document.getElementById('askForm'), demoTag = document.getElementById('demoTag');
+  function stopDemo(){ if (!demoOn && demoDone) return; demoOn = false; demoDone = true; clearTimeout(demoT); askForm.classList.remove('typing'); demoTag.classList.add('off'); }
+  function runDemo(){
+    if (demoDone || reduce) return; demoOn = true;
+    const lines = [["I can't stop thinking about work tonight", 'racing'], ['My boss moved the deadline again', 'behind']];
+    let li = 0;
+    const typeLine = () => {
+      if (!demoOn) return;
+      const [txt, id] = lines[li]; let i = 0; askText.value = ''; askForm.classList.add('typing');
+      const step = () => {
+        if (!demoOn) return;
+        askText.value = txt.slice(0, ++i);
+        if (i < txt.length) demoT = setTimeout(step, 45 + Math.random()*50);
+        else demoT = setTimeout(() => { askForm.classList.remove('typing'); answer(id, true); li = (li + 1) % lines.length; demoT = setTimeout(typeLine, 5200); }, 500);
+      };
+      step();
+    };
+    typeLine();
+  }
+  new IntersectionObserver((es, o) => es.forEach(e => { if (e.isIntersecting){ runDemo(); o.disconnect(); } }), {threshold:.4}).observe(document.getElementById('askBox'));
+  ['pointerdown','focusin','keydown'].forEach(ev => document.getElementById('askBox').addEventListener(ev, () => { if (demoOn){ stopDemo(); askText.value = ''; ans.classList.remove('on'); feel.querySelectorAll('button').forEach(b => b.setAttribute('aria-pressed', false)); } }));
   document.getElementById('askForm').addEventListener('submit', e => {
-    e.preventDefault();
+    e.preventDefault(); stopDemo();
     const words = document.getElementById('askText').value.toLowerCase().match(/[a-z]+/g) || [];
     let best = 'behind', score = 0;
     for (const [id,v] of Object.entries(WIS)){
@@ -972,7 +1338,7 @@ const KAILASH_CONFIG = {
     chosenPlan = p;
     payOpts.querySelectorAll('.pay-opt').forEach(b => b.setAttribute('aria-pressed', b.dataset.plan === p));
     document.getElementById('pwTitle').textContent = opts.title || 'Your free evenings are complete';
-    document.getElementById('pwWhy').textContent = opts.text || "You've felt what ten quiet minutes can do. Choose how to continue.";
+    document.getElementById('pwWhy').textContent = opts.text || "You've felt what fifteen quiet minutes can do. Choose how to continue.";
   }
   payOpts.addEventListener('click', e => { const b = e.target.closest('.pay-opt'); if (b) setPlan(b.dataset.plan, {title:document.getElementById('pwTitle').textContent, text:document.getElementById('pwWhy').textContent}); });
   payTerms.addEventListener('change', () => payGo.disabled = !payTerms.checked);
@@ -1032,15 +1398,64 @@ const KAILASH_CONFIG = {
   const prog = document.getElementById('sProg'), next = document.getElementById('sNext'), back = document.getElementById('sBack');
   prog.innerHTML = steps.map(() => '<i></i>').join('');
   const bars = [...prog.children];
-  const labels = ["I'm ready", 'Continue', 'Continue', 'Begin breathing', 'Continue', 'Finish', 'Done'];
+  const LABEL = {body:'Begin moving', breath:'Begin breathing', silence:'Begin silence', chant:'Continue'};
+  const labels = steps.map((s,i) => i === 0 ? "I'm ready" : i === steps.length - 1 ? 'Done' : i === steps.length - 2 ? 'Finish' : (LABEL[s.dataset.kind] || 'Continue'));
   let cur = 0, breathTimer = null, breathing = false;
-  const CH = 9;
-  const mini = makeMala(document.getElementById('miniMala'), CH, k => {
-    ses.querySelector('#miniMala .c').textContent = k;
-    if (steps[cur] && steps[cur].dataset.kind === 'chant' && k < CH) next.textContent = `Tap the Om · ${k} / ${CH}`;
-  }, () => { next.disabled = false; next.textContent = 'Continue'; });
+  let CH = 9, mini = null, cur0 = null, minutesStart = 0;
+  function buildMini(N){
+    CH = N;
+    const old = document.getElementById('miniMala'), el = old.cloneNode(true);
+    old.replaceWith(el);
+    el.querySelector('small').textContent = '/ ' + N;
+    mini = makeMala(el, N, k => {
+      el.querySelector('.c').textContent = k;
+      if (steps[cur] && steps[cur].dataset.kind === 'chant' && k < CH) next.textContent = `Tap the Om · ${k} / ${CH}`;
+    }, () => { next.disabled = false; next.textContent = 'Continue'; });
+    mini.reset();
+  }
+  const MOODS = ['Drained','Heavy','Okay','Lighter','Calm'];
+  const moodIn = document.getElementById('moodIn'), moodOut = document.getElementById('moodOut');
+  moodIn.addEventListener('input', () => document.getElementById('moodNow').textContent = MOODS[moodIn.value]);
+  moodOut.addEventListener('input', showShift);
+  function showShift(){
+    const a = +moodIn.value, b = +moodOut.value, el = document.getElementById('shift');
+    el.textContent = b > a ? `You came in ${MOODS[a].toLowerCase()} and leave ${MOODS[b].toLowerCase()}. That's the retreat.` :
+      b === a ? `Same as before — and that's fine. Some evenings the work is just showing up.` :
+      `Heavier tonight. Thank you for sitting with it anyway — that counts.`;
+  }
+  const intentChips = document.getElementById('intentChips');
+  intentChips.addEventListener('click', e => { const b = e.target.closest('button'); if (!b) return;
+    intentChips.querySelectorAll('button').forEach(x => x.setAttribute('aria-pressed', x === b));
+    const s = store.get(); s.intent = b.dataset.v; store.set(s); });
+  let voiceOn = 'speechSynthesis' in window;
+  const vBtn = document.getElementById('sVoice');
+  if (!voiceOn) vBtn.style.display = 'none';
+  vBtn.addEventListener('click', () => { voiceOn = !voiceOn; vBtn.setAttribute('aria-pressed', voiceOn); vBtn.textContent = voiceOn ? 'Voice cues on' : 'Voice cues off'; });
+  function say(w){
+    if (!voiceOn || !soundOn) return;
+    try{ speechSynthesis.cancel(); const u = new SpeechSynthesisUtterance(w); u.rate = .78; u.pitch = .85; u.volume = .85;
+      const v = speechSynthesis.getVoices().find(v => /en-(GB|US)/.test(v.lang) && /Samantha|Daniel|Serena|Google UK|Karen|Moira/.test(v.name)); if (v) u.voice = v;
+      speechSynthesis.speak(u); }catch(e){}
+  }
+  /* breath tones: rising = in, falling = out, soft drone = hold — so eyes can stay closed */
+  function tone(kind, sec){
+    if (!soundOn) return;
+    try{
+      actx = actx || new (window.AudioContext || window.webkitAudioContext)();
+      const now = actx.currentTime, o = actx.createOscillator(), g = actx.createGain(), f = actx.createBiquadFilter();
+      o.type = 'sine'; f.type = 'lowpass'; f.frequency.value = 900;
+      const lo = 174, hi = 261;
+      if (kind === 'in'){ o.frequency.setValueAtTime(lo, now); o.frequency.exponentialRampToValueAtTime(hi, now + sec); }
+      else if (kind === 'out' || kind === 'hum'){ o.frequency.setValueAtTime(hi, now); o.frequency.exponentialRampToValueAtTime(lo, now + sec); }
+      else { o.frequency.value = kind === 'hold' ? hi : lo; }
+      const peak = kind.startsWith('hold') ? .035 : .09;
+      g.gain.setValueAtTime(0, now); g.gain.linearRampToValueAtTime(peak, now + .4);
+      g.gain.setValueAtTime(peak, now + Math.max(.5, sec - .6)); g.gain.linearRampToValueAtTime(0, now + sec);
+      o.connect(f).connect(g).connect(actx.destination); o.start(now); o.stop(now + sec + .05);
+    }catch(e){}
+  }
   function show(i){
-    stopBreath();
+    stopBreath(); stopTimers();
     cur = i;
     steps.forEach((s,k) => s.classList.toggle('on', k === i));
     bars.forEach((b,k) => b.classList.toggle('on', k <= i));
@@ -1048,50 +1463,146 @@ const KAILASH_CONFIG = {
     if (i === steps.length - 1) next.textContent = user ? ((profile && profile.plan !== 'free') ? 'Done' : 'See full retreats') : 'Save my progress — free account';
     if (steps[i].dataset.kind === 'chant' && !mini.done){ next.disabled = true; next.textContent = `Tap the Om · 0 / ${CH}`; }
     back.style.display = i === 0 || i === steps.length - 1 ? 'none' : '';
-    if (steps[i].dataset.kind === 'breath'){ document.getElementById('breathWord').textContent = 'Press begin'; document.getElementById('breathCount').textContent = 'In for 4, out for 6. Six slow breaths.'; }
+    if (steps[i].dataset.kind === 'breath'){ document.getElementById('breathWord').textContent = 'Press begin'; document.getElementById('breathCount').textContent = `${BREATH[cur0.breath].tip} ${breaths()} slow breaths.`; }
   }
-  function stopBreath(){ clearTimeout(breathTimer); breathing = false; const o = document.getElementById('orb'); o.classList.remove('in','out'); }
+  function stopBreath(){ clearTimeout(breathTimer); breathing = false; try{ speechSynthesis.cancel(); }catch(e){} const o = document.getElementById('orb'); o.classList.remove('in','out','hold','holdlow'); }
+  const breaths = () => Math.min(10, 5 + (store.get().evenings || 0));   // grows a little each evening
   function runBreath(){
     breathing = true; next.textContent = 'Skip'; bell(true);
     const orb = document.getElementById('orb'), w = document.getElementById('breathWord'), c = document.getElementById('breathCount');
-    let k = 0;
-    const cycle = () => {
+    const B = BREATH[cur0.breath], total = breaths();
+    const WORD = {in:'Breathe in', out:'Breathe out', hold:'Hold', holdlow:'Hold', hum:'Hum out'};
+    let k = 0, p = 0;
+    const phase = () => {
       if (!breathing) return;
-      if (k === 6){ w.textContent = 'Stay here a moment'; c.textContent = 'Notice the quiet.'; orb.classList.remove('in','out'); bell(false); next.textContent = 'Continue'; breathing = false; return; }
-      k++; c.textContent = `Breath ${k} of 6`;
-      w.textContent = 'Breathe in'; orb.classList.remove('out'); orb.classList.add('in');
-      breathTimer = setTimeout(() => {
-        w.textContent = 'Breathe out'; orb.classList.remove('in'); orb.classList.add('out');
-        breathTimer = setTimeout(cycle, 6000);
-      }, 4000);
+      if (p === 0){
+        if (k === total){ w.textContent = 'Stay here a moment'; c.textContent = 'Notice the quiet. Open your eyes when you’re ready.'; orb.classList.remove('in','out','hold','holdlow'); bell(true); say('Gently open your eyes.'); next.textContent = 'Continue'; breathing = false; return; }
+        k++; c.textContent = `Breath ${k} of ${total}`;
+      }
+      const [kind, sec] = B.seq[p];
+      w.textContent = WORD[kind]; say(WORD[kind]); tone(kind, sec);
+      orb.style.transitionDuration = sec + 's';
+      orb.classList.remove('in','out','hold','holdlow');
+      orb.classList.add(kind === 'hum' ? 'out' : kind);
+      p = (p + 1) % B.seq.length;
+      breathTimer = setTimeout(phase, sec * 1000);
     };
-    cycle();
+    say('Close your eyes.'); breathTimer = setTimeout(phase, 1500);
   }
+  /* movement and silence runners */
+  let moving = false, silent = false, mvT = null, silT = null, curMoves = 'desk', area = 'work';
+  const ARC = 289;
+  function stopTimers(){ clearTimeout(mvT); clearInterval(silT); moving = false; silent = false; }
+  function ring(arc, num, left, total){ document.getElementById(arc).style.strokeDashoffset = ARC * (1 - left / total); document.getElementById(num).textContent = left; }
+  function runMoves(){
+    moving = true; next.textContent = 'Skip'; bell(true);
+    const set = MOVES[curMoves].poses, n = (store.get().evenings || 0), extra = Math.min(20, n * 4); // a little longer each evening
+    let pi = 0;
+    const pose = () => {
+      if (!moving) return;
+      if (pi === set.length){
+        document.getElementById('pName').textContent = 'Well done.';
+        document.getElementById('pHow').textContent = 'Notice how your body feels now. Then continue to the breath.';
+        document.getElementById('pSec').textContent = '✓'; document.getElementById('pStep').textContent = '';
+        bell(true); say('Well done.'); moving = false; next.textContent = 'Continue'; return;
+      }
+      const [name, how, s0] = set[pi], total = s0 + extra; let left = total, half = how.includes('Halfway');
+      document.getElementById('pName').textContent = name;
+      document.getElementById('pHow').textContent = how; noWidow(document.getElementById('pHow'));
+      document.getElementById('pStep').textContent = `Pose ${pi + 1} of ${set.length}`;
+      if (pi > 0) bell(false); say(name);
+      const arc = document.getElementById('pArc'); arc.style.transition = 'none'; ring('pArc','pSec', left, total); void arc.offsetWidth; arc.style.transition = '';
+      const tick = () => {
+        if (!moving) return;
+        left--; ring('pArc','pSec', Math.max(left,0), total);
+        if (half && left === Math.floor(total/2)){ bell(false); say('Switch sides'); }
+        if (left <= 0){ pi++; mvT = setTimeout(pose, 600); } else mvT = setTimeout(tick, 1000);
+      };
+      mvT = setTimeout(tick, 1000);
+    };
+    say('Let’s move.'); mvT = setTimeout(pose, 1200);
+  }
+  function runSilence(){
+    silent = true; next.textContent = 'Skip'; bell(true); say('Close your eyes.');
+    const total = Math.min(180, 60 + (store.get().evenings || 0) * 20); let left = total;
+    ring('sArc','sSec', left, total);
+    silT = setInterval(() => {
+      if (!silent) return;
+      left--; ring('sArc','sSec', Math.max(left,0), total);
+      if (left <= 0){ clearInterval(silT); silent = false; bell(true); document.getElementById('silText').textContent = 'Welcome back. Take your time before you open your eyes.'; next.textContent = 'Continue'; }
+    }, 1000);
+  }
+  function renderAreas(pr){
+    const areasEl = document.getElementById('areas'), prEl = document.getElementById('prompts');
+    if (Array.isArray(pr)){ areasEl.innerHTML = ''; prEl.innerHTML = pr.map(p => `<button type="button">${p}</button>`).join(''); return; }
+    areasEl.innerHTML = AREAS.map(([k,l]) => `<button type="button" data-a="${k}" aria-pressed="${k === area}">${l}</button>`).join('');
+    prEl.innerHTML = pr[area].map(p => `<button type="button">${p}</button>`).join('');
+    areasEl.onclick = e => { const b = e.target.closest('button'); if (!b) return; area = b.dataset.a; const s = store.get(); s.area = area; store.set(s); renderAreas(pr); };
+  }
+
   function open(){
-    const v = WIS[theme];
-    document.getElementById('sSrc').textContent = 'Verse · ' + v.src;
+    const s = store.get(), n = s.evenings || 0;
+    const v = cur0 = theme ? WIS[theme] : PATH[n % PATH.length];
+    document.getElementById('sSrc').textContent = (theme ? `For tonight · ${WIS[theme].chip}` : `Evening ${n + 1} · ${v.nm}`) + ' · ' + v.src;
     document.getElementById('sVerse').textContent = v.verse;
     document.getElementById('sMTitle').innerHTML = v.title;
     document.getElementById('sMText').textContent = v.text;
     document.getElementById('sQ').textContent = v.q;
+    document.getElementById('bName').textContent = 'Practice · ' + BREATH[v.breath].name;
+    const ch = CHANT[v.chant], beads = theme ? v.beads : v.beads;
+    document.getElementById('cName').textContent = ch.name;
+    document.getElementById('cMean').textContent = ch.mean;
+    document.getElementById('cKick').textContent = `Chant · ${beads} beads` + (n > 0 && !theme ? ' · a little more than last time' : '');
+    area = s.area || 'work';
+    renderAreas(theme ? (WISP[theme] || PROMPTS[theme === 'behind' ? 0 : 1]) : PROMPTS[n % PATH.length]);
+    curMoves = theme ? WIS_MOVES[theme] : PATH_MOVES[n % PATH.length];
+    document.getElementById('mvKick').textContent = 'Move · ' + MOVES[curMoves].name;
+    document.getElementById('pName').textContent = 'Let the body leave the day first';
+    document.getElementById('pHow').textContent = `${MOVES[curMoves].poses.length} gentle poses, about four minutes. A bell marks each change.`;
+    document.getElementById('pSec').textContent = '·'; document.getElementById('pStep').textContent = ''; document.getElementById('pArc').style.strokeDashoffset = 0;
+    document.getElementById('sSec').textContent = '·'; document.getElementById('sArc').style.strokeDashoffset = 0;
+    document.getElementById('silText').textContent = "Close your eyes. Don't meditate, don't try. Just sit. A bell will call you back.";
+    document.getElementById('todayAct').textContent = v.act;
     document.getElementById('reflect').value = '';
-    mini.reset(); show(0); ses.classList.add('open'); document.body.style.overflow = 'hidden'; bell(true); startDrone();
+    document.getElementById('intent').style.display = s.intent ? 'none' : '';
+    moodIn.value = 1; moodOut.value = 1; document.getElementById('moodNow').textContent = ''; document.getElementById('shift').textContent = '';
+    ['sVerse','sMText','sQ','cMean'].forEach(id => noWidow(document.getElementById(id)));
+    minutesStart = Date.now();
+    buildMini(beads); show(0); ses.classList.add('open'); document.body.style.overflow = 'hidden'; bell(true); startDrone();
   }
-  function close(){ stopBreath(); stopDrone(); ses.classList.remove('open'); document.body.style.overflow = ''; }
+  function close(){ stopBreath(); stopTimers(); stopDrone(); ses.classList.remove('open'); document.body.style.overflow = ''; }
   function complete(){
     const s = store.get(); s.evenings = (s.evenings || 0) + 1;
     s.journal = s.journal || [];
     const txt = document.getElementById('reflect').value.trim();
-    if (txt) s.journal.push({d:new Date().toISOString().slice(0,10), q:WIS[theme].q, a:txt});
+    if (txt) s.journal.push({d:new Date().toISOString().slice(0,10), q:cur0.q, a:txt});
+    s.days = s.days || []; const tk = dayKey(new Date()); if (!s.days.includes(tk)) s.days.push(tk);
+    s.minutes = (s.minutes || 0) + Math.max(1, Math.round((Date.now() - minutesStart) / 60000));
+    s.moods = s.moods || []; s.moods.push({d:tk, in:+moodIn.value});
     store.set(s);
-    document.getElementById('sStat').textContent = `Evening ${s.evenings} complete` + (txt ? ' · your reflection is saved on this device' : '');
+    document.getElementById('doneTitle').textContent = `Evening ${s.evenings} is complete.`;
+    moodOut.value = moodIn.value; document.getElementById('shift').textContent = 'Move the slider — notice what this evening changed.';
+    renderGrid(document.getElementById('doneGrid'), 6); renderPractice();
+    const intentLine = {calm:'Another calm evening in the bank.', habit:'One more square in your rhythm. Same time tomorrow?', deeper:'Tomorrow the breath grows a little longer.'}[s.intent] || '';
+    document.getElementById('sStat').textContent = `${s.evenings} evening${s.evenings > 1 ? 's' : ''} · ${s.minutes} minute${s.minutes > 1 ? 's' : ''} of stillness` + (txt ? ' · reflection saved' : '') + (intentLine ? ' — ' + intentLine : '');
+    const nx = PATH[s.evenings % PATH.length];
+    document.getElementById('nextUp').innerHTML = `Next evening: <b>${nx.nm}</b> — ${nx.src}.`;
+    theme = null;
   }
   document.querySelectorAll('.js-start').forEach(b => b.addEventListener('click', startEvening));
   document.getElementById('sClose').addEventListener('click', close);
   addEventListener('keydown', e => { if (e.key === 'Escape' && ses.classList.contains('open')) close(); });
   back.addEventListener('click', () => cur > 0 && show(cur - 1));
+  document.getElementById('prompts').addEventListener('click', e => {
+    const b = e.target.closest('button'); if (!b) return;
+    const ta = document.getElementById('reflect');
+    ta.value = (ta.value ? ta.value.trim() + '\n' : '') + b.textContent + ' — ';
+    ta.focus(); ta.setSelectionRange(ta.value.length, ta.value.length);
+  });
   next.addEventListener('click', () => {
     if (steps[cur].dataset.kind === 'breath' && !breathing && next.textContent === 'Begin breathing') return runBreath();
+    if (steps[cur].dataset.kind === 'body' && !moving && next.textContent === 'Begin moving') return runMoves();
+    if (steps[cur].dataset.kind === 'silence' && !silent && next.textContent === 'Begin silence') return runSilence();
     if (cur === steps.length - 1){ close();
       if (!user) showModal('signup', {why:'Keep your path. Three more evenings, free — on every device.'});
       else if (profile && profile.plan === 'free') showModal('paywall', {title:'Go deeper', text:'Your free evenings are a beginning. A full retreat takes you further.'});
