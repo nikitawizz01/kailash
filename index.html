@@ -349,6 +349,12 @@ p,li,.s-text,.lede{text-wrap:pretty}
 .journey b{display:block;color:var(--moon);font-weight:500}
 .includes{margin-top:34px;text-align:center;color:var(--mist);font-size:.95rem}
 .includes b{color:var(--moon);font-weight:500}
+.facts{margin:24px 0 30px;display:grid;gap:0}
+.facts div{display:flex;justify-content:space-between;gap:12px;padding:11px 0;border-top:1px solid rgba(154,166,214,.14);font-size:.95rem}
+.facts dt{color:var(--mist)}
+.facts dd{color:var(--moon);font-weight:500;text-align:right}
+.facts dd.no{color:rgba(154,166,214,.45)}
+.plan .price{margin-top:18px}
 
 /* ask shiva demo */
 .demo-tag{display:inline-block;font-size:.75rem;letter-spacing:.08em;text-transform:uppercase;color:var(--ember);border:1px solid rgba(240,178,106,.4);border-radius:999px;padding:3px 10px;margin-bottom:14px;transition:opacity .4s}
@@ -493,8 +499,8 @@ p,li,.s-text,.lede{text-wrap:pretty}
   <section id="ritual">
     <div class="wrap">
       <div class="ritual-head rv">
-        <h2>Every evening.<br>Five quiet steps.</h2>
-        <p class="lede">Each retreat is a path of evenings. Every evening is the same short ritual — so the habit forms itself — while the verse, the movement, the breath and the mantra change and grow a little longer as you go.</p>
+        <h2>Fifteen minutes.<br>Five quiet steps.</h2>
+        <p class="lede">One short ritual you can do whenever you need it. The verse, the movement, the breath and the mantra change each time — and grow a little longer as you go.</p>
       </div>
       <div class="steps">
         <div class="step rv"><span class="n">i.</span><h3>Verse</h3><p>One line from the Gita or the Upanishads, and what it means for your day, in plain words.</p><span class="min">2 minutes</span></div>
@@ -555,48 +561,48 @@ p,li,.s-text,.lede{text-wrap:pretty}
     <div class="wrap">
       <div class="rv">
         <h2>Choose your path.</h2>
-        <p class="lede">A retreat isn't more content — it's a journey with a direction. Your first evening is free, a free account adds three more. When you want to go further, pick where you want to arrive.</p>
+        <p class="lede">Your first session is free. Then pick one:</p>
       </div>
       <div class="plans">
         <article class="plan rv">
           <h3>Burnout Reset</h3>
-          <p class="who">7 evenings · for after a hard stretch at work</p>
-          <p class="desc">From running on empty to sleeping lighter.</p>
+          <p class="who">For one hard week</p>
           <div class="price">$19 <small>once</small></div>
-          <ul class="journey">
-            <li><b>Evenings 1–2 · Put the work down</b>Learn to end the workday on purpose.</li>
-            <li><b>Evenings 3–5 · Quiet the restless mind</b>Longer breaths, gentler thoughts.</li>
-            <li><b>Evenings 6–7 · Come back to yourself</b>Evenness, whatever tomorrow brings.</li>
-          </ul>
-          <button class="btn btn-ghost js-buy" data-plan="reset" type="button">Begin Burnout Reset</button>
+          <dl class="facts">
+            <div><dt>Sessions</dt><dd>7</dd></div>
+            <div><dt>Takes</dt><dd>1 week</dd></div>
+            <div><dt>You pay</dt><dd>Once, keep forever</dd></div>
+            <div><dt>New sessions</dt><dd class="no">—</dd></div>
+          </dl>
+          <button class="btn btn-ghost js-buy" data-plan="reset" type="button">Get Burnout Reset</button>
         </article>
         <article class="plan featured rv">
-          <span class="tag">Most chosen</span>
-          <h3>Kailash Membership</h3>
-          <p class="who">every evening · as long as you want</p>
-          <p class="desc">For people who want stillness to become part of their life, not a fix.</p>
+          <span class="tag">Best value</span>
+          <h3>Membership</h3>
+          <p class="who">Everything, always something new</p>
           <div class="price">$7 <small>/ month</small></div>
-          <ul class="journey">
-            <li><b>Both retreats included</b>Burnout Reset and Silence of Mind.</li>
-            <li><b>A new path every month</b>New verses, breaths and mantras.</li>
-            <li><b>Your rhythm, kept</b>Practice and journal on every device. Cancel anytime.</li>
-          </ul>
-          <button class="btn btn-glow js-buy" data-plan="member" type="button">Join Kailash</button>
+          <dl class="facts">
+            <div><dt>Sessions</dt><dd>28 + new monthly</dd></div>
+            <div><dt>Takes</dt><dd>As long as you like</dd></div>
+            <div><dt>You pay</dt><dd>Monthly, cancel anytime</dd></div>
+            <div><dt>New sessions</dt><dd>Every month</dd></div>
+          </dl>
+          <button class="btn btn-glow js-buy" data-plan="member" type="button">Join Membership</button>
         </article>
         <article class="plan rv">
           <h3>Silence of Mind</h3>
-          <p class="who">21 evenings · when rest is no longer enough</p>
-          <p class="desc">From needing rest to finding real stillness.</p>
+          <p class="who">For going deeper</p>
           <div class="price">$29 <small>once</small></div>
-          <ul class="journey">
-            <li><b>Week 1 · Calm the body</b>The breath grows a little longer each night.</li>
-            <li><b>Week 2 · Watch the mind</b>Ribhu Gita: you are not your thoughts.</li>
-            <li><b>Week 3 · Rest as awareness</b>Sitting in silence without effort.</li>
-          </ul>
-          <button class="btn btn-ghost js-buy" data-plan="silence" type="button">Begin Silence of Mind</button>
+          <dl class="facts">
+            <div><dt>Sessions</dt><dd>21 (3× more)</dd></div>
+            <div><dt>Takes</dt><dd>3 weeks</dd></div>
+            <div><dt>You pay</dt><dd>Once, keep forever</dd></div>
+            <div><dt>New sessions</dt><dd class="no">—</dd></div>
+          </dl>
+          <button class="btn btn-ghost js-buy" data-plan="silence" type="button">Get Silence of Mind</button>
         </article>
       </div>
-      <p class="includes rv">Every path includes <b>sound-guided breathing</b>, <b>mantras on the mala</b> and your <b>reflection journal</b> — every answer kept with the verse that prompted it, so you can see how you've changed. <b>Ask Shiva</b> is free for everyone.</p>
+      <p class="includes rv">Not sure? <b>Membership</b> includes both retreats and costs less than either one in the first month.</p>
     </div>
   </section>
 
@@ -699,9 +705,9 @@ p,li,.s-text,.lede{text-wrap:pretty}
       <h3 id="pwTitle">Your free evenings are complete</h3>
       <p class="why" id="pwWhy">You've felt what fifteen quiet minutes can do. Choose how to continue.</p>
       <div id="payOpts">
-        <button class="pay-opt" type="button" data-plan="member" aria-pressed="true"><span><b>Kailash Membership</b><small>Every retreat, new verses nightly, Ask Shiva</small></span><span class="pr">$7<small>/mo</small></span></button>
-        <button class="pay-opt" type="button" data-plan="reset" aria-pressed="false"><span><b>Burnout Reset</b><small>7 evenings · yours forever</small></span><span class="pr">$19</span></button>
-        <button class="pay-opt" type="button" data-plan="silence" aria-pressed="false"><span><b>Silence of Mind</b><small>21 evenings · yours forever</small></span><span class="pr">$29</span></button>
+        <button class="pay-opt" type="button" data-plan="member" aria-pressed="true"><span><b>Membership</b><small>Both retreats + new sessions monthly · cancel anytime</small></span><span class="pr">$7<small>/mo</small></span></button>
+        <button class="pay-opt" type="button" data-plan="reset" aria-pressed="false"><span><b>Burnout Reset</b><small>7 sessions · 1 week · pay once</small></span><span class="pr">$19</span></button>
+        <button class="pay-opt" type="button" data-plan="silence" aria-pressed="false"><span><b>Silence of Mind</b><small>21 sessions · 3 weeks · pay once</small></span><span class="pr">$29</span></button>
       </div>
       <label class="check"><input type="checkbox" id="payTerms"><span>I agree to the <a href="terms.html" target="_blank">Terms of Use</a> and ask for immediate access. I understand that once access begins I lose my 14-day right of withdrawal.</span></label>
       <button class="btn btn-glow" id="payGo" type="button" disabled>Continue to secure payment</button>
