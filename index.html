@@ -782,7 +782,7 @@ p,li,.s-text,.lede{text-wrap:pretty}
       <div class="breath-orb" id="orb"></div>
       <div class="breath-word" id="breathWord" aria-live="polite">Press begin</div>
       <p class="s-text" id="breathCount">In for 4, out for 6.</p>
-      <span class="eyes" id="eyesNote">Close your eyes. A rising tone means breathe in, a falling tone means breathe out.</span>
+      <span class="eyes" id="eyesNote">Close your eyes. A rising tone means breathe in, a falling tone means breathe out. A bell tells you when it's done.</span>
       <div class="s-tools"><button class="s-drone" id="sVoice" type="button" aria-pressed="true">Voice cues on</button></div>
     </div>
     <div class="s-step" data-step data-kind="chant">
@@ -1427,9 +1427,9 @@ const KAILASH_CONFIG = {
   intentChips.addEventListener('click', e => { const b = e.target.closest('button'); if (!b) return;
     intentChips.querySelectorAll('button').forEach(x => x.setAttribute('aria-pressed', x === b));
     const s = store.get(); s.intent = b.dataset.v; store.set(s); });
-  let voiceOn = 'speechSynthesis' in window;
+  let voiceOn = false;  // synthetic voice off until real recorded audio is added
   const vBtn = document.getElementById('sVoice');
-  if (!voiceOn) vBtn.style.display = 'none';
+  vBtn.style.display = 'none';
   vBtn.addEventListener('click', () => { voiceOn = !voiceOn; vBtn.setAttribute('aria-pressed', voiceOn); vBtn.textContent = voiceOn ? 'Voice cues on' : 'Voice cues off'; });
   /* soft female guide voice: picks the most natural female English voice on this device */
   const VOICE_RANK = [/Ava.*(Premium|Enhanced)/i, /Zoe.*(Premium|Enhanced)/i, /(Allison|Samantha|Susan|Serena|Karen|Moira|Tessa).*(Premium|Enhanced)/i,
