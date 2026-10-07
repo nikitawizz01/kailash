@@ -476,7 +476,6 @@ p,li,.s-text,.lede{text-wrap:pretty}
   </div>
 
   <div class="hero-copy">
-    <span class="kicker">A short retreat, whenever you need it</span>
     <h1>India's ancient stillness,<br class="br-d"> right at your desk.</h1>
     <p id="heroSub">A 15-minute practice for burnout: a verse from the Bhagavad Gita, gentle movement, a guided breath, a mantra and a minute of silence. No flight to the Himalayas needed.</p>
     <div class="ctas">
@@ -717,7 +716,7 @@ p,li,.s-text,.lede{text-wrap:pretty}
     <div class="m-view" data-v="soon">
       <h3>Hi there :)</h3>
       <p class="why">I'm the only developer behind Kailash. Payments are exactly what I'm building right now, so this part isn't open yet. It's coming very soon :)</p>
-      <p class="why">Until then, your free sessions are waiting for you.</p>
+      <p class="why">Until then, everything is open for you. Press Got it, then Start whenever you like.</p>
       <button class="btn btn-glow" type="button" id="soonOk">Got it</button>
     </div>
 
@@ -848,7 +847,8 @@ const KAILASH_CONFIG = {
     silence: ''
   },
   FREE_GUEST_EVENINGS: 1,
-  FREE_ACCOUNT_EVENINGS: 3
+  FREE_ACCOUNT_EVENINGS: 3,
+  OPEN_UNTIL_PAYMENTS: true   // temporary: after the "coming soon" popup, signed-in users practise freely. Set to false to turn off.
 };
 (() => {
   const reduce = matchMedia('(prefers-reduced-motion: reduce)').matches;
@@ -1362,7 +1362,7 @@ const KAILASH_CONFIG = {
     showModal('paywall', {plan, title:'Choose your retreat', text:'Unlock the full retreat on your account.'});
   }
   document.querySelectorAll('.js-buy').forEach(b => b.addEventListener('click', () => buy(b.dataset.plan)));
-  document.getElementById('soonOk').addEventListener('click', hideModal);
+  document.getElementById('soonOk').addEventListener('click', () => { if (C.OPEN_UNTIL_PAYMENTS){ const s = store.get(); s.openAccess = true; store.set(s); } hideModal(); });
 
   /* account */
   function fillAccount(){
@@ -1393,6 +1393,7 @@ const KAILASH_CONFIG = {
       return open();
     }
     try{
+      if (C.OPEN_UNTIL_PAYMENTS && store.get().openAccess) return open();
       const r = await Auth.useEvening();
       if (!r.ok) return showModal('paywall');
       open();
