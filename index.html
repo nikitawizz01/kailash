@@ -1431,10 +1431,20 @@ const KAILASH_CONFIG = {
   const vBtn = document.getElementById('sVoice');
   if (!voiceOn) vBtn.style.display = 'none';
   vBtn.addEventListener('click', () => { voiceOn = !voiceOn; vBtn.setAttribute('aria-pressed', voiceOn); vBtn.textContent = voiceOn ? 'Voice cues on' : 'Voice cues off'; });
+  /* soft female guide voice: picks the most natural female English voice on this device */
+  const VOICE_RANK = [/Ava.*(Premium|Enhanced)/i, /Zoe.*(Premium|Enhanced)/i, /(Allison|Samantha|Susan|Serena|Karen|Moira|Tessa).*(Premium|Enhanced)/i,
+    /Microsoft (Aria|Jenny|Sonia|Libby|Emma|Ava).*Natural/i, /Google UK English Female/i, /^Ava\b/i, /^Zoe\b/i, /Serena/i, /Samantha/i, /Karen/i, /Moira/i, /Tessa/i, /Victoria/i, /Fiona/i, /female/i];
+  let guideVoice = null;
+  function pickVoice(){
+    try{ const vs = speechSynthesis.getVoices().filter(v => /^en/i.test(v.lang));
+      for (const r of VOICE_RANK){ const v = vs.find(v => r.test(v.name)); if (v){ guideVoice = v; return; } } }catch(e){}
+  }
+  if ('speechSynthesis' in window){ pickVoice(); speechSynthesis.addEventListener && speechSynthesis.addEventListener('voiceschanged', pickVoice); }
   function say(w){
     if (!voiceOn || !soundOn) return;
-    try{ speechSynthesis.cancel(); const u = new SpeechSynthesisUtterance(w); u.rate = .78; u.pitch = .85; u.volume = .85;
-      const v = speechSynthesis.getVoices().find(v => /en-(GB|US)/.test(v.lang) && /Samantha|Daniel|Serena|Google UK|Karen|Moira/.test(v.name)); if (v) u.voice = v;
+    try{ speechSynthesis.cancel(); if (!guideVoice) pickVoice();
+      const u = new SpeechSynthesisUtterance(w); u.rate = .62; u.pitch = 1.04; u.volume = .7;
+      if (guideVoice){ u.voice = guideVoice; u.lang = guideVoice.lang; }
       speechSynthesis.speak(u); }catch(e){}
   }
   /* breath tones: rising = in, falling = out, soft drone = hold — so eyes can stay closed */
@@ -1472,22 +1482,23 @@ const KAILASH_CONFIG = {
     const orb = document.getElementById('orb'), w = document.getElementById('breathWord'), c = document.getElementById('breathCount');
     const B = BREATH[cur0.breath], total = breaths();
     const WORD = {in:'Breathe in', out:'Breathe out', hold:'Hold', holdlow:'Hold', hum:'Hum out'};
+    const SOFT = {in:'Breathe in… slowly…', out:'and let it go…', hold:'hold… softly…', holdlow:'rest… empty…', hum:'and hum… all the way out…'};
     let k = 0, p = 0;
     const phase = () => {
       if (!breathing) return;
       if (p === 0){
-        if (k === total){ w.textContent = 'Stay here a moment'; c.textContent = 'Notice the quiet. Open your eyes when you’re ready.'; orb.classList.remove('in','out','hold','holdlow'); bell(true); say('Gently open your eyes.'); next.textContent = 'Continue'; breathing = false; return; }
+        if (k === total){ w.textContent = 'Stay here a moment'; c.textContent = 'Notice the quiet. Open your eyes when you’re ready.'; orb.classList.remove('in','out','hold','holdlow'); bell(true); say('Mmm… and gently… open your eyes… whenever you are ready.'); next.textContent = 'Continue'; breathing = false; return; }
         k++; c.textContent = `Breath ${k} of ${total}`;
       }
       const [kind, sec] = B.seq[p];
-      w.textContent = WORD[kind]; say(WORD[kind]); tone(kind, sec);
+      w.textContent = WORD[kind]; say(SOFT[kind]); tone(kind, sec);
       orb.style.transitionDuration = sec + 's';
       orb.classList.remove('in','out','hold','holdlow');
       orb.classList.add(kind === 'hum' ? 'out' : kind);
       p = (p + 1) % B.seq.length;
       breathTimer = setTimeout(phase, sec * 1000);
     };
-    say('Close your eyes.'); breathTimer = setTimeout(phase, 1500);
+    say('Close your eyes… let your shoulders drop… and follow the sound.'); breathTimer = setTimeout(phase, 1500);
   }
   /* movement and silence runners */
   let moving = false, silent = false, mvT = null, silT = null, curMoves = 'desk', area = 'work';
@@ -1504,7 +1515,7 @@ const KAILASH_CONFIG = {
         document.getElementById('pName').textContent = 'Well done.';
         document.getElementById('pHow').textContent = 'Notice how your body feels now. Then continue to the breath.';
         document.getElementById('pSec').textContent = '✓'; document.getElementById('pStep').textContent = '';
-        bell(true); say('Well done.'); moving = false; next.textContent = 'Continue'; return;
+        bell(true); say('Beautiful… just notice your body now.'); moving = false; next.textContent = 'Continue'; return;
       }
       const [name, how, s0] = set[pi], total = s0 + extra; let left = total, half = how.includes('Halfway');
       document.getElementById('pName').textContent = name;
@@ -1515,15 +1526,15 @@ const KAILASH_CONFIG = {
       const tick = () => {
         if (!moving) return;
         left--; ring('pArc','pSec', Math.max(left,0), total);
-        if (half && left === Math.floor(total/2)){ bell(false); say('Switch sides'); }
+        if (half && left === Math.floor(total/2)){ bell(false); say('and… slowly… the other side.'); }
         if (left <= 0){ pi++; mvT = setTimeout(pose, 600); } else mvT = setTimeout(tick, 1000);
       };
       mvT = setTimeout(tick, 1000);
     };
-    say('Let’s move.'); mvT = setTimeout(pose, 1200);
+    say('Let the body move first… gently… no rush.'); mvT = setTimeout(pose, 1200);
   }
   function runSilence(){
-    silent = true; next.textContent = 'Skip'; bell(true); say('Close your eyes.');
+    silent = true; next.textContent = 'Skip'; bell(true); say('Close your eyes… nothing to do now… just be here.');
     const total = Math.min(180, 60 + (store.get().evenings || 0) * 20); let left = total;
     ring('sArc','sSec', left, total);
     silT = setInterval(() => {
