@@ -1395,7 +1395,7 @@ const KAILASH_CONFIG = {
     try{
       if (C.OPEN_UNTIL_PAYMENTS && store.get().openAccess) return open();
       const r = await Auth.useEvening();
-      if (!r.ok) return showModal('paywall');
+      if (!r.ok) return showModal(C.OPEN_UNTIL_PAYMENTS ? 'soon' : 'paywall');
       open();
     }catch(e){ open(); }
   }
@@ -1623,7 +1623,7 @@ const KAILASH_CONFIG = {
     if (steps[cur].dataset.kind === 'silence' && !silent && next.textContent === 'Begin silence') return runSilence();
     if (cur === steps.length - 1){ close();
       if (!user) showModal('signup', {why:'Keep your path. Three more sessions, free — on every device.'});
-      else if (profile && profile.plan === 'free') showModal('paywall', {title:'Go deeper', text:'Your free sessions are a beginning. A full retreat takes you further.'});
+      else if (profile && profile.plan === 'free' && !(C.OPEN_UNTIL_PAYMENTS && store.get().openAccess)) showModal('paywall', {title:'Go deeper', text:'Your free sessions are a beginning. A full retreat takes you further.'});
       return; }
     if (cur === steps.length - 2){ bell(true); complete(); }
     show(cur + 1);
