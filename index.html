@@ -314,6 +314,7 @@ footer{padding:40px clamp(20px,5vw,64px) 50px;display:flex;justify-content:space
 @keyframes stepIn{from{opacity:0;transform:translateY(18px);filter:blur(6px)}to{opacity:1;transform:none;filter:none}}
 
 @media (max-width:560px){.br-d{display:none}}
+.s-verse.long{font-size:clamp(1.6rem,4.4vw,2.4rem);line-height:1.2}
 /* no lonely words */
 h1,h2,h3,blockquote,.s-title,.s-verse,.v{text-wrap:balance}
 p,li,.s-text,.lede{text-wrap:pretty}
@@ -581,7 +582,7 @@ p,li,.s-text,.lede{text-wrap:pretty}
           <p class="who">Everything, always something new</p>
           <div class="price">$7 <small>/ month</small></div>
           <dl class="facts">
-            <div><dt>Sessions</dt><dd>28 + new monthly</dd></div>
+            <div><dt>Sessions</dt><dd>50 + new monthly</dd></div>
             <div><dt>Takes</dt><dd>As long as you like</dd></div>
             <div><dt>You pay</dt><dd>Monthly, cancel anytime</dd></div>
             <div><dt>New sessions</dt><dd>Every month</dd></div>
@@ -1106,6 +1107,691 @@ const KAILASH_CONFIG = {
   ];
   const PATH_MOVES = ['desk','stand','desk','floor','stand','floor','desk'];
   const WIS_MOVES = {tired:'floor', angry:'shake', racing:'stand', behind:'desk', doubt:'stand', lost:'desk', anxious:'floor'};
+  /* ===== sessions 8–50 (own renderings of public-domain texts) ===== */
+  Object.assign(BREATH, {
+    f478:{name:'4-7-8 breath', seq:[['in',4],['hold',7],['out',8]], tip:'In for 4, hold for 7, out slowly for 8.'},
+    pause:{name:'Resting pause', seq:[['in',4],['out',6],['holdlow',4]], tip:'In for 4, out for 6, then rest in the empty pause for 4.'},
+    ujjayi:{name:'Ocean breath', seq:[['in',5],['out',7]], tip:'Breathe through the nose with a soft ocean sound at the back of the throat.'}
+  });
+  Object.assign(CHANT, {
+    shivoham:{name:'Shivoham', mean:'“I am Shiva.” Not the body, not the mind — awareness itself.'},
+    shambho:{name:'Shambho', mean:'A name of Shiva: the gentle, kind one. Let each one be soft.'}
+  });
+  Object.assign(MOVES, {
+    spine:{name:'Spine and breath', poses:[
+      ['Seated cat-cow','Hands on knees. Breathe in, chest forward and arch; breathe out, round the back.',40],
+      ['Seated side stretch','Right arm up and over to the left. Halfway, switch sides.',40],
+      ['Seated twist','Sit tall and turn gently to the right. Halfway, turn to the left.',40],
+      ['Neck half-circles','Drop the chin and roll the head slowly from one shoulder to the other.',30],
+      ['Forward fold','Fold over your legs and let the whole spine hang long.',40],
+      ['Sit tall','Lengthen the spine, the crown of the head rising. Just breathe.',30]]},
+    ground:{name:'Grounding', poses:[
+      ['Stand barefoot','Feel both feet on the floor, weight spread evenly.',30],
+      ['Sway','Sway slowly forward, back and side to side, finding your centre.',30],
+      ['Tree pose','Rest one foot on the opposite ankle or calf, hands at your chest. Halfway, switch legs.',50],
+      ['Mountain','Stand tall, arms by your sides, palms forward. Steady as a mountain.',40],
+      ['Slow squat','Bend the knees slowly as if to sit, then rise. Keep it gentle.',40],
+      ['Heavy feet','Close your eyes. Feel roots growing from your feet into the earth.',40]]}
+  });
+  const S50 = `## The steady seat
+src: Yoga Sutras 2.46
+v: The posture should be steady and easy.
+t: Steady<br>and easy.
+m: Patanjali's whole teaching on posture is three words: steady and easy. Not rigid, not slumped. Most of us sit all day braced, as if waiting for a blow. Right now, let the seat hold you.
+q: Where in your body are you still bracing?
+w: Shoulders up at my ears | A clenched jaw in meetings | My eyes, from the screen
+s: Hunched over my notes | My neck from reading | A tight forehead
+l: My lower back | My hands and wrists | My knees and feet
+p: My stomach around certain people | My chest when I'm criticised | My throat when I hold words back
+i: Everywhere a little | I can't tell yet | My breath itself
+a: Three times tomorrow, check your shoulders and let them drop.
+sil: Sit steady and easy. Feel the weight of your body resting on the seat.
+x: calm ons 27 spine
+
+## A flame out of the wind
+src: Bhagavad Gita 6.19
+v: As a lamp in a windless place does not flicker — so is the settled mind of one who meditates.
+t: A flame out of<br>the wind.
+m: The Gita doesn't ask you to stop the wind. It asks you to find the sheltered place where the flame can stand still. For these fifteen minutes, this is that place.
+q: What is the wind in your life right now?
+w: Constant messages | Changing priorities | A noisy office
+s: Exams coming | Group chats | Pressure from family
+l: Long shifts | Noise and orders | Never enough rest
+p: Someone's moods | Conflict at home | Too many people at once
+i: My own worry | Endless scrolling | I don't know
+a: Find one sheltered place tomorrow — a corner, a bench, a parked car — and sit there for two minutes.
+sil: Imagine a small flame in your chest. No wind can reach it. Watch it stand still.
+x: long om 27 desk
+
+## Little by little
+src: Bhagavad Gita 6.25
+v: Little by little, let the mind grow still, held by steady resolve. Let it rest in the self and think of nothing else.
+t: Little<br>by little.
+m: Krishna doesn't say "at once". He says little by little. You don't have to be calm by the end of this session. You only have to be a little calmer than when you began.
+q: What is one small thing that is already a little better than before?
+w: I leave on time more often | I notice stress sooner | I take real breaks
+s: I study with less panic | I sleep a bit more | I compare less
+l: My body aches less | I rest after shifts | I eat properly
+p: Fewer arguments | I say no sometimes | I listen better
+i: I feel a bit lighter | I know how to breathe | Nothing yet — and that's fine
+a: Pick one tiny habit — a glass of water, one stretch — and do it at the same time tomorrow.
+sil: Don't try to empty the mind. Each time you notice a thought, just loosen your grip on it a little.
+x: box sohum 27 stand
+
+## Wander and return
+src: Bhagavad Gita 6.26
+v: Whenever the restless, unsteady mind wanders away, bring it back and settle it again in the self.
+t: Wander. Return.<br>Repeat.
+m: The practice is not "never wander". The practice is the return. Every time you notice you've drifted and come back, that is one repetition — like lifting a weight. A wandering mind isn't failure. It's the training itself.
+q: Where does your mind run when it wanders?
+w: To unfinished tasks | To my inbox | To what my boss thinks
+s: To exams | To my phone | To the future
+l: To money | To tomorrow's shift | To my aching body
+p: To an argument | To someone I miss | To what people think of me
+i: To old memories | To worries | Everywhere at once
+a: When you catch your mind drifting tomorrow, say silently "back" and take one breath.
+sil: Rest on the breath. When the mind wanders — and it will — gently bring it back. Count the returns, not the wanderings.
+x: calm ons 27 floor
+
+## The tortoise
+src: Bhagavad Gita 2.58
+v: As a tortoise draws in its limbs from every side, so one who draws the senses back from their objects is steady in wisdom.
+t: Draw in like<br>the tortoise.
+m: You can't stop the world from poking at you. But like the tortoise, you can draw in for a while — eyes, ears, attention — and rest inside your own shell. Not forever. Just long enough to recover.
+q: Which sense was most overloaded today?
+w: My eyes — screens all day | My ears — calls and noise | My attention — pulled everywhere
+s: Reading until my eyes hurt | Noise while I study | Too many tabs open
+l: Loud machines | Bright light or sun | My body, touching everything
+p: Too much talking | Being crowded | Other people's emotions
+i: All of them | My phone | My own thoughts
+a: Take one ten-minute break tomorrow with no screen and no sound. Draw in.
+sil: Draw everything in. Eyes soft and closed, ears resting. Feel the quiet inside your shell.
+x: bee om 36 floor
+
+## No effort is lost
+src: Bhagavad Gita 2.40
+v: On this path no effort is ever lost, and no harm is done. Even a little of this practice protects from great fear.
+t: No effort<br>is lost.
+m: You may feel you're not doing it right. The Gita says plainly: no effort here is wasted. Even a little protects you. Every session counts — even the distracted ones.
+q: What effort of yours went unnoticed lately?
+w: Staying late to fix something | Supporting a colleague | Keeping calm in a crisis
+s: Studying when I didn't want to | Helping a classmate | Showing up tired
+l: Working through pain | Doing the job properly | Covering a shift
+p: Keeping the peace at home | Listening to a friend | Holding things together
+i: Getting out of bed on hard days | Trying again | This practice
+a: Write down one thing you did this week that nobody saw — and give yourself credit.
+sil: Sit with the thought: nothing I do here is lost. Let the body believe it.
+x: long ons 36 stand
+
+## Steady, not stone
+src: Bhagavad Gita 2.56
+v: One whose mind is not shaken by sorrow, who does not crave pleasure, who is free from fear and anger — that one is called steady in wisdom.
+t: Steady,<br>not stone.
+m: The steady person in the Gita still feels sorrow and pleasure. They just aren't thrown by them. That's the goal of this first stretch: not to feel less, but to be shaken less.
+q: What shook you lately — and how did you come back?
+w: A tough meeting — I took a walk | Criticism — I stayed quiet | A mistake — I fixed it
+s: A bad grade — I talked to someone | A deadline — I made a plan | Doubt — I kept going
+l: An accident — I rested | A rude customer — I let it go | Being tired — I slept
+p: An argument — we made up | Bad news — I cried | Feeling alone — I called someone
+i: Anxiety — I breathed | A memory — I let it pass | I haven't come back yet
+a: Next time something shakes you, put a hand on your chest and take three breaths before you respond.
+sil: Feel the ground beneath you. Whatever comes up, let it come — and stay seated.
+x: ujjayi om 36 ground
+
+## Watch the waves
+src: Yoga Sutras 1.2
+v: Yoga is the stilling of the movements of the mind.
+t: Watch<br>the waves.
+m: Patanjali defines yoga in one line: the movements of the mind become still. Not forced still — like a lake after the wind drops. Now you practise watching the waves instead of riding them.
+q: What kind of waves came most today — worries, plans, memories or judgements?
+w: Plans for tomorrow | Replaying meetings | Judging my own work
+s: Worrying about grades | Daydreams | Comparing myself
+l: Counting the hours | Money | Aches and pains
+p: Imagined conversations | Old arguments | What they think of me
+i: Memories | Fears | A bit of everything
+a: Three times tomorrow, pause and name what your mind is doing: "planning", "worrying", "remembering".
+sil: Watch thoughts like waves on a lake. Don't swim after them. Just notice each one rise and settle.
+x: calm sohum 36 spine
+
+## When everything settles
+src: Katha Upanishad 2.3.10
+v: When the five senses and the mind are still, and even the intellect does not stir — that, say the wise, is the highest state.
+t: When everything<br>settles.
+m: The Katha Upanishad describes a state where the senses rest, the mind rests and even thinking stops stirring. You don't have to reach it today. You only have to taste one second of it.
+q: When did you last feel completely still — even for a moment?
+w: Never at work | Right after finishing something | In the car before going in
+s: After an exam | Late at night | On a walk
+l: At the end of a shift | Sitting in the sun | In the shower
+p: Holding someone I love | Laughing with friends | Alone with a pet
+i: In nature | Falling asleep | I can't remember
+a: Find that moment again tomorrow — and notice it while it's happening.
+sil: Let the senses rest. Then the mind. Then just rest. If one second of stillness comes, notice it.
+x: f478 om 36 floor
+
+## The gap between breaths
+src: Inspired by the Vijnana Bhairava Tantra
+v: Attend to the moment when the breath has gone out and has not yet come back. There, says Shiva, is the doorway.
+t: The gap<br>between breaths.
+m: In the Vijnana Bhairava Tantra, Shiva gives Devi 112 doorways into stillness. The first is simple: notice the pause after you breathe out, before the next breath comes. It lasts only a moment. That moment is the door.
+q: What happened when you noticed the gap?
+w: My mind went quiet | I forgot about work for a second | It felt strange
+s: I couldn't find it at first | It felt like a tiny rest | My thoughts slowed
+l: My body softened | I felt my heartbeat | It felt like stopping work
+p: I felt alone in a good way | I missed someone | Nothing changed
+i: Peace | A little fear | Curiosity
+a: Tomorrow, find the gap between two breaths three times — while waiting, walking or before sleep.
+sil: Breathe naturally. Each time you breathe out, rest in the small pause before the next breath.
+x: pause shivoham 36 desk
+
+## Not everything is on you
+src: Bhagavad Gita 3.27
+v: All actions are carried out by the forces of nature. Only the one confused by ego thinks: I alone am the doer.
+t: Not everything<br>is on you.
+m: You were trained to believe every outcome depends on you. The Gita offers relief: countless forces — other people, timing, luck, nature — act in every result. You play your part. You don't carry the whole universe.
+q: What outcome are you carrying as if it all depends on you?
+w: A project's success | My team's mood | The company's numbers
+s: My final grade | My family's expectations | My whole future
+l: Finishing everything in time | Other people's mistakes | Keeping everyone safe
+p: Someone else's happiness | Holding the family together | A friend's choices
+i: Fixing my whole life | Being perfect | Everything
+a: Tomorrow, name one thing that isn't yours to control — and consciously let it be.
+sil: Feel how much the body lets go when you stop holding up the world. Let the shoulders, jaw and hands drop.
+x: long om 36 stand
+
+## Turn the thought around
+src: Yoga Sutras 2.33
+v: When disturbed by negative thoughts, cultivate their opposite.
+t: Turn the<br>thought around.
+m: Patanjali's tool is simple: when a heavy thought grips you, don't fight it — grow its opposite right next to it. Fear beside trust. Resentment beside gratitude. The heavy thought doesn't vanish, but it loses its monopoly.
+q: What heavy thought keeps returning — and what is its opposite?
+w: "I'm failing" → "I'm learning" | "They don't value me" → "I value my work" | "Too much" → "One thing at a time"
+s: "I'm stupid" → "I'm still learning" | "No time" → "Enough for today" | "Everyone's ahead" → "My own pace"
+l: "I'm exhausted" → "I did what I could" | "Nobody cares" → "My work matters" | "It never ends" → "This shift ends"
+p: "They hate me" → "I don't know that" | "I'm alone" → "Someone cares" | "It's my fault" → "It's shared"
+i: "Nothing will change" → "Something already has" | "I'm broken" → "I'm tired" | "I can't" → "Not yet"
+a: Write tomorrow's heaviest thought on paper — and its opposite underneath.
+sil: Bring to mind something you're grateful for. Hold it gently, like a warm cup in your hands.
+x: calm shanti 36 desk
+
+## What notices
+src: Kena Upanishad 1.5
+v: That which cannot be spoken by words, but by which words are spoken — know that alone to be the real.
+t: What<br>notices.
+m: The Kena Upanishad points not at your thoughts, but at what notices them. You've spent days watching your mind. Now turn around once and ask: who is watching?
+q: When you watch your thoughts, what does the watching feel like?
+w: Like stepping out of a meeting | Quiet | Unfamiliar
+s: Like looking at a page without reading it | Strange | Spacious
+l: Like resting after work | Heavy, then light | Peaceful
+p: Like watching people through a window | A bit lonely | Free
+i: Wide | Empty in a good way | I'm not sure yet
+a: Once tomorrow, in the middle of a busy moment, ask silently: "what is noticing this?"
+sil: Let thoughts come and go. Rest as the one who notices them — not the thoughts themselves.
+x: ujjayi sohum 36 floor
+
+## As you think, you become
+src: Ashtavakra Gita 1.11
+v: If you think you are free, you are free. If you think you are bound, you are bound. As one thinks, so one becomes.
+t: As you think,<br>you become.
+m: Ashtavakra is blunt: much of our prison is a story we keep repeating. The walls may be real — the deadlines, the bills. But the feeling of being trapped is partly something we tell ourselves. Today, try a different story.
+q: Which story about yourself would you like to stop repeating?
+w: "I can never say no" | "I'm only as good as my results" | "I have no choice"
+s: "I'm bad at this" | "I'll never catch up" | "I'm not smart enough"
+l: "This is all I'll ever do" | "My body is done" | "Rest is for others"
+p: "I'm too much" | "Nobody understands me" | "I have to keep everyone happy"
+i: "I'm broken" | "It's always been like this" | "I can't change"
+a: Tomorrow, catch yourself saying "I always" or "I never" — and replace it with "today".
+sil: Sit as if you are already free. Notice how the body changes when you believe it.
+x: box shivoham 54 stand
+
+## Shivoham
+src: Nirvana Shatakam · Adi Shankara
+v: I am not the mind, nor the intellect, nor the ego, nor memory. I am awareness and bliss. I am Shiva. I am Shiva.
+t: Not the mind.<br>Not the role.
+m: Twelve centuries ago, Adi Shankara wrote six verses that all end the same way: Shivoham — I am Shiva. Not the tired body, not the busy mind, not the role you play at work. Underneath all of it: awareness, quiet and whole.
+q: What are you, beyond your job title?
+w: Someone who cares about doing things well | Curious | More than my role
+s: A learner, not a grade | Someone with dreams | Still forming
+l: Strong and patient | Someone who builds things | A provider
+p: A friend | A son, daughter or parent | Someone who loves
+i: Awareness | I don't know yet | Quiet underneath
+a: When someone asks "what do you do?" tomorrow, notice how much of you that answer leaves out.
+sil: Silently repeat: not the body, not the mind. Then rest in whatever remains.
+x: long shivoham 54 floor
+
+## What never tires
+src: Bhagavad Gita 2.20
+v: It is not born, and it does not die. Unborn, eternal, ancient — it is not destroyed when the body is destroyed.
+t: Something in you<br>never gets tired.
+m: Krishna points to a part of you that doesn't age, doesn't burn out, doesn't get fired. Whether or not you take it literally, try this: notice the part of you that was watching at five, at fifteen, and now. It hasn't changed.
+q: What has stayed the same in you through all the years?
+w: My sense of right and wrong | My curiosity | My stubbornness
+s: My love of certain things | Wanting to understand | My dreams
+l: My will to keep going | My hands knowing their work | My humour
+p: The way I love | My loyalty | My sensitivity
+i: Something quiet, watching | My heart | I'm not sure
+a: Look at an old photo of yourself tomorrow and notice who is still the same.
+sil: Rest as the one who has watched every year of your life — calm and unchanged.
+x: f478 om 54 desk
+
+## One sound for everything
+src: Mandukya Upanishad 1
+v: Om is all this — what was, what is, what will be, and what lies beyond time. All of it is Om.
+t: One sound<br>for everything.
+m: The Mandukya Upanishad says the whole universe is held in one syllable. A-U-M: waking, dreaming, deep sleep — and the silence after the sound, which holds all three. Today the chant is Om, and the silence after it matters as much as the sound.
+q: What did you notice in the silence after the sound?
+w: My mind stopped planning | A buzz in my head | Relief
+s: My thoughts went quiet | A tingling | It felt bigger than me
+l: My body vibrating | My chest opening | Tiredness leaving
+p: I missed someone | I felt connected | I felt safe
+i: Peace | Space | Nothing — and it was nice
+a: Hum one long Om tomorrow — in the shower or the car — and listen to the silence after it.
+sil: After each Om, rest in the silence that follows. Let the silence grow a little longer.
+x: bee om 54 floor
+
+## Become the open sky
+src: Inspired by the Vijnana Bhairava Tantra
+v: Gaze at the clear, open sky without moving your eyes. Let the mind become as wide and still as the sky itself.
+t: Become the<br>open sky.
+m: Another of Shiva's doorways: look at the open sky until the mind takes its shape — wide, clear, without edges. If you can't see the sky now, imagine it. Tomorrow, find a real one.
+q: What does "spacious" feel like in your body?
+w: My chest loosens | My head feels lighter | My shoulders drop
+s: My thoughts slow down | I breathe deeper | I feel younger
+l: My back relaxes | My hands open | I feel rested
+p: I feel less crowded | I feel kinder | I feel free
+i: Like floating | Like a deep breath | I can't feel it yet
+a: Tomorrow, spend one full minute looking at the sky — without your phone.
+sil: Imagine an endless, clear sky. Let your mind spread out to fill it.
+x: ujjayi shanti 54 ground
+
+## You are that
+src: Chandogya Upanishad 6.8.7
+v: That subtle essence — the whole world has it as its self. That is the real. That is the self. You are that.
+t: You are<br>that.
+m: A father teaches his son: the essence in salt water, in a seed, in the whole universe — is the same essence in you. Tat tvam asi. You are not a small, separate machine running out of fuel. You're made of the same stuff as everything.
+q: When do you feel connected to something larger than yourself?
+w: In a good team | When my work helps someone | Rarely
+s: Learning something beautiful | With friends | In nature
+l: Building something that lasts | Outdoors | Working shoulder to shoulder
+p: With family | Sometimes with strangers | At a celebration
+i: Under the stars | In music | In silence
+a: Tomorrow, notice one thing you share with a stranger — tired eyes, a smile, a coffee.
+sil: Feel your breath. The same air is being breathed by everyone on earth. Rest in that.
+x: calm sohum 54 stand
+
+## Nothing to reach
+src: Inspired by the Ribhu Gita
+v: All of this is one awareness. There is nothing to reach and nothing to lose. Rest as you are.
+t: Nothing<br>to reach.
+m: Much of the Ribhu Gita repeats one message until it sinks in: you already are what you're looking for. There is no finish line in this practice. Today, stop trying to get somewhere. Just rest here.
+q: What are you always trying to reach — and what if you were already there?
+w: The next promotion | An empty inbox | Being respected
+s: Graduation | Top grades | Knowing what to do with my life
+l: The weekend | Retirement | Enough money
+p: Being loved | Being understood | Fixing a relationship
+i: Peace | Being "better" | I'm not sure
+a: Tomorrow, do one ordinary thing — washing a cup, walking — as if it were the destination, not a step toward something.
+sil: There is nowhere to go and nothing to do. Rest exactly as you are.
+x: long shivoham 54 floor
+
+## Silence of mind
+src: Ashtavakra Gita 1.4
+v: If you set the body aside and rest in awareness, then right now you will be happy, at peace and free.
+t: Right now,<br>at peace.
+m: Three weeks ago you started by calming the body. Then you watched the mind. Ashtavakra says the last step is the simplest: rest in awareness, right now. Not after the next goal. Now.
+q: Looking back on these weeks, what has changed — even slightly?
+w: I react less | I leave work at work more | I notice tension sooner
+s: I study more calmly | I sleep better | I compare less
+l: My body feels lighter | I rest better | I'm kinder to myself
+p: I listen better | Less drama | More patience
+i: I'm quieter inside | I know where to return | Not much — and that's okay
+a: Choose one practice from these weeks to keep — and do it tomorrow without the app.
+sil: Rest in awareness. Nothing to fix, nothing to add. This is the retreat.
+x: f478 shivoham 54 desk
+
+## Skill in action
+src: Bhagavad Gita 2.50
+v: Yoga is skill in action.
+t: Skill<br>in action.
+m: After weeks of stillness, the Gita sends you back into the world: yoga is skill in action. Not escaping work — doing it with a clear, unhurried mind. Calm isn't the opposite of productive. It's how you do your best work.
+q: What would you do differently if you were completely calm?
+w: Say no more often | Do one thing at a time | Speak up
+s: Start early without panic | Ask for help | Focus longer
+l: Pace myself | Take real breaks | Stop rushing and getting hurt
+p: Listen before answering | Take things less personally | Be more patient
+i: Decide faster | Worry less | Enjoy what I do
+a: Tomorrow, do one task slowly and fully — as if it were your meditation.
+sil: Picture yourself tomorrow moving through the day calm and clear. See it in detail.
+x: calm om 54 stand
+
+## Your part, not theirs
+src: Bhagavad Gita 3.8
+v: Do the work that is yours to do. Action is better than inaction; even the body cannot be kept alive without it.
+t: Your part,<br>not theirs.
+m: The Gita doesn't tell you to quit. It tells you to act — on what is truly yours. A lot of burnout comes from doing work that isn't yours: other people's tasks, other people's worries.
+q: What work did you do lately that wasn't really yours?
+w: Covering for a colleague | Fixing other people's mistakes | Answering out of hours
+s: A group project alone | Family errands | Helping everyone else first
+l: Extra shifts | Someone else's share | Unpaid tasks
+p: Managing someone's feelings | Solving their problems | Always keeping the peace
+i: Worrying for others | Planning everyone's life | Trying to save everyone
+a: Tomorrow, hand back one thing that isn't yours — kindly, but clearly.
+sil: Feel the difference between carrying and resting. Let your arms grow heavy.
+x: box ons 54 desk
+
+## Like a lotus leaf
+src: Bhagavad Gita 5.10
+v: One who acts without clinging, offering it all, is untouched by trouble — as a lotus leaf is untouched by water.
+t: Like a<br>lotus leaf.
+m: The lotus grows in muddy water, yet water rolls off its leaves. You can live in a busy, messy world and still not let everything soak in. The mud isn't the problem. Soaking in it is.
+q: What soaked into you today that you'd like to let roll off?
+w: A rude email | A tense meeting | Someone's bad mood
+s: A harsh comment | A disappointing grade | Group drama
+l: Being shouted at | A customer's anger | Exhaustion
+p: An argument | Gossip | Feeling left out
+i: The news | Social media | Old memories
+a: Tomorrow, when something unpleasant lands on you, picture it rolling off like water from a leaf.
+sil: Picture a lotus on dark water. Drops fall and roll off its leaves. Breathe like that.
+x: ujjayi shanti 54 floor
+
+## Four ways to meet people
+src: Yoga Sutras 1.33
+v: Friendliness toward the happy, compassion toward the suffering, gladness toward the good, and calm toward the harmful — these keep the mind clear.
+t: Four ways to<br>meet people.
+m: Patanjali offers four attitudes, one for each kind of person you meet. Most stress isn't the work itself — it's people. Choosing the right attitude for each one keeps your mind clear.
+q: Who do you find hardest — and which of the four attitudes would help?
+w: A difficult boss — calm | A struggling colleague — compassion | A successful rival — gladness
+s: A strict teacher — calm | A friend who's ahead — gladness | A struggling classmate — compassion
+l: A rude customer — calm | A tired coworker — compassion | A fair boss — friendliness
+p: A family member — compassion | An ex — calm | A happy friend — gladness
+i: Myself — compassion | Strangers online — calm | I'm not sure
+a: Tomorrow, before you meet someone difficult, choose one of the four attitudes on purpose.
+sil: Think of someone you love, then someone neutral, then someone difficult. Wish all three well.
+x: calm sohum 54 stand
+
+## Careful words
+src: Bhagavad Gita 17.15
+v: Words that cause no distress, that are true, pleasant and helpful — this is the discipline of speech.
+t: Careful<br>words.
+m: The Gita treats speech as a practice of its own: true, kind, helpful, never wounding. Burnout often shows up first in how we talk — short, sharp, sarcastic. Tomorrow, watch your words the way you watch your breath.
+q: Whose words hurt you lately — or whom did your words hurt?
+w: A sharp reply in a chat | My boss's comment | I snapped at someone
+s: A teacher's remark | A friend's joke | I was harsh with my family
+l: Shouting at work | A customer's insult | I was short with a coworker
+p: My partner and I | My parents | A friend
+i: My own self-talk | Comments online | Nobody — it's been quiet
+a: Tomorrow, before sending one message, ask: is it true, is it kind, is it helpful?
+sil: Feel your jaw and tongue soften. Rest in the silence that words come from.
+x: long om 81 desk
+
+## Gentleness is strength
+src: Bhagavad Gita 17.16
+v: Serenity of mind, gentleness, silence, self-restraint and a pure heart — this is called the discipline of the mind.
+t: Gentleness<br>is strength.
+m: Look at what the Gita calls discipline here: not pushing harder, but serenity, gentleness and silence. For people who burn out, the hardest discipline isn't working more. It's being gentle with yourself.
+q: Where could you be gentler with yourself this week?
+w: No email after work | Accepting "good enough" | Taking a sick day
+s: Resting before exams | Not comparing | Asking for help
+l: Stretching after work | Saying I'm tired | Eating properly
+p: Not over-giving | Saying no | Forgiving myself
+i: Sleeping more | Stopping self-criticism | Doing nothing sometimes
+a: Tomorrow, do one thing simply because it's gentle — a slow tea, a warm shower, an early night.
+sil: Speak to yourself the way you'd speak to a tired child. Soft, patient, warm.
+x: bee shanti 81 floor
+
+## Enjoy by letting go
+src: Isha Upanishad 1
+v: All this, whatever moves in this world, is filled with the divine. Enjoy it by letting go. Do not covet what belongs to another.
+t: Enjoy by<br>letting go.
+m: The Isha Upanishad opens with a paradox: you enjoy life most when you hold it lightly. Clinging to what you have — or wanting what others have — steals the joy of what's already here.
+q: What are you holding too tightly right now?
+w: My position | Control over every detail | My image
+s: Perfect grades | My plans for the future | Being liked
+l: Overtime money | My routine | Doing everything myself
+p: Someone I'm afraid to lose | Being right | The past
+i: My phone | Certainty | Worry itself
+a: Tomorrow, enjoy one thing you already have — without wanting more of it.
+sil: Rest your hands on your knees, palms up. Feel what it's like to hold nothing.
+x: calm ons 81 stand
+
+## Old clothes
+src: Bhagavad Gita 2.22
+v: As a person sheds worn-out clothes and puts on new ones, so the self sheds worn-out bodies and takes on new ones.
+t: Old<br>clothes.
+m: In the Gita, change is as natural as changing clothes. Some of what exhausts you may simply be worn out — an old role, an old routine, an old version of you that no longer fits. Letting it go isn't failure. It's getting dressed for a new season.
+q: What in your life feels like clothes you've outgrown?
+w: My current role | Working late as a habit | Always proving myself
+s: My chosen subject | Old study habits | Being the "good student"
+l: This job | Pushing through pain | Never asking for more
+p: A friendship that drains me | Being the strong one | Old family roles
+i: An old belief about myself | A habit I keep repeating | My idea of success
+a: Tomorrow, let go of one small thing that no longer fits — unsubscribe, declutter, say no.
+sil: As you breathe out, imagine a heavy coat sliding off your shoulders.
+x: long om 81 ground
+
+## Arise, awake
+src: Katha Upanishad 1.3.14
+v: Arise, awake, and learn from those who know. The path is sharp as a razor's edge, hard to walk — so say the wise.
+t: Arise.<br>Awake.
+m: The Katha Upanishad doesn't pretend the path is easy. You know by now that it isn't. But it also says: arise, awake. Not "be perfect" — just wake up a little more each day.
+q: Where do you feel most "asleep" in your life right now?
+w: Going through the motions | Endless meetings | Autopilot mornings
+s: Studying without understanding | Scrolling between classes | Not knowing why I'm here
+l: Repeating the same day | Numb after shifts | Not noticing my body
+p: Half-listening to people | Routine relationships | Not saying what I feel
+i: Free time lost to screens | Not noticing beauty | Not dreaming anymore
+a: Tomorrow, do one routine thing wide awake — as if for the first time.
+sil: Sit tall, awake and relaxed. Feel how alive the body is right now.
+x: ujjayi shivoham 81 stand
+
+## Make friends with your mind
+src: Bhagavad Gita 6.6
+v: For one who has mastered the mind, the mind is the best of friends. For one who has not, the mind acts like an enemy.
+t: Make friends<br>with your mind.
+m: The mind isn't your enemy. Untrained, it acts like one — waking you at 3 a.m., replaying fights. Trained, it becomes the best friend you have. Every session here is a small act of friendship.
+q: When is your mind your friend — and when is it your enemy?
+w: Friend when I focus, enemy at night | Friend in a crisis, enemy after | Mostly enemy lately
+s: Friend when I'm curious | Enemy before exams | Friend on walks
+l: Friend when I work with my hands | Enemy when I'm tired | Friend with music
+p: Friend with good people | Enemy after arguments | Friend when I'm alone
+i: Friend in the morning | Enemy in bed | It's changing
+a: Tomorrow, when your mind turns against you, answer it gently: "I hear you. Not now."
+sil: Imagine sitting beside your mind like an old friend on a bench. No need to talk.
+x: calm sohum 81 desk
+
+## See it differently
+src: Bhagavad Gita 2.69
+v: What is night for all beings, the self-mastered one is awake to; and what all beings are awake to is night for the sage who sees.
+t: See it<br>differently.
+m: The wise see the world almost upside down: what everyone chases, they see as noise; what everyone ignores — stillness, breath, presence — they see as the real thing.
+q: What does everyone around you chase that you're no longer sure is worth it?
+w: Promotions | Being busy | Status
+s: Perfect grades | Prestigious schools | Being popular
+l: Endless overtime | Bigger things | Looking tough
+p: Approval | Likes and followers | Looking happy
+i: Constant stimulation | More stuff | Being impressive
+a: Tomorrow, spend ten minutes on something everyone ignores: a plant, the light, your own breath.
+sil: Rest in what most people never notice: the quiet behind every sound.
+x: f478 om 81 floor
+
+## Peace first
+src: Bhagavad Gita 2.66
+v: The unsteady have no wisdom and no focus. Without focus there is no peace — and without peace, how can there be happiness?
+t: Peace<br>first.
+m: We usually try to get happy first and hope peace follows. The Gita reverses it: peace comes first, then happiness. Not the other way round.
+q: What would bring a little more peace into your week — not happiness, just peace?
+w: Fewer notifications | Clear boundaries | One quiet hour
+s: A study plan | Less social media | Enough sleep
+l: Proper breaks | Less overtime | A quiet commute
+p: Less conflict | Time alone | One honest talk
+i: Less news | A daily walk | This practice
+a: Tomorrow, protect one fifteen-minute window of peace as if it were a meeting.
+sil: Don't look for happiness now. Just let peace settle, like dust after the wind.
+x: long shanti 81 stand
+
+## Not disturbed, not disturbing
+src: Bhagavad Gita 12.15
+v: One by whom the world is not disturbed, and who is not disturbed by the world, free from excitement, anger and fear — that one is dear to me.
+t: Not disturbed,<br>not disturbing.
+m: Krishna describes someone who neither disturbs the world nor is disturbed by it. A rare kind of person — and the people around them grow calmer too. Your calm isn't selfish. It spreads.
+q: Who in your life is calm like this — and how do you feel around them?
+w: A calm manager | An older colleague | Nobody yet
+s: A teacher | A grandparent | A friend
+l: An experienced coworker | A parent | A neighbour
+p: My partner | A close friend | My grandmother
+i: Nobody — I want to be that person | Someone I admire from afar | My pet
+a: Tomorrow, try to be the calmest person in one room you walk into.
+sil: Feel your calm like a soft light around you, reaching the people you'll see tomorrow.
+x: calm ons 81 desk
+
+## Small, with love
+src: Bhagavad Gita 9.26
+v: Whoever offers me with love a leaf, a flower, a fruit or a little water — that offering of love I gladly accept.
+t: Small,<br>with love.
+m: The Gita says the size of the offering doesn't matter. A leaf, a flower, a little water — given with love. Burnout often comes from believing only big things count. Today, small things are enough.
+q: What small thing could you offer someone this week — with love?
+w: A thank-you message | Helping a new colleague | Listening fully
+s: Sharing my notes | Calling home | Encouraging a friend
+l: Making coffee for the team | A kind word | Showing someone a trick
+p: A hug | Cooking a meal | Remembering a small detail
+i: Feeding the birds | A smile at a stranger | Kindness to myself
+a: Tomorrow, give one small thing with full attention — and expect nothing back.
+sil: Offer this moment of stillness as a gift — to someone you love, or to the world.
+x: bee om 81 floor
+
+## From darkness to light
+src: Brihadaranyaka Upanishad 1.3.28
+v: Lead me from the unreal to the real. Lead me from darkness to light. Lead me from death to the deathless.
+t: From darkness<br>to light.
+m: This short prayer from the Brihadaranyaka Upanishad has been chanted for some three thousand years. It holds the whole journey in three lines: from what isn't real to what is, from dark to light. Where are you on that path today?
+q: What feels unreal in your life — and what feels truly real?
+w: Unreal: titles. Real: people | Unreal: deadlines. Real: health | Unreal: busyness. Real: rest
+s: Unreal: grades. Real: curiosity | Unreal: pressure. Real: friends | Unreal: comparison. Real: my path
+l: Unreal: hurry. Real: my body | Unreal: overtime. Real: family | Unreal: fear. Real: my skill
+p: Unreal: drama. Real: love | Unreal: image. Real: honesty | Unreal: approval. Real: kindness
+i: Unreal: worry. Real: breath | Unreal: the past. Real: now | Unreal: fear. Real: this
+a: Tomorrow, notice one moment of light — when something feels completely real and good.
+sil: Imagine light slowly filling the body, from the top of the head down to the feet.
+x: ujjayi om 108 ground
+
+## Their tiredness, your tiredness
+src: Bhagavad Gita 6.32
+v: One who sees the joy and sorrow of all beings as their own — that yogi is the highest.
+t: You're not<br>alone in it.
+m: Compassion in the Gita isn't pity. It's seeing that other people's joy and pain feel just like yours. Strangely, this makes burnout lighter: you stop feeling alone inside it.
+q: Who around you might be as tired as you are?
+w: My manager | The new colleague | The people who clean the office
+s: My classmates | My teachers | My parents
+l: My coworkers | The person on the next shift | My boss
+p: My partner | My parents | A friend who's gone quiet
+i: Everyone, really | People I'll never meet | Me
+a: Tomorrow, ask one tired-looking person how they really are — and listen.
+sil: Breathe in, aware of all the tired people in the world. Breathe out, wishing them rest.
+x: long sohum 108 stand
+
+## Stand up
+src: Bhagavad Gita 2.3
+v: Do not yield to weakness — it does not suit you. Shake off this small faintness of heart and stand up.
+t: Stand<br>up.
+m: Arjuna sits down on the battlefield, unable to act. Krishna's first words aren't soothing — they're a wake-up call: shake it off, stand up. Sometimes, after rest, what's needed is a little fire.
+q: Where in your life do you need a little more courage, not more rest?
+w: Asking for a raise | Changing jobs | Saying what I think
+s: Changing my subject | Asking questions in class | Applying somewhere
+l: Asking for better conditions | Learning a new skill | Talking to my boss
+p: Ending something | Starting something | Saying sorry
+i: Starting what I keep postponing | Trusting myself | Asking for help
+a: Tomorrow, take one small brave step — a message, a question, a "no".
+sil: Sit tall. Feel the strength in your spine, steady as a mountain.
+x: ujjayi shambho 108 ground
+
+## You are awareness
+src: Shiva Sutras 1.1
+v: Consciousness is the self.
+t: You are<br>awareness.
+m: The Shiva Sutras open with just two words: chaitanyam atma — consciousness is the self. The job, the stress, the plans all appear in that consciousness. You are the space where it all happens.
+q: What changes when you see stress as something appearing in you, not as you?
+w: It feels smaller | I have more room | It's hard to believe
+s: Exams feel less huge | I can breathe | I'm not sure
+l: The tiredness feels lighter | I feel steadier | Nothing yet
+p: Arguments feel less personal | I feel calmer | I'm curious
+i: Space | Relief | Something shifts
+a: Tomorrow, when stress rises, say silently: "this is appearing in me" — and notice the space around it.
+sil: Rest as the space in which thoughts, sounds and feelings appear and disappear.
+x: calm shivoham 108 floor
+
+## Joy from inside
+src: Bhagavad Gita 5.21
+v: One who is not attached to outer pleasures finds the joy within. United with the infinite, that one knows a happiness that does not end.
+t: Joy from<br>inside.
+m: Most of our joy depends on outside things going right. The Gita points to a joy that needs nothing to happen — the quiet happiness of simply being. You've tasted it in these sessions, maybe without noticing.
+q: When did you last feel a moment of joy for no reason?
+w: A random sunny moment | Coffee at my desk | A laugh with a colleague
+s: Walking between classes | A song | Suddenly understanding something
+l: Finishing a job | A cold drink | The ride home
+p: Playing with a child | A hug | A shared meal
+i: Waking up rested | Rain | Silence
+a: Tomorrow, catch one moment of joy for no reason — and pause to feel it fully.
+sil: Smile very slightly. Feel how a small inner smile spreads through the body.
+x: f478 shanti 108 stand
+
+## Put it down
+src: Bhagavad Gita 18.66
+v: Let go of every duty and take refuge in me alone. I will free you from every burden. Do not grieve.
+t: Put it<br>down.
+m: Near the end of the Gita, after hundreds of verses, Krishna's final word to the exhausted Arjuna is this: let go, take refuge, do not grieve. Whatever you believe, there is relief in trusting that you don't have to hold everything alone.
+q: What would you put down if you trusted you'd be held?
+w: Control | Over-planning | Fear of failing
+s: Fear of the future | The need to be perfect | Money worries
+l: Fear of losing my job | Carrying everyone | Pain I hide
+p: Old guilt | Responsibility for others | A grudge
+i: Fear | Needing to understand everything | All of it
+a: Tomorrow, before sleep, name one burden out loud — and imagine handing it over.
+sil: Let your whole weight be held by the ground. You don't have to hold yourself up.
+x: long ons 108 floor
+
+## Beyond words
+src: Taittiriya Upanishad 2.9
+v: One who knows the bliss of the infinite — from which words turn back, together with the mind, unable to reach it — fears nothing.
+t: Beyond<br>words.
+m: The Taittiriya Upanishad describes a happiness so deep that words and thoughts turn back from it. You won't find it by thinking — only by resting, the way you've practised here for weeks.
+q: Is there something you've felt in these sessions that's hard to put into words?
+w: Relief | Lightness | Space
+s: Calm | Curiosity | Wonder
+l: Rest | Strength | Ease
+p: Connection | Love | Forgiveness
+i: Peace | Something bigger | Nothing — and that's fine
+a: Tomorrow, spend five minutes in complete silence — no phone, no music, no words.
+sil: Let go of words. Even the word "silence". Just be.
+x: ujjayi om 108 desk
+
+## Shivoham — the return
+src: Nirvana Shatakam · Adi Shankara
+v: I am without form, beyond thought, present everywhere. I am never bound and never set free. I am awareness and bliss. I am Shiva. I am Shiva.
+t: You were<br>never bound.
+m: Fifty sessions. You started tired, maybe sceptical. Shankara's last verse says what this whole path has pointed to: underneath everything, you were never bound. The work, the stress, the burnout are real — but they're not the deepest truth about you. Take that with you.
+q: What do you want to take with you from these fifty sessions?
+w: Leaving work at work | Breathing before answering | My worth isn't my output
+s: Studying calmly | My own pace | Rest is part of learning
+l: Respecting my body | Real breaks | Pride in my work
+p: Listening | Gentleness | Boundaries
+i: Stillness is always here | Shivoham | I can come back anytime
+a: Tomorrow, sit for five minutes on your own — no app, no guide — and see what you've learned.
+sil: Rest as Shiva — still, aware, whole. Nothing to add. You've arrived where you always were.
+x: f478 shivoham 108 floor
+`;
+  (function(){
+    let cur = null; const L = [];
+    S50.split('\n').forEach(line => {
+      if (line.startsWith('## ')){ cur = {nm: line.slice(3).trim()}; L.push(cur); return; }
+      if (!line.trim() || !cur) return;
+      const i = line.indexOf(':'); cur[line.slice(0, i).trim()] = line.slice(i + 1).trim();
+    });
+    L.forEach(s => {
+      const [b, c, beads, mv] = s.x.split(/\s+/), sp = k => s[k].split('|').map(x => x.trim());
+      PATH.push({src:s.src, verse:s.v, title:s.t, text:s.m, q:s.q, act:s.a, sil:s.sil, breath:b, chant:c, beads:+beads, nm:s.nm});
+      PROMPTS.push({work:sp('w'), study:sp('s'), labor:sp('l'), people:sp('p'), inside:sp('i')});
+      PATH_MOVES.push(mv);
+    });
+  })();
   const WIS = {
     behind:{chip:'Behind on everything', ...PATH[0], k:['behind','deadline','late','result','boss','review','task','todo','list','pressure','work']},
     racing:{chip:"Can't switch off", ...PATH[1], k:['switch','off','racing','think','thoughts','sleep','mind','stop','overthink','night']},
@@ -1561,8 +2247,9 @@ const KAILASH_CONFIG = {
   function open(){
     const s = store.get(), n = s.evenings || 0;
     const v = cur0 = theme ? WIS[theme] : PATH[n % PATH.length];
-    document.getElementById('sSrc').textContent = (theme ? `For you now · ${WIS[theme].chip}` : `Session ${n + 1} · ${v.nm}`) + ' · ' + v.src;
+    document.getElementById('sSrc').textContent = (theme ? `For you now · ${WIS[theme].chip}` : `Session ${n % PATH.length + 1} of ${PATH.length} · ${v.nm}`) + ' · ' + v.src;
     document.getElementById('sVerse').textContent = v.verse;
+    document.getElementById('sVerse').classList.toggle('long', v.verse.length > 100);
     document.getElementById('sMTitle').innerHTML = v.title;
     document.getElementById('sMText').textContent = v.text;
     document.getElementById('sQ').textContent = v.q;
@@ -1579,7 +2266,7 @@ const KAILASH_CONFIG = {
     document.getElementById('pHow').textContent = `${MOVES[curMoves].poses.length} gentle poses, about four minutes. A bell marks each change.`;
     document.getElementById('pSec').textContent = '·'; document.getElementById('pStep').textContent = ''; document.getElementById('pArc').style.strokeDashoffset = 0;
     document.getElementById('sSec').textContent = '·'; document.getElementById('sArc').style.strokeDashoffset = 0;
-    document.getElementById('silText').textContent = "Close your eyes. Don't meditate, don't try. Just sit. A bell will call you back.";
+    document.getElementById('silText').textContent = v.sil || "Close your eyes. Don't meditate, don't try. Just sit. A bell will call you back.";
     document.getElementById('todayAct').textContent = v.act;
     document.getElementById('reflect').value = '';
     document.getElementById('intent').style.display = s.intent ? 'none' : '';
