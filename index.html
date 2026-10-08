@@ -349,6 +349,9 @@ p,li,.s-text,.lede{text-wrap:pretty}
 .journey li:last-child::before{background:var(--ember);border-color:var(--ember)}
 .journey b{display:block;color:var(--moon);font-weight:500}
 .includes{margin-top:34px;text-align:center;color:var(--mist);font-size:.95rem}
+.promo-link{display:block;margin:14px auto 0;color:var(--mist);font-size:.9rem;text-decoration:underline;text-underline-offset:3px}
+.promo-link:hover{color:var(--moon)}
+.field input.code{text-transform:uppercase;letter-spacing:.12em}
 .includes b{color:var(--moon);font-weight:500}
 .facts{margin:24px 0 30px;display:grid;gap:0}
 .facts div{display:flex;justify-content:space-between;gap:12px;padding:11px 0;border-top:1px solid rgba(154,166,214,.14);font-size:.95rem}
@@ -603,6 +606,7 @@ p,li,.s-text,.lede{text-wrap:pretty}
         </article>
       </div>
       <p class="includes rv">Not sure? <b>Membership</b> includes both retreats and costs less than either one in the first month.</p>
+      <button class="promo-link js-promo rv" type="button">Have a promo code?</button>
     </div>
   </section>
 
@@ -712,6 +716,17 @@ p,li,.s-text,.lede{text-wrap:pretty}
       <label class="check"><input type="checkbox" id="payTerms"><span>I agree to the <a href="terms.html" target="_blank">Terms of Use</a> and ask for immediate access. I understand that once access begins I lose my 14-day right of withdrawal.</span></label>
       <button class="btn btn-glow" id="payGo" type="button" disabled>Continue to secure payment</button>
       <p class="m-msg" id="payMsg" aria-live="polite"></p>
+      <button class="promo-link js-promo" type="button">Have a promo code?</button>
+    </div>
+
+    <div class="m-view" data-v="promo">
+      <h3>Promo code</h3>
+      <p class="why" id="prWhy">Enter your code to unlock free days on your account.</p>
+      <form id="fPromo">
+        <label class="field"><span>Code</span><input class="code" type="text" name="code" required autocomplete="off" autocapitalize="characters" spellcheck="false" maxlength="40"></label>
+        <button class="btn btn-glow" type="submit">Apply code</button>
+        <p class="m-msg" aria-live="polite"></p>
+      </form>
     </div>
 
     <div class="m-view" data-v="soon">
@@ -719,6 +734,7 @@ p,li,.s-text,.lede{text-wrap:pretty}
       <p class="why">I'm the only developer behind Kailash. Payments are exactly what I'm building right now, so this part isn't open yet. It's coming very soon :)</p>
       <p class="why">Until then, everything is open for you. Press Got it, then Start whenever you like.</p>
       <button class="btn btn-glow" type="button" id="soonOk">Got it</button>
+      <button class="promo-link js-promo" type="button">Have a promo code?</button>
     </div>
 
     <div class="m-view" data-v="account">
@@ -731,6 +747,7 @@ p,li,.s-text,.lede{text-wrap:pretty}
       </div>
       <button class="btn btn-glow" type="button" id="aUpgrade">See retreats</button>
       <button class="btn btn-ghost" type="button" id="aOut">Sign out</button>
+      <button class="promo-link js-promo" type="button">Have a promo code?</button>
     </div>
 
     <p class="m-demo" id="mDemo" hidden>Demo mode — accounts are stored only in this browser until Supabase is connected.</p>
@@ -1954,7 +1971,8 @@ x: f478 shivoham 108 floor
     },
     async loadProfile(){
       if (!LIVE) return profile;
-      const { data } = await sb.from('profiles').select('plan, evenings_used').eq('id', user.id).single();
+      let { data, error } = await sb.from('profiles').select('plan, evenings_used, promo_until').eq('id', user.id).single();
+      if (error) ({ data } = await sb.from('profiles').select('plan, evenings_used').eq('id', user.id).single());
       profile = data || {plan:'free', evenings_used:0}; return profile;
     },
     async signUp(email, pw, mkt){
@@ -1982,8 +2000,16 @@ x: f478 shivoham 108 floor
       }
       const { data, error } = await sb.rpc('use_evening'); if (error) throw error;
       await Auth.loadProfile(); return data;
+    },
+    async redeem(code){   // returns {ok, days, until, error}
+      if (!LIVE) return {ok:false, error:'invalid'};
+      const { data, error } = await sb.rpc('redeem_promo', { p_code: code }); if (error) throw error;
+      if (data && data.ok) await Auth.loadProfile();
+      return data;
     }
   };
+  const promoActive = () => !!(profile && profile.promo_until && new Date(profile.promo_until) > new Date());
+  const promoDate = () => new Date(profile.promo_until).toLocaleDateString('en-GB', {day:'numeric', month:'long'});
 
   /* modal */
   const modal = document.getElementById('modal'), views = [...modal.querySelectorAll('.m-view')];
@@ -2050,13 +2076,38 @@ x: f478 shivoham 108 floor
   document.querySelectorAll('.js-buy').forEach(b => b.addEventListener('click', () => buy(b.dataset.plan)));
   document.getElementById('soonOk').addEventListener('click', () => { if (C.OPEN_UNTIL_PAYMENTS){ const s = store.get(); s.openAccess = true; store.set(s); } hideModal(); });
 
+  /* promo codes — checked on the server, one use per account */
+  let promoPrefill = '';
+  function openPromo(){
+    if (!user){ afterAuth = openPromo; return showModal('signup', {why:'Create a free account first — your code will be added to it.'}); }
+    showModal('promo');
+    const f = document.getElementById('fPromo'), fb = f.querySelector('button'); delete fb.dataset.done; fb.textContent = 'Apply code'; if (promoPrefill){ f.code.value = promoPrefill; promoPrefill = ''; }
+  }
+  document.querySelectorAll('.js-promo').forEach(b => b.addEventListener('click', openPromo));
+  document.getElementById('fPromo').addEventListener('submit', async e => {
+    e.preventDefault(); const f = e.target, b = f.querySelector('button[type=submit]'), code = f.code.value.trim().toUpperCase();
+    if (!code) return;
+    b.disabled = true; msg(f, 'Checking…', true);
+    try{
+      const r = await Auth.redeem(code);
+      if (r && r.ok){
+        msg(f, `Done. ${r.days} free days are yours — until ${promoDate()}. Press Start whenever you like.`, true);
+        f.code.value = ''; b.textContent = 'Start a session'; b.dataset.done = '1';
+      } else msg(f, r && r.error === 'used' ? 'You have already used this code.' : 'This code isn’t valid.');
+    }catch(err){ msg(f, 'Could not check the code right now. Try again in a minute.'); }
+    b.disabled = false;
+  });
+  document.getElementById('fPromo').querySelector('button').addEventListener('click', e => {
+    const b = e.currentTarget; if (b.dataset.done){ e.preventDefault(); delete b.dataset.done; b.textContent = 'Apply code'; hideModal(); startEvening(); }
+  });
+
   /* account */
   function fillAccount(){
     const used = (profile && profile.evenings_used) || 0, plan = (profile && profile.plan) || 'free';
     document.getElementById('aEmail').textContent = user ? user.email : '';
-    document.getElementById('aPlan').textContent = plan === 'free' ? 'Free' : plan[0].toUpperCase() + plan.slice(1);
+    document.getElementById('aPlan').textContent = plan !== 'free' ? plan[0].toUpperCase() + plan.slice(1) : promoActive() ? `Free access until ${promoDate()}` : 'Free';
     document.getElementById('aDone').textContent = Math.max(used, store.get().evenings || 0);
-    document.getElementById('aLeft').textContent = plan === 'free' ? Math.max(0, C.FREE_ACCOUNT_EVENINGS - used) : 'Unlimited';
+    document.getElementById('aLeft').textContent = plan === 'free' && !promoActive() ? Math.max(0, C.FREE_ACCOUNT_EVENINGS - used) : 'Unlimited';
   }
   document.getElementById('aOut').addEventListener('click', async () => { await Auth.signOut(); renderNav(); hideModal(); });
   document.getElementById('aUpgrade').addEventListener('click', () => showModal('paywall', {title:'Choose your retreat', text:'Unlock the full retreat on your account.'}));
@@ -2065,7 +2116,10 @@ x: f478 shivoham 108 floor
   navAcct.addEventListener('click', () => user ? showModal('account') : showModal('signin'));
   document.querySelectorAll('.js-signup').forEach(b => b.addEventListener('click', () => user ? showModal('account') : showModal('signup')));
   document.querySelectorAll('.js-signin').forEach(b => b.addEventListener('click', () => user ? showModal('account') : showModal('signin')));
-  Auth.init().then(renderNav).catch(() => renderNav());
+  Auth.init().then(renderNav).catch(() => renderNav()).then(() => {
+    const q = new URLSearchParams(location.search).get('promo');
+    if (q){ promoPrefill = q.trim().toUpperCase().slice(0, 40); openPromo(); }
+  });
 
   /* access gate: guest → 1 free evening, account → 3 more, then paywall */
   async function startEvening(){
@@ -2310,7 +2364,7 @@ x: f478 shivoham 108 floor
     if (steps[cur].dataset.kind === 'silence' && !silent && next.textContent === 'Begin silence') return runSilence();
     if (cur === steps.length - 1){ close();
       if (!user) showModal('signup', {why:'Keep your path. Three more sessions, free — on every device.'});
-      else if (profile && profile.plan === 'free' && !(C.OPEN_UNTIL_PAYMENTS && store.get().openAccess)) showModal('paywall', {title:'Go deeper', text:'Your free sessions are a beginning. A full retreat takes you further.'});
+      else if (profile && profile.plan === 'free' && !promoActive() && !(C.OPEN_UNTIL_PAYMENTS && store.get().openAccess)) showModal('paywall', {title:'Go deeper', text:'Your free sessions are a beginning. A full retreat takes you further.'});
       return; }
     if (cur === steps.length - 2){ bell(true); complete(); }
     show(cur + 1);
