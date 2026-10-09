@@ -4,7 +4,23 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
 <title>Kailash — A retreat for burnout, anytime</title>
-<meta name="description" content="A retreat to India in ten minutes a day. Ancient wisdom from the Bhagavad Gita and Ribhu Gita for modern burnout.">
+<meta name="description" content="A 15-minute daily retreat for burnout: a verse from the Bhagavad Gita, gentle movement, breath, mantra and silence. 50 sessions, no flight to the Himalayas needed.">
+<meta name="theme-color" content="#03040c">
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="Kailash">
+<meta property="og:title" content="Kailash — A retreat for burnout, anytime">
+<meta property="og:description" content="A 15-minute daily retreat for burnout: a verse from the Bhagavad Gita, gentle movement, breath, mantra and silence. 50 sessions, no flight to the Himalayas needed.">
+<meta property="og:url" content="https://nikitawizz01.github.io/kailash/">
+<meta property="og:image" content="https://nikitawizz01.github.io/kailash/og.jpg">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta property="og:image:alt" content="Shiva in meditation under a crescent moon — Kailash">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="Kailash — A retreat for burnout, anytime">
+<meta name="twitter:description" content="A 15-minute daily retreat for burnout: a verse from the Bhagavad Gita, gentle movement, breath, mantra and silence. 50 sessions, no flight to the Himalayas needed.">
+<meta name="twitter:image" content="https://nikitawizz01.github.io/kailash/og.jpg">
+<link rel="icon" type="image/png" sizes="64x64" href="icon-64.png">
+<link rel="apple-touch-icon" href="icon-180.png">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;1,400;1,500&family=Jost:wght@400;500&display=swap" rel="stylesheet">
@@ -697,6 +713,28 @@ p,li,.s-text,.lede{text-wrap:pretty}
         <p class="m-msg" aria-live="polite"></p>
       </form>
       <p class="m-alt">New here? <button type="button" data-go="signup">Create a free account</button></p>
+      <p class="m-alt" style="margin-top:8px"><button type="button" data-go="forgot">Forgot password?</button></p>
+    </div>
+
+    <div class="m-view" data-v="forgot">
+      <h3>Reset your password</h3>
+      <p class="why">Enter your email. We'll send you a link to set a new password.</p>
+      <form id="fForgot">
+        <label class="field"><span>Email</span><input type="email" name="email" required autocomplete="email"></label>
+        <button class="btn btn-glow" type="submit">Send reset link</button>
+        <p class="m-msg" aria-live="polite"></p>
+      </form>
+      <p class="m-alt">Remembered it? <button type="button" data-go="signin">Sign in</button></p>
+    </div>
+
+    <div class="m-view" data-v="newpw">
+      <h3>Set a new password</h3>
+      <p class="why">Choose a new password for your account.</p>
+      <form id="fNewpw">
+        <label class="field"><span>New password (8+ characters)</span><input type="password" name="pw" minlength="8" required autocomplete="new-password"></label>
+        <button class="btn btn-glow" type="submit">Save password</button>
+        <p class="m-msg" aria-live="polite"></p>
+      </form>
     </div>
 
     <div class="m-view" data-v="confirm">
@@ -715,6 +753,7 @@ p,li,.s-text,.lede{text-wrap:pretty}
       </div>
       <label class="check"><input type="checkbox" id="payTerms"><span>I agree to the <a href="terms.html" target="_blank">Terms of Use</a> and ask for immediate access. I understand that once access begins I lose my 14-day right of withdrawal.</span></label>
       <button class="btn btn-glow" id="payGo" type="button" disabled>Continue to secure payment</button>
+      <button class="btn btn-ghost" id="payRepeat" type="button" hidden>Repeat</button>
       <p class="m-msg" id="payMsg" aria-live="polite"></p>
       <button class="promo-link js-promo" type="button">Have a promo code?</button>
     </div>
@@ -743,6 +782,7 @@ p,li,.s-text,.lede{text-wrap:pretty}
         <div class="acct-row"><span>Email</span><span id="aEmail"></span></div>
         <div class="acct-row"><span>Plan</span><span id="aPlan"></span></div>
         <div class="acct-row"><span>Sessions completed</span><span id="aDone"></span></div>
+        <div class="acct-row"><span>Next session</span><span id="aNext"></span></div>
         <div class="acct-row"><span>Free sessions left</span><span id="aLeft"></span></div>
       </div>
       <button class="btn btn-glow" type="button" id="aUpgrade">See retreats</button>
@@ -1841,8 +1881,30 @@ x: f478 shivoham 108 floor
     get(){ try{ return JSON.parse(localStorage.getItem('kailash') || '{}'); }catch(e){ return {}; } },
     set(v){ try{ localStorage.setItem('kailash', JSON.stringify(v)); }catch(e){} }
   };
-  const past = store.get().evenings || 0;
-  if (past > 0) document.getElementById('heroSub').textContent = `Welcome back. ${past} session${past > 1 ? 's' : ''} completed. Next: “${PATH[past % PATH.length].nm}” — one verse, one breath, fifteen quiet minutes.`;
+  /* progress: kept in this browser and, when signed in, on the account (every device) */
+  const Prog = {
+    pos(){ const s = store.get(); return Number.isInteger(s.pos) && s.pos >= 0 && s.pos < PATH.length ? s.pos : (s.evenings || 0) % PATH.length; },
+    setPos(i){ const s = store.get(); s.pos = i; store.set(s); },
+    clear(){ const s = store.get(); ['evenings','pos','days','minutes','moods'].forEach(k => delete s[k]); store.set(s); },
+    async sync(){
+      if (typeof LIVE === 'undefined' || !LIVE || !user || !sb) return;
+      const s = store.get();
+      try{
+        const { data, error } = await sb.rpc('merge_progress', {p_done: s.evenings || 0, p_pos: Prog.pos(), p_minutes: s.minutes || 0, p_days: s.days || []});
+        if (error || !data) return;
+        const t = store.get();
+        if (data.done >= (t.evenings || 0)){ t.evenings = data.done; t.pos = data.pos; }
+        t.minutes = Math.max(t.minutes || 0, data.minutes || 0);
+        t.days = [...new Set([...(t.days || []), ...(data.days || [])])];
+        store.set(t); renderPractice(); renderHero();
+      }catch(e){}
+    }
+  };
+  function renderHero(){
+    const past = store.get().evenings || 0;
+    if (past > 0) document.getElementById('heroSub').textContent = `Welcome back. ${past} session${past > 1 ? 's' : ''} completed. Next: “${PATH[Prog.pos()].nm}” — one verse, one breath, fifteen quiet minutes.`;
+  }
+  renderHero();
 
   /* no lonely last words */
   function noWidow(el){
@@ -1954,7 +2016,7 @@ x: f478 shivoham 108 floor
 
   /* ===== accounts (Supabase, or local demo until configured) ===== */
   const C = KAILASH_CONFIG, LIVE = !!(C.SUPABASE_URL && C.SUPABASE_ANON_KEY);
-  let sb = null, user = null, profile = null;
+  let sb = null, user = null, profile = null, wantNewPw = false, linkExpired = false;
   const demo = {
     get(){ try{ return JSON.parse(localStorage.getItem('kailash_demo') || 'null'); }catch(e){ return null; } },
     set(v){ try{ localStorage.setItem('kailash_demo', JSON.stringify(v)); }catch(e){} }
@@ -1963,17 +2025,30 @@ x: f478 shivoham 108 floor
     async init(){
       if (!LIVE){ const d = demo.get(); if (d && d.signedIn){ user = {email:d.email}; profile = d; } return; }
       await new Promise((ok, no) => { const s = document.createElement('script'); s.src = 'https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/dist/umd/supabase.min.js'; s.onload = ok; s.onerror = no; document.head.appendChild(s); });
+      const q0 = new URLSearchParams(location.search), h0 = location.hash;
+      const recovery = q0.has('reset') || /type=recovery/.test(h0);
+      if (/error_code=/.test(h0)) linkExpired = true;
       sb = window.supabase.createClient(C.SUPABASE_URL, C.SUPABASE_ANON_KEY);
       const { data } = await sb.auth.getSession();
       user = data.session ? data.session.user : null;
       if (user) await Auth.loadProfile();
-      sb.auth.onAuthStateChange(async (_e, session) => { user = session ? session.user : null; profile = null; if (user) await Auth.loadProfile(); renderNav(); });
+      if (recovery || linkExpired){ q0.delete('reset'); history.replaceState(null, '', location.pathname + (q0.toString() ? '?' + q0 : '')); }
+      if (recovery && user) wantNewPw = true;
+      sb.auth.onAuthStateChange(async (e, session) => {
+        if (e === 'PASSWORD_RECOVERY') showModal('newpw');
+        user = session ? session.user : null; profile = null; if (user) await Auth.loadProfile(); renderNav();
+      });
     },
     async loadProfile(){
       if (!LIVE) return profile;
-      let { data, error } = await sb.from('profiles').select('plan, evenings_used, promo_until').eq('id', user.id).single();
-      if (error) ({ data } = await sb.from('profiles').select('plan, evenings_used').eq('id', user.id).single());
-      profile = data || {plan:'free', evenings_used:0}; return profile;
+      let data = null;
+      for (const cols of ['plan, evenings_used, promo_until, path_pos', 'plan, evenings_used, promo_until', 'plan, evenings_used']){
+        const r = await sb.from('profiles').select(cols).eq('id', user.id).single();
+        if (!r.error){ data = r.data; break; }
+      }
+      profile = data || {plan:'free', evenings_used:0};
+      Prog.sync();
+      return profile;
     },
     async signUp(email, pw, mkt){
       if (!LIVE){ const d = {email, plan:'free', evenings_used:0, marketing:mkt, signedIn:true}; demo.set(d); user = {email}; profile = d; return {confirm:false}; }
@@ -1989,7 +2064,7 @@ x: f478 shivoham 108 floor
     async signOut(){
       if (!LIVE){ const d = demo.get(); if (d){ d.signedIn = false; demo.set(d); } }
       else await sb.auth.signOut();
-      user = null; profile = null;
+      user = null; profile = null; Prog.clear(); renderPractice();
     },
     async useEvening(){   // returns {ok, left}
       if (!LIVE){
@@ -2000,6 +2075,11 @@ x: f478 shivoham 108 floor
       }
       const { data, error } = await sb.rpc('use_evening'); if (error) throw error;
       await Auth.loadProfile(); return data;
+    },
+    async restart(){   // returns first index of the owned retreat
+      if (!LIVE) return {ok:false};
+      const { data, error } = await sb.rpc('restart_retreat'); if (error) throw error;
+      return data;
     },
     async redeem(code){   // returns {ok, days, until, error}
       if (!LIVE) return {ok:false, error:'invalid'};
@@ -2019,7 +2099,11 @@ x: f478 shivoham 108 floor
     modal.querySelectorAll('.m-msg').forEach(m => { m.textContent = ''; m.classList.remove('ok'); });
     if (opts.why) document.getElementById('mWhy').textContent = opts.why;
     else if (v === 'signup') document.getElementById('mWhy').textContent = 'Three more sessions, free. Your path saved on every device.';
-    if (v === 'paywall') setPlan(opts.plan || chosenPlan, opts);
+    if (v === 'paywall'){
+      payOpts.querySelectorAll('.pay-opt').forEach(b => b.style.display = (opts.hide || []).includes(b.dataset.plan) ? 'none' : '');
+      const rp = document.getElementById('payRepeat'); rp.hidden = !opts.repeat; if (opts.repeat) rp.textContent = opts.repeat;
+      setPlan(opts.plan || chosenPlan, opts);
+    }
     if (v === 'account') fillAccount();
     document.getElementById('mDemo').hidden = LIVE;
     modal.classList.add('open'); document.body.style.overflow = 'hidden';
@@ -2049,6 +2133,26 @@ x: f478 shivoham 108 floor
     catch(err){ msg(f, err.message === 'Invalid login credentials' ? 'Wrong email or password.' : (err.message || 'Could not sign in.')); }
     b.disabled = false;
   });
+  document.getElementById('fForgot').addEventListener('submit', async e => {
+    e.preventDefault(); const f = e.target, b = f.querySelector('button[type=submit]');
+    b.disabled = true; msg(f, 'Sending…', true);
+    try{
+      if (!LIVE) throw new Error('Password reset works on the live site only.');
+      const { error } = await sb.auth.resetPasswordForEmail(f.email.value.trim(), { redirectTo: location.origin + location.pathname + '?reset=1' });
+      if (error) throw error;
+      msg(f, 'Check your inbox. If an account exists for this email, the link is on its way.', true);
+    }catch(err){ msg(f, /rate|security purposes|seconds/i.test(err.message || '') ? 'Too many requests. Please wait a minute and try again.' : (err.message || 'Could not send the link.')); }
+    b.disabled = false;
+  });
+  document.getElementById('fNewpw').addEventListener('submit', async e => {
+    e.preventDefault(); const f = e.target, b = f.querySelector('button[type=submit]');
+    b.disabled = true; msg(f, 'Saving…', true);
+    try{
+      const { error } = await sb.auth.updateUser({ password: f.pw.value }); if (error) throw error;
+      msg(f, 'Password saved. You are signed in.', true); f.reset(); renderNav(); setTimeout(hideModal, 1500);
+    }catch(err){ msg(f, err.message || 'Could not save the password.'); }
+    b.disabled = false;
+  });
 
   /* paywall */
   const payOpts = document.getElementById('payOpts'), payTerms = document.getElementById('payTerms'), payGo = document.getElementById('payGo');
@@ -2067,6 +2171,15 @@ x: f478 shivoham 108 floor
     if (user && user.email) u.searchParams.set('checkout[email]', user.email);
     if (user && user.id) u.searchParams.set('checkout[custom][user_id]', user.id);
     location.href = u.toString();
+  });
+  const DONE = {
+    reset:{title:'You’ve completed Burnout Reset', text:'Go deeper with Silence of Mind or Membership — or walk the week again.', repeat:'Repeat Burnout Reset', plan:'silence', hide:['reset']},
+    silence:{title:'You’ve completed Silence of Mind', text:'Membership opens all 50 sessions — or walk the three weeks again.', repeat:'Repeat Silence of Mind', plan:'member', hide:['silence']},
+    both:{title:'You’ve completed both retreats', text:'Membership opens all 50 sessions and new ones every month — or start again from session 1.', repeat:'Start again from session 1', plan:'member', hide:['reset','silence']}
+  };
+  function showDone(ret){ const d = DONE[ret] || DONE.reset; showModal('paywall', d); }
+  document.getElementById('payRepeat').addEventListener('click', async () => {
+    try{ const r = await Auth.restart(); if (r && r.ok){ Prog.setPos(r.idx); hideModal(); startEvening(); } }catch(e){ document.getElementById('payMsg').textContent = 'Could not restart right now. Try again in a minute.'; }
   });
   function buy(plan){
     if (!C.PAYMENT_LINKS[plan]) return showModal('soon');
@@ -2107,6 +2220,7 @@ x: f478 shivoham 108 floor
     document.getElementById('aEmail').textContent = user ? user.email : '';
     document.getElementById('aPlan').textContent = plan !== 'free' ? plan[0].toUpperCase() + plan.slice(1) : promoActive() ? `Free access until ${promoDate()}` : 'Free';
     document.getElementById('aDone').textContent = Math.max(used, store.get().evenings || 0);
+    document.getElementById('aNext').textContent = `${Prog.pos() + 1} of ${PATH.length} · ${PATH[Prog.pos()].nm}`;
     document.getElementById('aLeft').textContent = plan === 'free' && !promoActive() ? Math.max(0, C.FREE_ACCOUNT_EVENINGS - used) : 'Unlimited';
   }
   document.getElementById('aOut').addEventListener('click', async () => { await Auth.signOut(); renderNav(); hideModal(); });
@@ -2117,6 +2231,8 @@ x: f478 shivoham 108 floor
   document.querySelectorAll('.js-signup').forEach(b => b.addEventListener('click', () => user ? showModal('account') : showModal('signup')));
   document.querySelectorAll('.js-signin').forEach(b => b.addEventListener('click', () => user ? showModal('account') : showModal('signin')));
   Auth.init().then(renderNav).catch(() => renderNav()).then(() => {
+    if (wantNewPw) return showModal('newpw');
+    if (linkExpired){ showModal('forgot'); return msg(document.getElementById('fForgot'), 'That link has expired or was already used. Send a new one.'); }
     const q = new URLSearchParams(location.search).get('promo');
     if (q){ promoPrefill = q.trim().toUpperCase().slice(0, 40); openPromo(); }
   });
@@ -2135,8 +2251,11 @@ x: f478 shivoham 108 floor
     try{
       if (C.OPEN_UNTIL_PAYMENTS && store.get().openAccess) return open();
       const r = await Auth.useEvening();
-      if (!r.ok) return showModal(C.OPEN_UNTIL_PAYMENTS ? 'soon' : 'paywall');
-      open();
+      if (!r.ok){
+        if (r.reason === 'done') return showDone(r.retreat);
+        return showModal(C.OPEN_UNTIL_PAYMENTS ? 'soon' : 'paywall');
+      }
+      open(r.idx);
     }catch(e){ open(); }
   }
 
@@ -2298,8 +2417,9 @@ x: f478 shivoham 108 floor
     areasEl.onclick = e => { const b = e.target.closest('button'); if (!b) return; area = b.dataset.a; const s = store.get(); s.area = area; store.set(s); renderAreas(pr); };
   }
 
-  function open(){
-    const s = store.get(), n = s.evenings || 0;
+  function open(idx){
+    if (Number.isInteger(idx) && idx >= 0 && idx < PATH.length && idx !== Prog.pos()) Prog.setPos(idx);
+    const s = store.get(), n = Prog.pos(), past = s.evenings || 0;
     const v = cur0 = theme ? WIS[theme] : PATH[n % PATH.length];
     document.getElementById('sSrc').textContent = (theme ? `For you now · ${WIS[theme].chip}` : `Session ${n % PATH.length + 1} of ${PATH.length} · ${v.nm}`) + ' · ' + v.src;
     document.getElementById('sVerse').textContent = v.verse;
@@ -2311,7 +2431,7 @@ x: f478 shivoham 108 floor
     const ch = CHANT[v.chant], beads = theme ? v.beads : v.beads;
     document.getElementById('cName').textContent = ch.name;
     document.getElementById('cMean').textContent = ch.mean;
-    document.getElementById('cKick').textContent = `Chant · ${beads} beads` + (n > 0 && !theme ? ' · a little more than last time' : '');
+    document.getElementById('cKick').textContent = `Chant · ${beads} beads` + (past > 0 && !theme ? ' · a little more than last time' : '');
     area = s.area || 'work';
     renderAreas(theme ? (WISP[theme] || PROMPTS[theme === 'behind' ? 0 : 1]) : PROMPTS[n % PATH.length]);
     curMoves = theme ? WIS_MOVES[theme] : PATH_MOVES[n % PATH.length];
@@ -2331,7 +2451,8 @@ x: f478 shivoham 108 floor
   }
   function close(){ stopBreath(); stopTimers(); stopDrone(); ses.classList.remove('open'); document.body.style.overflow = ''; }
   function complete(){
-    const s = store.get(); s.evenings = (s.evenings || 0) + 1;
+    const wasTheme = !!theme, s = store.get(); s.evenings = (s.evenings || 0) + 1;
+    if (!wasTheme) s.pos = (Prog.pos() + 1) % PATH.length;
     s.journal = s.journal || [];
     const txt = document.getElementById('reflect').value.trim();
     if (txt) s.journal.push({d:new Date().toISOString().slice(0,10), q:cur0.q, a:txt});
@@ -2344,9 +2465,9 @@ x: f478 shivoham 108 floor
     renderGrid(document.getElementById('doneGrid'), 6); renderPractice();
     const intentLine = {calm:'Another calm moment in the bank.', habit:'One more square in your rhythm. Same time tomorrow?', deeper:'Tomorrow the breath grows a little longer.'}[s.intent] || '';
     document.getElementById('sStat').textContent = `${s.evenings} session${s.evenings > 1 ? 's' : ''} · ${s.minutes} minute${s.minutes > 1 ? 's' : ''} of stillness` + (txt ? ' · reflection saved' : '') + (intentLine ? ' — ' + intentLine : '');
-    const nx = PATH[s.evenings % PATH.length];
+    const nx = PATH[Prog.pos()];
     document.getElementById('nextUp').innerHTML = `Next session: <b>${nx.nm}</b> — ${nx.src}.`;
-    theme = null;
+    theme = null; renderHero(); Prog.sync();
   }
   document.querySelectorAll('.js-start').forEach(b => b.addEventListener('click', startEvening));
   document.getElementById('sClose').addEventListener('click', close);
