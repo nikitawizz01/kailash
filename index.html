@@ -588,7 +588,7 @@ p,li,.s-text,.lede{text-wrap:pretty}
           <p class="who">For one hard week</p>
           <div class="price">$19 <small>once</small></div>
           <dl class="facts">
-            <div><dt>Sessions</dt><dd>7</dd></div>
+            <div><dt>Sessions</dt><dd>1–7</dd></div>
             <div><dt>Takes</dt><dd>1 week</dd></div>
             <div><dt>You pay</dt><dd>Once, keep forever</dd></div>
             <div><dt>New sessions</dt><dd class="no">—</dd></div>
@@ -601,7 +601,7 @@ p,li,.s-text,.lede{text-wrap:pretty}
           <p class="who">Everything, always something new</p>
           <div class="price">$7 <small>/ month</small></div>
           <dl class="facts">
-            <div><dt>Sessions</dt><dd>50 + new monthly</dd></div>
+            <div><dt>Sessions</dt><dd>All 50 + new monthly</dd></div>
             <div><dt>Takes</dt><dd>As long as you like</dd></div>
             <div><dt>You pay</dt><dd>Monthly, cancel anytime</dd></div>
             <div><dt>New sessions</dt><dd>Every month</dd></div>
@@ -613,7 +613,7 @@ p,li,.s-text,.lede{text-wrap:pretty}
           <p class="who">For going deeper</p>
           <div class="price">$29 <small>once</small></div>
           <dl class="facts">
-            <div><dt>Sessions</dt><dd>21 (3× more)</dd></div>
+            <div><dt>Sessions</dt><dd>8–28</dd></div>
             <div><dt>Takes</dt><dd>3 weeks</dd></div>
             <div><dt>You pay</dt><dd>Once, keep forever</dd></div>
             <div><dt>New sessions</dt><dd class="no">—</dd></div>
@@ -622,6 +622,7 @@ p,li,.s-text,.lede{text-wrap:pretty}
         </article>
       </div>
       <p class="includes rv">Not sure? <b>Membership</b> includes both retreats and costs less than either one in the first month.</p>
+      <p class="includes rv" style="margin-top:10px">Every plan saves your progress to your account — on every device.</p>
       <button class="promo-link js-promo rv" type="button">Have a promo code?</button>
     </div>
   </section>
@@ -747,15 +748,26 @@ p,li,.s-text,.lede{text-wrap:pretty}
       <h3 id="pwTitle">Your free sessions are complete</h3>
       <p class="why" id="pwWhy">You've felt what fifteen quiet minutes can do. Choose how to continue.</p>
       <div id="payOpts">
-        <button class="pay-opt" type="button" data-plan="member" aria-pressed="true"><span><b>Membership</b><small>Both retreats + new sessions monthly · cancel anytime</small></span><span class="pr">$7<small>/mo</small></span></button>
-        <button class="pay-opt" type="button" data-plan="reset" aria-pressed="false"><span><b>Burnout Reset</b><small>7 sessions · 1 week · pay once</small></span><span class="pr">$19</span></button>
-        <button class="pay-opt" type="button" data-plan="silence" aria-pressed="false"><span><b>Silence of Mind</b><small>21 sessions · 3 weeks · pay once</small></span><span class="pr">$29</span></button>
+        <button class="pay-opt" type="button" data-plan="member" aria-pressed="true"><span><b>Membership</b><small>All 50 sessions + new ones monthly · cancel anytime</small></span><span class="pr">$7<small>/mo</small></span></button>
+        <button class="pay-opt" type="button" data-plan="reset" aria-pressed="false"><span><b>Burnout Reset</b><small>Sessions 1–7 · 1 week · pay once, repeat anytime</small></span><span class="pr">$19</span></button>
+        <button class="pay-opt" type="button" data-plan="silence" aria-pressed="false"><span><b>Silence of Mind</b><small>Sessions 8–28 · 3 weeks · pay once, repeat anytime</small></span><span class="pr">$29</span></button>
       </div>
       <label class="check"><input type="checkbox" id="payTerms"><span>I agree to the <a href="terms.html" target="_blank">Terms of Use</a> and ask for immediate access. I understand that once access begins I lose my 14-day right of withdrawal.</span></label>
       <button class="btn btn-glow" id="payGo" type="button" disabled>Continue to secure payment</button>
       <button class="btn btn-ghost" id="payRepeat" type="button" hidden>Repeat</button>
       <p class="m-msg" id="payMsg" aria-live="polite"></p>
       <button class="promo-link js-promo" type="button">Have a promo code?</button>
+    </div>
+
+    <div class="m-view" data-v="delete">
+      <h3>Delete your account?</h3>
+      <p class="why">Your account, your progress and any promo access will be erased right away, together with your reflections on this device. This can't be undone. If you have a Membership, cancel it first using the link in your receipt email.</p>
+      <form id="fDelete">
+        <label class="field"><span>Type DELETE to confirm</span><input type="text" name="c" required autocomplete="off" autocapitalize="characters" spellcheck="false"></label>
+        <button class="btn btn-ghost" type="submit">Delete my account</button>
+        <p class="m-msg" aria-live="polite"></p>
+      </form>
+      <p class="m-alt"><button type="button" data-go="account">Keep my account</button></p>
     </div>
 
     <div class="m-view" data-v="promo">
@@ -787,6 +799,7 @@ p,li,.s-text,.lede{text-wrap:pretty}
       </div>
       <button class="btn btn-glow" type="button" id="aUpgrade">See retreats</button>
       <button class="btn btn-ghost" type="button" id="aOut">Sign out</button>
+      <button class="promo-link" type="button" data-go="delete" style="margin-top:6px">Delete account</button>
       <button class="promo-link js-promo" type="button">Have a promo code?</button>
     </div>
 
@@ -1900,9 +1913,11 @@ x: f478 shivoham 108 floor
       }catch(e){}
     }
   };
+  const HERO0 = document.getElementById('heroSub').textContent;
   function renderHero(){
     const past = store.get().evenings || 0;
-    if (past > 0) document.getElementById('heroSub').textContent = `Welcome back. ${past} session${past > 1 ? 's' : ''} completed. Next: “${PATH[Prog.pos()].nm}” — one verse, one breath, fifteen quiet minutes.`;
+    if (!past) document.getElementById('heroSub').textContent = HERO0;
+    else document.getElementById('heroSub').textContent = `Welcome back. ${past} session${past > 1 ? 's' : ''} completed. Next: “${PATH[Prog.pos()].nm}” — one verse, one breath, fifteen quiet minutes.`;
   }
   renderHero();
 
@@ -2224,6 +2239,20 @@ x: f478 shivoham 108 floor
     document.getElementById('aLeft').textContent = plan === 'free' && !promoActive() ? Math.max(0, C.FREE_ACCOUNT_EVENINGS - used) : 'Unlimited';
   }
   document.getElementById('aOut').addEventListener('click', async () => { await Auth.signOut(); renderNav(); hideModal(); });
+  document.getElementById('fDelete').addEventListener('submit', async e => {
+    e.preventDefault(); const f = e.target, b = f.querySelector('button[type=submit]');
+    if (f.c.value.trim().toUpperCase() !== 'DELETE') return msg(f, 'Type DELETE to confirm.');
+    b.disabled = true; msg(f, 'Deleting…', true);
+    try{
+      if (LIVE){ const { error } = await sb.rpc('delete_my_account'); if (error) throw error; try{ await sb.auth.signOut({ scope:'local' }); }catch(_){} }
+      else demo.set(null);
+      user = null; profile = null; Prog.clear();
+      const s = store.get(); delete s.journal; delete s.openAccess; store.set(s);
+      renderNav(); renderPractice(); renderHero();
+      msg(f, 'Your account has been deleted.', true); f.reset(); setTimeout(hideModal, 1800);
+    }catch(err){ msg(f, 'Could not delete the account right now. Write to contact.wizard.io@gmail.com and we will do it for you.'); }
+    b.disabled = false;
+  });
   document.getElementById('aUpgrade').addEventListener('click', () => showModal('paywall', {title:'Choose your retreat', text:'Unlock the full retreat on your account.'}));
   const navAcct = document.getElementById('navAcct');
   function renderNav(){ navAcct.textContent = user ? 'Account' : 'Sign in'; }
@@ -2493,5 +2522,6 @@ x: f478 shivoham 108 floor
 
 })();
 </script>
+<script defer src='https://static.cloudflareinsights.com/beacon.min.js' data-cf-beacon='{"token": "dbb044e5e3fc43a999977908636ef057"}'></script>
 </body>
 </html>
