@@ -659,11 +659,11 @@ p,li,.s-text,.lede{text-wrap:pretty}
       <div class="final-grid">
         <div class="rv">
           <h2>Keep your retreat.</h2>
-          <p class="lede">Your first session is free, no sign-up. Create a free account to continue — it takes 20 seconds.</p>
+          <p class="lede">Your first session is free, no sign-up. After that, continue with a retreat plan or a promo code.</p>
           <ul class="gets">
-            <li><span class="ic">i</span><span><b>Three more sessions, free</b>A new verse and practice each time, chosen for how you feel.</span></li>
+            <li><span class="ic">i</span><span><b>One free session</b>A verse, gentle movement, breath, mantra and silence. No card needed.</span></li>
             <li><span class="ic">ii</span><span><b>Your path, on every device</b>Progress follows you from phone to laptop.</span></li>
-            <li><span class="ic">iii</span><span><b>Go deeper when you're ready</b>Unlock full retreats in one tap. No card needed to start.</span></li>
+            <li><span class="ic">iii</span><span><b>Go deeper when you're ready</b>Pick a retreat or enter a promo code. Your account keeps it all.</span></li>
           </ul>
           <button class="btn btn-glow js-signup" type="button" style="margin-top:30px">Create free account</button>
           <p class="fine">Already have one? <button class="js-signin" type="button" style="text-decoration:underline;text-underline-offset:3px;color:var(--moon)">Sign in</button></p>
@@ -692,7 +692,7 @@ p,li,.s-text,.lede{text-wrap:pretty}
 
     <div class="m-view" data-v="signup">
       <h3 id="mTitle">Create your free account</h3>
-      <p class="why" id="mWhy">Three more sessions, free. Your path saved on every device.</p>
+      <p class="why" id="mWhy">Your path saved on every device. Plans and promo codes are linked to your account.</p>
       <form id="fSignup">
         <label class="field"><span>Email</span><input type="email" name="email" required autocomplete="email"></label>
         <label class="field"><span>Password (8+ characters)</span><input type="password" name="pw" minlength="8" required autocomplete="new-password"></label>
@@ -745,7 +745,7 @@ p,li,.s-text,.lede{text-wrap:pretty}
     </div>
 
     <div class="m-view" data-v="paywall">
-      <h3 id="pwTitle">Your free sessions are complete</h3>
+      <h3 id="pwTitle">Your free session is complete</h3>
       <p class="why" id="pwWhy">You've felt what fifteen quiet minutes can do. Choose how to continue.</p>
       <div id="payOpts">
         <button class="pay-opt" type="button" data-plan="member" aria-pressed="true"><span><b>Membership</b><small>All 50 sessions + new ones monthly · cancel anytime</small></span><span class="pr">$7<small>/mo</small></span></button>
@@ -782,7 +782,6 @@ p,li,.s-text,.lede{text-wrap:pretty}
 
     <div class="m-view" data-v="soon">
       <h3>Hi there :)</h3>
-      <p class="why">Right now, everything is open for you. Press Got it, then Start whenever you like.</p>
       <p class="why">Questions, or want early access with a founding discount? Write to me:<br><a href="mailto:contact.wizard.io@gmail.com" style="color:inherit;text-decoration:underline;text-underline-offset:3px;word-break:break-all">contact.wizard.io@gmail.com</a></p>
       <button class="btn btn-glow" type="button" id="soonOk">Got it</button>
       <button class="promo-link js-promo" type="button">Have a promo code?</button>
@@ -918,8 +917,8 @@ const KAILASH_CONFIG = {
     silence: ''
   },
   FREE_GUEST_EVENINGS: 1,
-  FREE_ACCOUNT_EVENINGS: 3,
-  OPEN_UNTIL_PAYMENTS: true   // temporary: after the "coming soon" popup, signed-in users practise freely. Set to false to turn off.
+  FREE_ACCOUNT_EVENINGS: 1,
+  OPEN_UNTIL_PAYMENTS: false  // no open access: one free session, then plans or promo codes only
 };
 (() => {
   const reduce = matchMedia('(prefers-reduced-motion: reduce)').matches;
@@ -2113,7 +2112,7 @@ x: f478 shivoham 108 floor
     views.forEach(x => x.classList.toggle('on', x.dataset.v === v));
     modal.querySelectorAll('.m-msg').forEach(m => { m.textContent = ''; m.classList.remove('ok'); });
     if (opts.why) document.getElementById('mWhy').textContent = opts.why;
-    else if (v === 'signup') document.getElementById('mWhy').textContent = 'Three more sessions, free. Your path saved on every device.';
+    else if (v === 'signup') document.getElementById('mWhy').textContent = 'Your path saved on every device. Plans and promo codes are linked to your account.';
     if (v === 'paywall'){
       payOpts.querySelectorAll('.pay-opt').forEach(b => b.style.display = (opts.hide || []).includes(b.dataset.plan) ? 'none' : '');
       const rp = document.getElementById('payRepeat'); rp.hidden = !opts.repeat; if (opts.repeat) rp.textContent = opts.repeat;
@@ -2174,7 +2173,7 @@ x: f478 shivoham 108 floor
   function setPlan(p, opts = {}){
     chosenPlan = p;
     payOpts.querySelectorAll('.pay-opt').forEach(b => b.setAttribute('aria-pressed', b.dataset.plan === p));
-    document.getElementById('pwTitle').textContent = opts.title || 'Your free sessions are complete';
+    document.getElementById('pwTitle').textContent = opts.title || 'Your free session is complete';
     document.getElementById('pwWhy').textContent = opts.text || "You've felt what fifteen quiet minutes can do. Choose how to continue.";
   }
   payOpts.addEventListener('click', e => { const b = e.target.closest('.pay-opt'); if (b) setPlan(b.dataset.plan, {title:document.getElementById('pwTitle').textContent, text:document.getElementById('pwWhy').textContent}); });
@@ -2202,7 +2201,7 @@ x: f478 shivoham 108 floor
     showModal('paywall', {plan, title:'Choose your retreat', text:'Unlock the full retreat on your account.'});
   }
   document.querySelectorAll('.js-buy').forEach(b => b.addEventListener('click', () => buy(b.dataset.plan)));
-  document.getElementById('soonOk').addEventListener('click', () => { if (C.OPEN_UNTIL_PAYMENTS){ const s = store.get(); s.openAccess = true; store.set(s); } hideModal(); });
+  document.getElementById('soonOk').addEventListener('click', () => { hideModal(); });
 
   /* promo codes — checked on the server, one use per account */
   let promoPrefill = '';
@@ -2236,7 +2235,7 @@ x: f478 shivoham 108 floor
     document.getElementById('aPlan').textContent = plan !== 'free' ? plan[0].toUpperCase() + plan.slice(1) : promoActive() ? `Free access until ${promoDate()}` : 'Free';
     document.getElementById('aDone').textContent = Math.max(used, store.get().evenings || 0);
     document.getElementById('aNext').textContent = `${Prog.pos() + 1} of ${PATH.length} · ${PATH[Prog.pos()].nm}`;
-    document.getElementById('aLeft').textContent = plan === 'free' && !promoActive() ? Math.max(0, C.FREE_ACCOUNT_EVENINGS - used) : 'Unlimited';
+    document.getElementById('aLeft').textContent = plan === 'free' && !promoActive() ? Math.max(0, C.FREE_ACCOUNT_EVENINGS - used - Math.min(1, store.get().guestUsed || 0)) : 'Unlimited';
   }
   document.getElementById('aOut').addEventListener('click', async () => { await Auth.signOut(); renderNav(); hideModal(); });
   document.getElementById('fDelete').addEventListener('submit', async e => {
@@ -2266,26 +2265,26 @@ x: f478 shivoham 108 floor
     if (q){ promoPrefill = q.trim().toUpperCase().slice(0, 40); openPromo(); }
   });
 
-  /* access gate: guest → 1 free evening, account → 3 more, then paywall */
+  /* access gate: one free session in total, then plan or promo only */
   async function startEvening(){
     if (!user){
       const s = store.get();
       if ((s.guestUsed || 0) >= C.FREE_GUEST_EVENINGS){
         afterAuth = startEvening;
-        return showModal('signup', {why:"Your free session is done. Create a free account to get three more — it takes 20 seconds."});
+        return showModal('signup', {why:"Your free session is done. Create an account to continue with a retreat plan or a promo code."});
       }
       s.guestUsed = (s.guestUsed || 0) + 1; store.set(s);
       return open();
     }
     try{
-      if (C.OPEN_UNTIL_PAYMENTS && store.get().openAccess) return open();
+      if (profile && profile.plan === 'free' && !promoActive() && (store.get().guestUsed || 0) >= C.FREE_GUEST_EVENINGS) return showModal('paywall');
       const r = await Auth.useEvening();
       if (!r.ok){
         if (r.reason === 'done') return showDone(r.retreat);
-        return showModal(C.OPEN_UNTIL_PAYMENTS ? 'soon' : 'paywall');
+        return showModal('paywall');
       }
       open(r.idx);
-    }catch(e){ open(); }
+    }catch(e){ showModal('paywall'); }
   }
 
   /* tonight's evening session */
@@ -2513,8 +2512,8 @@ x: f478 shivoham 108 floor
     if (steps[cur].dataset.kind === 'body' && !moving && next.textContent === 'Begin moving') return runMoves();
     if (steps[cur].dataset.kind === 'silence' && !silent && next.textContent === 'Begin silence') return runSilence();
     if (cur === steps.length - 1){ close();
-      if (!user) showModal('signup', {why:'Keep your path. Three more sessions, free — on every device.'});
-      else if (profile && profile.plan === 'free' && !promoActive() && !(C.OPEN_UNTIL_PAYMENTS && store.get().openAccess)) showModal('paywall', {title:'Go deeper', text:'Your free sessions are a beginning. A full retreat takes you further.'});
+      if (!user) showModal('signup', {why:'Keep your path on every device. Continue with a retreat plan or a promo code.'});
+      else if (profile && profile.plan === 'free' && !promoActive()) showModal('paywall', {title:'Go deeper', text:'Your free session was a beginning. A full retreat takes you further.'});
       return; }
     if (cur === steps.length - 2){ bell(true); complete(); }
     show(cur + 1);
