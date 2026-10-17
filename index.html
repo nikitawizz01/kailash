@@ -461,6 +461,17 @@ p,li,.s-text,.lede{text-wrap:pretty}
 .gift-list{list-style:none;margin:16px 0 4px;display:grid;gap:8px}
 .gift-list li{position:relative;padding-left:24px;color:var(--moon);font-size:.95rem}
 .gift-list li::before{content:"✦";position:absolute;left:2px;top:0;color:var(--ember);font-size:.85rem}
+.gift-badge{position:absolute;top:22px;right:58px;width:78px;height:78px;border-radius:50%;display:grid;place-content:center;text-align:center;line-height:1;
+  background:radial-gradient(circle at 35% 30%,#ffe0b0,#f0b26a 55%,#d8893f);color:#1a0f05;transform:rotate(12deg);
+  box-shadow:0 0 0 4px rgba(240,178,106,.18),0 12px 30px -8px rgba(240,178,106,.65);animation:badge 3.2s ease-in-out infinite}
+.gift-badge::before{content:"";position:absolute;inset:6px;border-radius:50%;border:1.5px dashed rgba(26,15,5,.45)}
+.gift-badge b{font-size:1.25rem;font-weight:700;letter-spacing:.06em}
+.gift-badge span{font-size:.62rem;letter-spacing:.16em;text-transform:uppercase;margin-top:3px;font-weight:600}
+@keyframes badge{0%,100%{transform:rotate(12deg) scale(1)}50%{transform:rotate(6deg) scale(1.06)}}
+.gift-price{display:flex;align-items:baseline;gap:10px;margin-top:14px;padding:10px 14px;border-radius:14px;background:rgba(240,178,106,.08);border:1px solid rgba(240,178,106,.3)}
+.gift-price s{color:var(--mist);font-size:1rem}
+.gift-price b{color:#ffd9ad;font-size:1.6rem;font-weight:600;line-height:1}
+.gift-price span{color:#ffd9ad;font-size:.85rem}
 .gift-ok{margin-top:14px;padding:14px 16px;border-radius:16px;border:1px solid rgba(240,178,106,.4);background:rgba(240,178,106,.08);color:#ffd9ad;font-size:.95rem}
 /* ---------- email-first + phone layout ---------- */
 .m-only,.m-bar{display:none}
@@ -762,23 +773,25 @@ p,li,.s-text,.lede{text-wrap:pretty}
     <span class="omk" aria-hidden="true"></span>
 
     <div class="m-view" data-v="gift">
-      <p class="gift-k">A gift for our first members</p>
-      <h3>7 days of Kailash, free</h3>
-      <p class="why">You're one of our first members, so the full retreat is yours for a week — completely free. No card. Nothing to cancel.</p>
+      <div class="gift-badge" aria-hidden="true"><b>FREE</b><span>gift</span></div>
+      <p class="gift-k" style="padding-right:96px">A gift for our first members</p>
+      <h3>7 days of Kailash,<br>on us</h3>
+      <p class="gift-price"><s>$7</s><b>$0</b><span>100% free · no card · nothing to cancel</span></p>
+      <p class="why">You're one of our first members, so the full retreat is yours for a week. We just send a code to your email to unlock it.</p>
       <ul class="gift-list"><li>All 50 sessions, no limits</li><li>Both retreats: Burnout Reset and Silence of Mind</li><li>Your path saved on every device</li></ul>
-      <button class="btn btn-glow" type="button" id="giftYes">Accept my 7 days</button>
+      <button class="btn btn-glow" type="button" id="giftYes">Claim my free week</button>
       <p class="m-alt"><button type="button" class="js-giftno">No, thanks</button></p>
     </div>
 
     <div class="m-view" data-v="giftmail">
       <p class="gift-k">Almost yours</p>
-      <h3>Where should we send your access?</h3>
-      <p class="why">Enter your email and your 7 days start right now. No password, no card.</p>
+      <h3>Where should we send your code?</h3>
+      <p class="why">Enter your email. We'll send a 6-digit code — type it in and your free week opens right away. No password, no card.</p>
       <form id="fGift" novalidate>
         <label class="field"><span>Email</span><input type="email" name="email" required autocomplete="email" inputmode="email"></label>
-        <button class="btn btn-glow" type="submit">Activate my 7 days</button>
+        <button class="btn btn-glow" type="submit">Send my code</button>
         <p class="m-msg" aria-live="polite"></p>
-        <p class="m-legal">By activating, you agree to the <a href="terms.html" target="_blank">Terms of Use</a> and <a href="privacy.html" target="_blank">Privacy Policy</a>. We'll also email you a code, so you can use your access on any device.</p>
+        <p class="m-legal">By continuing, you agree to the <a href="terms.html" target="_blank">Terms of Use</a> and <a href="privacy.html" target="_blank">Privacy Policy</a>.</p>
       </form>
       <p class="m-alt"><button type="button" class="js-giftno">Skip the gift</button></p>
     </div>
@@ -803,7 +816,7 @@ p,li,.s-text,.lede{text-wrap:pretty}
         <button class="btn btn-glow" type="submit">Continue</button>
         <p class="m-msg" aria-live="polite"></p>
       </form>
-      <p class="m-alt"><button type="button" id="cResend">Send a new code</button> · <button type="button" data-go="signup">Use another email</button></p>
+      <p class="m-alt"><button type="button" id="cResend">Send a new code</button> · <button type="button" id="cOther">Use another email</button></p>
       <p class="m-alt m-small">Can't find it? Check Spam or Promotions. The email comes from hello@kailash.day.</p>
     </div>
 
@@ -2179,7 +2192,11 @@ x: f478 shivoham 108 floor
       }
       profile = data || {plan:'free', evenings_used:0};
       if (store.get().trialAccepted && profile.plan === 'free' && profile.welcome_claimed === false){   // gift accepted as a guest → put it on the account
-        try{ const { data: w } = await sb.rpc('claim_welcome'); if (w && w.ok){ profile.promo_until = w.until; profile.welcome_claimed = true; } }catch(e){}
+        try{
+          const { data: w } = await sb.rpc('claim_welcome');
+          if (w && w.ok){ profile.promo_until = w.until; profile.welcome_claimed = true; }
+          else { const r2 = await sb.from('profiles').select('promo_until, welcome_claimed').eq('id', user.id).single(); if (!r2.error && r2.data) Object.assign(profile, r2.data); }
+        }catch(e){}
       }
       Prog.sync();
       return profile;
@@ -2278,12 +2295,12 @@ x: f478 shivoham 108 floor
 
   /* founding-member gift: 7 days of full access for an email */
   const GIFT_DAYS = 7;
-  let giftCont = null, giftShown = false;
+  let giftCont = null, giftShown = false, giftPending = false;
   const trialUntil = () => { const t = store.get().trialUntil; return t && t > Date.now() ? t : 0; };
   const fmtDate = t => new Date(t).toLocaleDateString('en-GB', {day:'numeric', month:'long'});
   function giftDue(){
     if (giftShown) return false;
-    if (!user) return !store.get().trialUntil;
+    if (!user) return true;
     return !!(profile && profile.plan === 'free' && !promoActive() && profile.welcome_claimed === false);
   }
   function offerGift(cont){ giftShown = true; giftCont = cont || null; Ev.send('gift', 'offer'); showModal('gift'); }
@@ -2326,7 +2343,7 @@ x: f478 shivoham 108 floor
     const b = e.currentTarget; b.disabled = true;
     try{
       const { data } = await sb.rpc('claim_welcome');
-      if (data && data.ok){ profile.promo_until = data.until; profile.welcome_claimed = true; Ev.send('gift', 'activated'); b.textContent = `Done — full access until ${fmtDate(data.until)}`; setTimeout(() => { b.disabled = false; b.textContent = 'Accept my 7 days'; hideModal(); }, 1500); return; }
+      if (data && data.ok){ profile.promo_until = data.until; profile.welcome_claimed = true; Ev.send('gift', 'activated'); b.textContent = `Done — full access until ${fmtDate(data.until)}`; setTimeout(() => { b.disabled = false; b.textContent = 'Claim my free week'; hideModal(); }, 1500); return; }
     }catch(err){}
     b.disabled = false; hideModal();
   });
@@ -2334,12 +2351,14 @@ x: f478 shivoham 108 floor
   document.getElementById('fGift').addEventListener('submit', async e => {
     e.preventDefault(); const f = e.target, b = f.querySelector('button[type=submit]'), email = f.email.value.trim().toLowerCase();
     if (!EMAIL_RE.test(email)) return msg(f, 'Please enter a valid email.');
-    b.disabled = true; msg(f, 'Activating…', true);
-    try{ await Mail.request(email, 'gift'); }catch(err){ /* access on this device never waits on email delivery */ }
-    const s = store.get(); s.trialUntil = Date.now() + GIFT_DAYS * 864e5; s.trialAccepted = true; store.set(s);
-    Ev.send('gift', 'activated'); renderNav(); renderHero();
-    msg(f, `Done. Full access is yours until ${fmtDate(s.trialUntil)}.`, true);
-    setTimeout(() => { b.disabled = false; f.reset(); hideModal(); }, 1500);
+    b.disabled = true; msg(f, 'Sending your code…', true);
+    try{
+      await Mail.request(email, 'gift');
+      const s = store.get(); s.trialAccepted = true; store.set(s);
+      Ev.send('gift', 'code'); giftPending = true;
+      showCode(email, {title:'Check your inbox', lead:'Enter the 6-digit code we sent to', tail:' and your free week opens.'});
+    }catch(err){ msg(f, Mail.nice(err)); }
+    b.disabled = false;
   });
   document.getElementById('fSignup').addEventListener('submit', async e => {
     e.preventDefault(); const f = e.target, b = f.querySelector('button[type=submit]'), email = f.email.value.trim().toLowerCase();
@@ -2368,12 +2387,14 @@ x: f478 shivoham 108 floor
     try{
       await Mail.verify(f.dataset.email || store.get().email, code);
       Ev.send('verified'); renderNav(); renderHero(); f.reset();
-      msg(f, 'You’re in. Your path is saved on your account.', true);
+      if (giftPending && promoActive()){ giftPending = false; Ev.send('gift', 'activated'); msg(f, `Unlocked. Your free week runs until ${promoDate()}.`, true); }
+      else msg(f, 'You’re in. Your path is saved on your account.', true);
       setTimeout(() => { hideModal(); runAfterAuth(); }, 1300);
     }catch(err){ msg(f, Mail.nice(err)); }
     b.disabled = false;
   });
   document.getElementById('fCode').code.addEventListener('input', e => { const v = e.target.value.replace(/\D/g, ''); if (e.target.value !== v) e.target.value = v; if (v.length === C.OTP_LENGTH) e.target.form.requestSubmit(); });
+  document.getElementById('cOther').addEventListener('click', () => showModal(giftPending ? 'giftmail' : 'signup'));
   document.getElementById('cResend').addEventListener('click', async () => {
     const f = document.getElementById('fCode'), email = f.dataset.email || store.get().email;
     if (!email) return showModal('signup');
@@ -2520,7 +2541,7 @@ x: f478 shivoham 108 floor
           if (s.email && s.codeSent) return showCode(s.email, {title:'Welcome back', lead:'Your path is waiting. Enter the code we sent to', tail:' — or send a new one.'});
           showModal('signup', {why:'Your free session is done. Save your path with your email to continue with a retreat plan or a promo code.'});
         };
-        if (giftDue()) return offerGift(() => trialUntil() ? startEvening() : after());
+        if (giftDue()) return offerGift(() => (trialUntil() || promoActive()) ? startEvening() : after());
         return after();
       }
       s.guestUsed = (s.guestUsed || 0) + 1; store.set(s);
