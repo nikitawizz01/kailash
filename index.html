@@ -456,9 +456,70 @@ p,li,.s-text,.lede{text-wrap:pretty}
   .form input{padding:14px 16px}
   .final-grid>*{min-width:0}
 }
+/* ---------- email-first + phone layout ---------- */
+.m-only,.m-bar{display:none}
+.m-legal{margin-top:12px;font-size:.8rem;line-height:1.5;color:rgba(154,166,214,.8)}
+.m-legal a{color:var(--moon);text-decoration:underline;text-underline-offset:3px}
+.m-small{margin-top:8px!important;font-size:.82rem!important;opacity:.85}
+.field input.otp{font-size:1.6rem;letter-spacing:.4em;text-align:center;font-variant-numeric:tabular-nums;padding:14px 10px}
+@media (max-width:760px){
+  .d-only{display:none}
+  .m-only{display:block}
+  .nav{padding-top:max(14px,env(safe-area-inset-top))}
+  .nav .js-start{display:none}
+  .hero{justify-content:flex-end;min-height:100svh;padding:calc(min(190vw,96svh) * .3) 0 calc(18px + env(safe-area-inset-bottom))}
+  .hero::before{-webkit-mask-image:none;mask-image:none}
+  .om-giant,.scroll-hint{display:none}
+  .halo{top:30%;width:130vw}
+  .shiva{position:absolute;top:calc(30px + env(safe-area-inset-top));left:50%;width:min(190vw,96svh);translate:-50% 0;margin:0}
+  .shiva img{-webkit-mask-image:radial-gradient(ellipse 40% 58% at 50% 42%,#000 42%,rgba(0,0,0,.55) 70%,transparent 100%),linear-gradient(180deg,transparent 0,#000 16%);
+                    mask-image:radial-gradient(ellipse 40% 58% at 50% 42%,#000 42%,rgba(0,0,0,.55) 70%,transparent 100%),linear-gradient(180deg,transparent 0,#000 16%);
+    -webkit-mask-composite:source-in;mask-composite:intersect}
+  .hero-copy{width:100%;max-width:440px;padding:0 20px}
+  .hero-copy::before{content:"";position:absolute;inset:-90px 0 -40px;z-index:-1;pointer-events:none;
+    background:linear-gradient(180deg,rgba(3,4,12,0) 0%,rgba(3,4,12,.78) 28%,rgba(3,4,12,.94) 60%,rgba(3,4,12,.96) 100%)}
+  .hero p.eyebrow{font-size:.72rem;letter-spacing:.18em;text-transform:uppercase;color:var(--ember);margin:0 auto 10px;max-width:none;opacity:0;animation:rise .9s ease .45s forwards}
+  .hero h1{font-size:clamp(2.2rem,10.4vw,3rem);line-height:1.02}
+  .hero #heroSub{display:none}
+  .hero.back #heroSub{display:block;margin:14px auto 18px;font-size:.98rem}
+  .hero.back .m-sub,.hero.back .m-chips{display:none}
+  .hero p.m-sub{margin:12px auto 14px;font-size:.95rem;line-height:1.5;max-width:23rem}
+  .m-chips{display:flex;justify-content:center;flex-wrap:wrap;gap:8px;list-style:none;margin:0 0 16px;opacity:0;animation:rise .9s ease .95s forwards}
+  .m-chips li{padding:5px 12px;border-radius:999px;font-size:.8rem;color:var(--moon);border:1px solid rgba(154,166,214,.28);background:rgba(7,11,36,.55)}
+  .m-chips li:last-child{border-color:rgba(240,178,106,.5);color:#ffd9ad}
+  .m-form{display:flex;flex-direction:column;gap:10px;opacity:0;animation:rise .9s ease 1.05s forwards}
+  .m-form input{width:100%;height:52px;padding:0 18px;border-radius:16px;background:rgba(228,233,255,.08);border:1px solid rgba(154,166,214,.32);color:var(--moon);font:inherit;font-size:16px;text-align:center}
+  .m-form input:focus{outline:none;border-color:var(--glow);background:rgba(228,233,255,.1)}
+  .m-form .btn{width:100%;padding:16px 20px;font-size:1.02rem}
+  .m-form .m-msg{margin:0;min-height:0;text-align:center}
+  .m-form .m-msg:empty{display:none}
+  .hero p.m-fine{margin:10px auto 0;font-size:.8rem;line-height:1.55;color:rgba(154,166,214,.85);max-width:none}
+  .m-fine span{opacity:.75}
+  .m-fine a{color:inherit;text-decoration:underline;text-underline-offset:2px}
+  .hero .ctas{margin-top:0;gap:4px;flex-direction:column;align-items:center}
+  .hero .ctas .js-start{display:none}
+  .hero .ctas .btn-ghost{border:0;padding:6px 14px;font-size:.92rem;color:var(--mist);text-decoration:underline;text-underline-offset:4px}
+  body.known .m-form,body.known .m-fine{display:none}
+  body.known .hero .ctas .js-start{display:inline-flex;width:100%;margin-top:4px}
+  .free-note{display:none}
+  section{padding:76px 20px}
+  .steps{display:flex;gap:12px;overflow-x:auto;scroll-snap-type:x mandatory;margin:34px -20px 0;padding:0 20px 10px;border-top:0;scrollbar-width:none;-webkit-overflow-scrolling:touch}
+  .steps::-webkit-scrollbar{display:none}
+  .steps .step,.steps .step + .step{flex:0 0 80%;scroll-snap-align:center;padding:24px 22px;border:1px solid rgba(154,166,214,.2);border-radius:22px;background:rgba(228,233,255,.035)}
+  .steps .rv{opacity:1;transform:none}
+  .m-bar{display:flex;position:fixed;left:12px;right:12px;bottom:calc(12px + env(safe-area-inset-bottom));z-index:18;align-items:center;justify-content:space-between;gap:12px;
+    padding:10px 10px 10px 18px;border-radius:20px;background:rgba(9,13,40,.82);border:1px solid rgba(154,166,214,.22);backdrop-filter:blur(14px);-webkit-backdrop-filter:blur(14px);
+    box-shadow:0 18px 50px -18px rgba(0,0,0,.9);transform:translateY(160%);transition:transform .45s cubic-bezier(.2,.7,.1,1)}
+  .m-bar.show{transform:none}
+  .m-bar b{display:block;font-weight:500;font-size:.92rem;color:var(--moon)}
+  .m-bar small{display:block;font-size:.78rem;color:var(--mist)}
+  .m-bar .btn{padding:12px 22px;font-size:.95rem;flex:none}
+  footer{padding-bottom:110px}
+  .m-card{padding:30px 22px 24px}
+}
 @media (prefers-reduced-motion:reduce){
   *,*::before,*::after{animation:none!important;transition:none!important}
-  .shiva img,.hero h1,.hero p,.hero .ctas,.rv{opacity:1;transform:none}
+  .shiva img,.hero h1,.hero p,.hero .ctas,.rv,.eyebrow,.m-chips,.m-form{opacity:1;transform:none}
 }
 </style>
 </head>
@@ -496,13 +557,22 @@ p,li,.s-text,.lede{text-wrap:pretty}
   </div>
 
   <div class="hero-copy">
-    <h1>India's ancient stillness,<br class="br-d"> right at your desk.</h1>
+    <p class="eyebrow m-only">A 15-minute retreat for burnout</p>
+    <h1><span class="d-only">India's ancient stillness,<br class="br-d"> right at your desk.</span><span class="m-only">Rest your mind.<br>Right where you are.</span></h1>
+    <p class="m-sub m-only">A guided pause from Shiva's tradition: one verse, gentle movement, breath, a mantra and silence. Fifteen minutes, on your phone.</p>
+    <ul class="m-chips m-only" aria-label="At a glance"><li>15 min</li><li>No app</li><li>First session free</li></ul>
+    <form class="m-form m-only" id="heroForm" novalidate>
+      <input type="email" name="email" placeholder="Your email" autocomplete="email" inputmode="email" aria-label="Your email" required>
+      <button class="btn btn-glow" type="submit">Start my free session</button>
+      <p class="m-msg" aria-live="polite"></p>
+    </form>
+    <p class="m-fine m-only">No password · no card · your path is saved<br><span>By starting, you agree to the <a href="terms.html">Terms</a> and <a href="privacy.html">Privacy Policy</a>.</span></p>
     <p id="heroSub">A 15-minute practice for burnout: a verse from the Bhagavad Gita, gentle movement, a guided breath, a mantra and a minute of silence. No flight to the Himalayas needed.</p>
     <div class="ctas">
-      <button class="btn btn-glow js-start btn-big" type="button">Start</button>
+      <button class="btn btn-glow js-start btn-big" type="button" id="heroStart">Start</button>
       <a class="btn btn-ghost btn-big" href="#ritual">How it works</a>
     </div>
-    <p class="free-note">Free 15-minute practice · no sign-up</p>
+    <p class="free-note">First session free · just your email, no password</p>
   </div>
   <div class="scroll-hint" aria-hidden="true"></div>
 </header>
@@ -659,13 +729,13 @@ p,li,.s-text,.lede{text-wrap:pretty}
       <div class="final-grid">
         <div class="rv">
           <h2>Keep your retreat.</h2>
-          <p class="lede">Your first session is free, no sign-up. After that, continue with a retreat plan or a promo code.</p>
+          <p class="lede">Your first session is free — just your email, no password. After that, continue with a retreat plan or a promo code.</p>
           <ul class="gets">
             <li><span class="ic">i</span><span><b>One free session</b>A verse, gentle movement, breath, mantra and silence. No card needed.</span></li>
             <li><span class="ic">ii</span><span><b>Your path, on every device</b>Progress follows you from phone to laptop.</span></li>
             <li><span class="ic">iii</span><span><b>Go deeper when you're ready</b>Pick a retreat or enter a promo code. Your account keeps it all.</span></li>
           </ul>
-          <button class="btn btn-glow js-signup" type="button" style="margin-top:30px">Create free account</button>
+          <button class="btn btn-glow js-signup" type="button" style="margin-top:30px">Save my path — free</button>
           <p class="fine">Already have one? <button class="js-signin" type="button" style="text-decoration:underline;text-underline-offset:3px;color:var(--moon)">Sign in</button></p>
         </div>
         <div class="acct-card rv" aria-hidden="true">
@@ -685,35 +755,58 @@ p,li,.s-text,.lede{text-wrap:pretty}
   <span>Wisdom from the Bhagavad Gita and Ribhu Gita. Not a substitute for medical care.</span>
 </footer>
 
+<div class="m-bar" id="mBar"><span><b>Your first session is free</b><small>15 minutes · no card</small></span><button class="btn btn-glow js-start" type="button">Start</button></div>
+
 <div class="modal" id="modal" role="dialog" aria-modal="true" aria-labelledby="mTitle">
   <div class="m-card">
     <button class="m-x" id="mX" type="button" aria-label="Close">×</button>
     <span class="omk" aria-hidden="true"></span>
 
     <div class="m-view" data-v="signup">
-      <h3 id="mTitle">Create your free account</h3>
-      <p class="why" id="mWhy">Your path saved on every device. Plans and promo codes are linked to your account.</p>
-      <form id="fSignup">
-        <label class="field"><span>Email</span><input type="email" name="email" required autocomplete="email"></label>
-        <label class="field"><span>Password (8+ characters)</span><input type="password" name="pw" minlength="8" required autocomplete="new-password"></label>
-        <label class="check"><input type="checkbox" name="terms" required><span>I agree to the <a href="terms.html" target="_blank">Terms of Use</a> and have read the <a href="privacy.html" target="_blank">Privacy Policy</a>.</span></label>
-        <label class="check"><input type="checkbox" name="mkt"><span>Send me occasional emails about new retreats and offers. Optional — unsubscribe anytime.</span></label>
-        <button class="btn btn-glow" type="submit">Create account</button>
+      <h3 id="mTitle">Save your path</h3>
+      <p class="why" id="mWhy">Just your email — no password. We'll send you a 6-digit code.</p>
+      <form id="fSignup" novalidate>
+        <label class="field"><span>Email</span><input type="email" name="email" required autocomplete="email" inputmode="email"></label>
+        <button class="btn btn-glow" type="submit" id="suBtn">Send me a code</button>
         <p class="m-msg" aria-live="polite"></p>
+        <p class="m-legal">No password · no card · no spam. By continuing, you agree to the <a href="terms.html" target="_blank">Terms of Use</a> and <a href="privacy.html" target="_blank">Privacy Policy</a>.</p>
       </form>
       <p class="m-alt">Already have an account? <button type="button" data-go="signin">Sign in</button></p>
     </div>
 
+    <div class="m-view" data-v="code">
+      <h3 id="cTitle">Check your inbox</h3>
+      <p class="why" id="cWhy"></p>
+      <form id="fCode" novalidate>
+        <label class="field"><span>Code from the email</span><input class="code otp" type="text" name="code" inputmode="numeric" autocomplete="one-time-code" pattern="[0-9]*" maxlength="8" required></label>
+        <button class="btn btn-glow" type="submit">Continue</button>
+        <p class="m-msg" aria-live="polite"></p>
+      </form>
+      <p class="m-alt"><button type="button" id="cResend">Send a new code</button> · <button type="button" data-go="signup">Use another email</button></p>
+      <p class="m-alt m-small">Can't find it? Check Spam or Promotions. The email comes from hello@kailash.day.</p>
+    </div>
+
     <div class="m-view" data-v="signin">
       <h3>Welcome back</h3>
-      <p class="why">Sign in to continue your path.</p>
-      <form id="fSignin">
+      <p class="why">Enter your email and we'll send you a sign-in code.</p>
+      <form id="fSignin" novalidate>
+        <label class="field"><span>Email</span><input type="email" name="email" required autocomplete="email" inputmode="email"></label>
+        <button class="btn btn-glow" type="submit">Email me a code</button>
+        <p class="m-msg" aria-live="polite"></p>
+      </form>
+      <p class="m-alt"><button type="button" data-go="signinpw">Use my password instead</button></p>
+    </div>
+
+    <div class="m-view" data-v="signinpw">
+      <h3>Sign in with password</h3>
+      <p class="why">For accounts created with a password.</p>
+      <form id="fSigninPw">
         <label class="field"><span>Email</span><input type="email" name="email" required autocomplete="email"></label>
         <label class="field"><span>Password</span><input type="password" name="pw" required autocomplete="current-password"></label>
         <button class="btn btn-glow" type="submit">Sign in</button>
         <p class="m-msg" aria-live="polite"></p>
       </form>
-      <p class="m-alt">New here? <button type="button" data-go="signup">Create a free account</button></p>
+      <p class="m-alt"><button type="button" data-go="signin">Email me a code instead</button></p>
       <p class="m-alt" style="margin-top:8px"><button type="button" data-go="forgot">Forgot password?</button></p>
     </div>
 
@@ -725,7 +818,7 @@ p,li,.s-text,.lede{text-wrap:pretty}
         <button class="btn btn-glow" type="submit">Send reset link</button>
         <p class="m-msg" aria-live="polite"></p>
       </form>
-      <p class="m-alt">Remembered it? <button type="button" data-go="signin">Sign in</button></p>
+      <p class="m-alt">Remembered it? <button type="button" data-go="signinpw">Sign in</button></p>
     </div>
 
     <div class="m-view" data-v="newpw">
@@ -918,6 +1011,8 @@ const KAILASH_CONFIG = {
   },
   FREE_GUEST_EVENINGS: 1,
   FREE_ACCOUNT_EVENINGS: 1,
+  EMAIL_FIRST: true,           // the free session opens after the visitor enters an email (no password)
+  OTP_LENGTH: 6,               // must match Supabase → Auth → Email → OTP length
   OPEN_UNTIL_PAYMENTS: false  // no open access: one free session, then plans or promo codes only
 };
 (() => {
@@ -1915,8 +2010,10 @@ x: f478 shivoham 108 floor
   const HERO0 = document.getElementById('heroSub').textContent;
   function renderHero(){
     const past = store.get().evenings || 0;
-    if (!past) document.getElementById('heroSub').textContent = HERO0;
-    else document.getElementById('heroSub').textContent = `Welcome back. ${past} session${past > 1 ? 's' : ''} completed. Next: “${PATH[Prog.pos()].nm}” — one verse, one breath, fifteen quiet minutes.`;
+    const hs = document.getElementById('heroSub'), hst = document.getElementById('heroStart');
+    document.querySelector('.hero').classList.toggle('back', past > 0);
+    if (!past){ hs.textContent = HERO0; if (hst) hst.textContent = 'Start'; }
+    else { hs.textContent = `Welcome back. ${past} session${past > 1 ? 's' : ''} completed. Next: “${PATH[Prog.pos()].nm}” — one verse, one breath, fifteen quiet minutes.`; if (hst) hst.textContent = 'Continue your path'; }
   }
   renderHero();
 
@@ -2105,14 +2202,72 @@ x: f478 shivoham 108 floor
   const promoActive = () => !!(profile && profile.promo_until && new Date(profile.promo_until) > new Date());
   const promoDate = () => new Date(profile.promo_until).toLocaleDateString('en-GB', {day:'numeric', month:'long'});
 
+  /* anonymous activity (random id in this browser, no names) so we can see where people stop */
+  const Ev = {
+    q: [],
+    id(){ const s = store.get(); if (!s.vid){ s.vid = (window.crypto && crypto.randomUUID) ? crypto.randomUUID() : 'v' + Math.random().toString(36).slice(2) + Date.now().toString(36); store.set(s); } return s.vid; },
+    send(ev, meta){
+      if (!LIVE) return;
+      const row = { vid: Ev.id(), ev, meta: String(meta || '').slice(0, 120) };
+      if (sb) sb.from('events').insert(row).then(() => {}, () => {}); else Ev.q.push(row);
+    },
+    flush(){ if (!sb || !Ev.q.length) return; sb.from('events').insert(Ev.q.splice(0)).then(() => {}, () => {}); }
+  };
+
+  /* email-first sign-in: one field, a 6-digit code, no password */
+  const EMAIL_RE = /^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/;
+  let authReady = null;
+  const Mail = {
+    async request(email, src){
+      const s = store.get(); s.email = email; s.codeSent = 0; store.set(s); renderNav();
+      if (!LIVE) { const t = store.get(); t.codeSent = Date.now(); store.set(t); return; }
+      if (!sb && authReady) await authReady.catch(() => {});
+      if (!sb) throw new Error('Could not connect. Check your internet and try again.');
+      sb.from('leads').insert({ email, source: src, vid: Ev.id() }).then(() => {}, () => {});
+      const { error } = await sb.auth.signInWithOtp({ email, options: { shouldCreateUser: true, emailRedirectTo: location.origin + location.pathname, data: { terms_accepted_at: new Date().toISOString(), source: src } } });
+      if (error) throw error;
+      const t = store.get(); t.codeSent = Date.now(); store.set(t);
+    },
+    async verify(email, token){
+      if (!LIVE){ const d = {email, plan:'free', evenings_used:0, signedIn:true}; demo.set(d); user = {email}; profile = d; return; }
+      let r = await sb.auth.verifyOtp({ email, token, type: 'email' });
+      if (r.error){ const r2 = await sb.auth.verifyOtp({ email, token, type: 'signup' }); if (!r2.error) r = r2; }
+      if (r.error) throw r.error;
+      user = (r.data && r.data.user) || (await sb.auth.getUser()).data.user;
+      await Auth.loadProfile();
+      const s = store.get(); s.codeSent = 0; store.set(s);
+    },
+    nice(err){
+      const m = (err && err.message) || '';
+      if (/rate|security purposes|seconds|too many/i.test(m)) return 'Please wait a minute before asking for another code.';
+      if (/expired|invalid|token/i.test(m)) return 'That code is not right or has expired. Send a new one.';
+      return m || 'Something went wrong. Try again.';
+    }
+  };
+  function showCode(email, opts = {}){
+    showModal('code');
+    document.getElementById('cTitle').textContent = opts.title || 'Check your inbox';
+    const w = document.getElementById('cWhy'); w.textContent = (opts.lead || 'We sent a 6-digit code to') + ' ';
+    const b = document.createElement('b'); b.style.cssText = 'color:var(--moon);font-weight:500'; b.textContent = email; w.appendChild(b);
+    w.appendChild(document.createTextNode(opts.tail || '. Enter it below.'));
+    document.getElementById('fCode').dataset.email = email;
+  }
+
   /* modal */
   const modal = document.getElementById('modal'), views = [...modal.querySelectorAll('.m-view')];
   let afterAuth = null, chosenPlan = 'member';
   function showModal(v, opts = {}){
     views.forEach(x => x.classList.toggle('on', x.dataset.v === v));
     modal.querySelectorAll('.m-msg').forEach(m => { m.textContent = ''; m.classList.remove('ok'); });
-    if (opts.why) document.getElementById('mWhy').textContent = opts.why;
-    else if (v === 'signup') document.getElementById('mWhy').textContent = 'Your path saved on every device. Plans and promo codes are linked to your account.';
+    if (v === 'signup'){
+      const start = opts.mode === 'start', f = document.getElementById('fSignup');
+      f.dataset.mode = start ? 'start' : 'save';
+      document.getElementById('mTitle').textContent = opts.title || (start ? 'Your free session is ready' : 'Save your path');
+      document.getElementById('mWhy').textContent = opts.why || (start ? 'Where should we keep your path? Enter your email — no password, nothing to install.' : "Just your email — no password. We'll send you a 6-digit code.");
+      document.getElementById('suBtn').textContent = start ? 'Open my free session' : 'Send me a code';
+      const e = store.get().email; if (e && !f.email.value) f.email.value = e;
+    }
+    if (v === 'paywall') Ev.send('paywall', opts.title || '');
     if (v === 'paywall'){
       payOpts.querySelectorAll('.pay-opt').forEach(b => b.style.display = (opts.hide || []).includes(b.dataset.plan) ? 'none' : '');
       const rp = document.getElementById('payRepeat'); rp.hidden = !opts.repeat; if (opts.repeat) rp.textContent = opts.repeat;
@@ -2129,21 +2284,50 @@ x: f478 shivoham 108 floor
   addEventListener('keydown', e => { if (e.key === 'Escape' && modal.classList.contains('open')) hideModal(); });
 
   function msg(form, text, ok){ const m = form.querySelector('.m-msg'); m.textContent = text; m.classList.toggle('ok', !!ok); }
+  function runAfterAuth(){ if (afterAuth){ const fn = afterAuth; afterAuth = null; fn(); } }
   document.getElementById('fSignup').addEventListener('submit', async e => {
-    e.preventDefault(); const f = e.target, b = f.querySelector('button[type=submit]');
-    b.disabled = true; msg(f, 'Creating your account…', true);
-    try{
-      const r = await Auth.signUp(f.email.value.trim(), f.pw.value, f.mkt.checked);
-      renderNav();
-      if (r.confirm){ document.getElementById('mConfEmail').textContent = f.email.value.trim(); showModal('confirm'); }
-      else { hideModal(); f.reset(); if (afterAuth){ const fn = afterAuth; afterAuth = null; fn(); } }
-    }catch(err){ msg(f, err.message || 'Something went wrong. Try again.'); }
+    e.preventDefault(); const f = e.target, b = f.querySelector('button[type=submit]'), email = f.email.value.trim().toLowerCase();
+    if (!EMAIL_RE.test(email)) return msg(f, 'Please enter a valid email.');
+    b.disabled = true; msg(f, f.dataset.mode === 'start' ? 'Opening your session…' : 'Sending your code…', true);
+    if (f.dataset.mode === 'start'){
+      try{ await Mail.request(email, 'start'); }catch(err){ /* never block the free session on email delivery */ }
+      Ev.send('email', 'start'); b.disabled = false; hideModal(); startEvening(); return;
+    }
+    try{ await Mail.request(email, 'save'); Ev.send('email', 'save'); showCode(email); }
+    catch(err){ msg(f, Mail.nice(err)); }
     b.disabled = false;
   });
   document.getElementById('fSignin').addEventListener('submit', async e => {
+    e.preventDefault(); const f = e.target, b = f.querySelector('button[type=submit]'), email = f.email.value.trim().toLowerCase();
+    if (!EMAIL_RE.test(email)) return msg(f, 'Please enter a valid email.');
+    b.disabled = true; msg(f, 'Sending your code…', true);
+    try{ await Mail.request(email, 'signin'); showCode(email, {title:'Welcome back'}); }
+    catch(err){ msg(f, Mail.nice(err)); }
+    b.disabled = false;
+  });
+  document.getElementById('fCode').addEventListener('submit', async e => {
+    e.preventDefault(); const f = e.target, b = f.querySelector('button[type=submit]'), code = f.code.value.replace(/\D/g, '');
+    if (code.length < C.OTP_LENGTH) return msg(f, `Enter the ${C.OTP_LENGTH}-digit code from the email.`);
+    b.disabled = true; msg(f, 'Checking…', true);
+    try{
+      await Mail.verify(f.dataset.email || store.get().email, code);
+      Ev.send('verified'); renderNav(); renderHero(); f.reset();
+      msg(f, 'You’re in. Your path is saved on your account.', true);
+      setTimeout(() => { hideModal(); runAfterAuth(); }, 1300);
+    }catch(err){ msg(f, Mail.nice(err)); }
+    b.disabled = false;
+  });
+  document.getElementById('fCode').code.addEventListener('input', e => { const v = e.target.value.replace(/\D/g, ''); if (e.target.value !== v) e.target.value = v; if (v.length === C.OTP_LENGTH) e.target.form.requestSubmit(); });
+  document.getElementById('cResend').addEventListener('click', async () => {
+    const f = document.getElementById('fCode'), email = f.dataset.email || store.get().email;
+    if (!email) return showModal('signup');
+    msg(f, 'Sending a new code…', true);
+    try{ await Mail.request(email, 'resend'); msg(f, 'New code sent. Check your inbox.', true); }catch(err){ msg(f, Mail.nice(err)); }
+  });
+  document.getElementById('fSigninPw').addEventListener('submit', async e => {
     e.preventDefault(); const f = e.target, b = f.querySelector('button[type=submit]');
     b.disabled = true; msg(f, 'Signing in…', true);
-    try{ await Auth.signIn(f.email.value.trim(), f.pw.value); renderNav(); hideModal(); f.reset(); if (afterAuth){ const fn = afterAuth; afterAuth = null; fn(); } }
+    try{ await Auth.signIn(f.email.value.trim(), f.pw.value); renderNav(); renderHero(); hideModal(); f.reset(); runAfterAuth(); }
     catch(err){ msg(f, err.message === 'Invalid login credentials' ? 'Wrong email or password.' : (err.message || 'Could not sign in.')); }
     b.disabled = false;
   });
@@ -2254,11 +2438,14 @@ x: f478 shivoham 108 floor
   });
   document.getElementById('aUpgrade').addEventListener('click', () => showModal('paywall', {title:'Choose your retreat', text:'Unlock the full retreat on your account.'}));
   const navAcct = document.getElementById('navAcct');
-  function renderNav(){ navAcct.textContent = user ? 'Account' : 'Sign in'; }
+  function renderNav(){ navAcct.textContent = user ? 'Account' : 'Sign in'; document.body.classList.toggle('known', !!(user || store.get().email)); }
   navAcct.addEventListener('click', () => user ? showModal('account') : showModal('signin'));
   document.querySelectorAll('.js-signup').forEach(b => b.addEventListener('click', () => user ? showModal('account') : showModal('signup')));
   document.querySelectorAll('.js-signin').forEach(b => b.addEventListener('click', () => user ? showModal('account') : showModal('signin')));
-  Auth.init().then(renderNav).catch(() => renderNav()).then(() => {
+  authReady = Auth.init();
+  authReady.then(renderNav).catch(() => renderNav()).then(() => {
+    Ev.flush(); renderHero();
+    try{ if (!sessionStorage.getItem('kv')){ sessionStorage.setItem('kv', '1'); const q = new URLSearchParams(location.search), r = document.referrer ? new URL(document.referrer).hostname : 'direct'; Ev.send('visit', (matchMedia('(max-width:760px)').matches ? 'phone' : 'desktop') + ' | ' + (q.get('utm_source') || r) + (user ? ' | signed-in' : '')); } }catch(_){}
     if (wantNewPw) return showModal('newpw');
     if (linkExpired){ showModal('forgot'); return msg(document.getElementById('fForgot'), 'That link has expired or was already used. Send a new one.'); }
     const q = new URLSearchParams(location.search).get('promo');
@@ -2271,8 +2458,10 @@ x: f478 shivoham 108 floor
       const s = store.get();
       if ((s.guestUsed || 0) >= C.FREE_GUEST_EVENINGS){
         afterAuth = startEvening;
-        return showModal('signup', {why:"Your free session is done. Create an account to continue with a retreat plan or a promo code."});
+        if (s.email && s.codeSent) return showCode(s.email, {title:'Welcome back', lead:'Your path is waiting. Enter the code we sent to', tail:' — or send a new one.'});
+        return showModal('signup', {why:'Your free session is done. Save your path with your email to continue with a retreat plan or a promo code.'});
       }
+      if (C.EMAIL_FIRST && !s.email){ Ev.send('gate'); return showModal('signup', {mode:'start'}); }
       s.guestUsed = (s.guestUsed || 0) + 1; store.set(s);
       return open();
     }
@@ -2446,6 +2635,7 @@ x: f478 shivoham 108 floor
   }
 
   function open(idx){
+    Ev.send('start', String((Number.isInteger(idx) ? idx : Prog.pos()) + 1));
     if (Number.isInteger(idx) && idx >= 0 && idx < PATH.length && idx !== Prog.pos()) Prog.setPos(idx);
     const s = store.get(), n = Prog.pos(), past = s.evenings || 0;
     const v = cur0 = theme ? WIS[theme] : PATH[n % PATH.length];
@@ -2479,6 +2669,7 @@ x: f478 shivoham 108 floor
   }
   function close(){ stopBreath(); stopTimers(); stopDrone(); ses.classList.remove('open'); document.body.style.overflow = ''; }
   function complete(){
+    Ev.send('finish', String(Prog.pos() + 1));
     const wasTheme = !!theme, s = store.get(); s.evenings = (s.evenings || 0) + 1;
     if (!wasTheme) s.pos = (Prog.pos() + 1) % PATH.length;
     s.journal = s.journal || [];
@@ -2498,6 +2689,21 @@ x: f478 shivoham 108 floor
     theme = null; renderHero(); Prog.sync();
   }
   document.querySelectorAll('.js-start').forEach(b => b.addEventListener('click', startEvening));
+  document.getElementById('heroForm').addEventListener('submit', async e => {
+    e.preventDefault(); const f = e.target, b = f.querySelector('button'), email = f.email.value.trim().toLowerCase();
+    if (!EMAIL_RE.test(email)) return msg(f, 'Please enter a valid email.');
+    b.disabled = true; b.textContent = 'Opening…'; msg(f, '');
+    try{ await Mail.request(email, 'hero'); }catch(err){ /* the free session never waits on email delivery */ }
+    Ev.send('email', 'hero'); b.disabled = false; b.textContent = 'Start my free session'; startEvening();
+  });
+  (() => {
+    const bar = document.getElementById('mBar'), hero = document.querySelector('.hero'), fin = document.getElementById('begin');
+    if (!('IntersectionObserver' in window)) return;
+    let heroIn = true, finIn = false;
+    const upd = () => bar.classList.toggle('show', !heroIn && !finIn);
+    new IntersectionObserver(es => { es.forEach(x => { if (x.target === hero) heroIn = x.isIntersecting; else finIn = x.isIntersecting; }); upd(); }, {threshold:0.05}).observe(hero);
+    const io2 = new IntersectionObserver(es => { es.forEach(x => finIn = x.isIntersecting); upd(); }, {threshold:0.25}); if (fin) io2.observe(fin);
+  })();
   document.getElementById('sClose').addEventListener('click', close);
   addEventListener('keydown', e => { if (e.key === 'Escape' && ses.classList.contains('open')) close(); });
   back.addEventListener('click', () => cur > 0 && show(cur - 1));
@@ -2512,7 +2718,7 @@ x: f478 shivoham 108 floor
     if (steps[cur].dataset.kind === 'body' && !moving && next.textContent === 'Begin moving') return runMoves();
     if (steps[cur].dataset.kind === 'silence' && !silent && next.textContent === 'Begin silence') return runSilence();
     if (cur === steps.length - 1){ close();
-      if (!user) showModal('signup', {why:'Keep your path on every device. Continue with a retreat plan or a promo code.'});
+      if (!user){ const s = store.get(); if (s.email && s.codeSent) showCode(s.email, {title:'Save your path', lead:'Session complete ✓ To keep your path on any device, enter the code we sent to', tail:'.'}); else showModal('signup', {why:'Session complete ✓ Keep your path on every device — just your email, no password.'}); }
       else if (profile && profile.plan === 'free' && !promoActive()) showModal('paywall', {title:'Go deeper', text:'Your free session was a beginning. A full retreat takes you further.'});
       return; }
     if (cur === steps.length - 2){ bell(true); complete(); }
