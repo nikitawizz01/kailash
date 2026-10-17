@@ -456,6 +456,12 @@ p,li,.s-text,.lede{text-wrap:pretty}
   .form input{padding:14px 16px}
   .final-grid>*{min-width:0}
 }
+/* ---------- founding gift ---------- */
+.gift-k{font-size:.74rem;letter-spacing:.18em;text-transform:uppercase;color:var(--ember);margin:-4px 0 8px}
+.gift-list{list-style:none;margin:16px 0 4px;display:grid;gap:8px}
+.gift-list li{position:relative;padding-left:24px;color:var(--moon);font-size:.95rem}
+.gift-list li::before{content:"✦";position:absolute;left:2px;top:0;color:var(--ember);font-size:.85rem}
+.gift-ok{margin-top:14px;padding:14px 16px;border-radius:16px;border:1px solid rgba(240,178,106,.4);background:rgba(240,178,106,.08);color:#ffd9ad;font-size:.95rem}
 /* ---------- email-first + phone layout ---------- */
 .m-only,.m-bar{display:none}
 .m-legal{margin-top:12px;font-size:.8rem;line-height:1.5;color:rgba(154,166,214,.8)}
@@ -493,14 +499,12 @@ p,li,.s-text,.lede{text-wrap:pretty}
   .m-form .btn{width:100%;padding:16px 20px;font-size:1.02rem}
   .m-form .m-msg{margin:0;min-height:0;text-align:center}
   .m-form .m-msg:empty{display:none}
-  .hero p.m-fine{margin:10px auto 0;font-size:.8rem;line-height:1.55;color:rgba(154,166,214,.85);max-width:none}
+  .hero p.m-fine{margin:8px auto 0;font-size:.8rem;line-height:1.55;color:rgba(154,166,214,.85);max-width:none}
   .m-fine span{opacity:.75}
   .m-fine a{color:inherit;text-decoration:underline;text-underline-offset:2px}
-  .hero .ctas{margin-top:0;gap:4px;flex-direction:column;align-items:center}
-  .hero .ctas .js-start{display:none}
+  .hero .ctas{margin-top:2px;gap:4px;flex-direction:column;align-items:center}
+  .hero .ctas .js-start{width:100%;padding:17px 20px;font-size:1.05rem}
   .hero .ctas .btn-ghost{border:0;padding:6px 14px;font-size:.92rem;color:var(--mist);text-decoration:underline;text-underline-offset:4px}
-  body.known .m-form,body.known .m-fine{display:none}
-  body.known .hero .ctas .js-start{display:inline-flex;width:100%;margin-top:4px}
   .free-note{display:none}
   section{padding:76px 20px}
   .steps{display:flex;gap:12px;overflow-x:auto;scroll-snap-type:x mandatory;margin:34px -20px 0;padding:0 20px 10px;border-top:0;scrollbar-width:none;-webkit-overflow-scrolling:touch}
@@ -560,19 +564,14 @@ p,li,.s-text,.lede{text-wrap:pretty}
     <p class="eyebrow m-only">A 15-minute retreat for burnout</p>
     <h1><span class="d-only">India's ancient stillness,<br class="br-d"> right at your desk.</span><span class="m-only">Rest your mind.<br>Right where you are.</span></h1>
     <p class="m-sub m-only">A guided pause from Shiva's tradition: one verse, gentle movement, breath, a mantra and silence. Fifteen minutes, on your phone.</p>
-    <ul class="m-chips m-only" aria-label="At a glance"><li>15 min</li><li>No app</li><li>First session free</li></ul>
-    <form class="m-form m-only" id="heroForm" novalidate>
-      <input type="email" name="email" placeholder="Your email" autocomplete="email" inputmode="email" aria-label="Your email" required>
-      <button class="btn btn-glow" type="submit">Start my free session</button>
-      <p class="m-msg" aria-live="polite"></p>
-    </form>
-    <p class="m-fine m-only">No password · no card · your path is saved<br><span>By starting, you agree to the <a href="terms.html">Terms</a> and <a href="privacy.html">Privacy Policy</a>.</span></p>
+    <ul class="m-chips m-only" aria-label="At a glance"><li>15 min</li><li>Guided</li><li>First session free</li></ul>
     <p id="heroSub">A 15-minute practice for burnout: a verse from the Bhagavad Gita, gentle movement, a guided breath, a mantra and a minute of silence. No flight to the Himalayas needed.</p>
     <div class="ctas">
       <button class="btn btn-glow js-start btn-big" type="button" id="heroStart">Start</button>
       <a class="btn btn-ghost btn-big" href="#ritual">How it works</a>
     </div>
-    <p class="free-note">First session free · just your email, no password</p>
+    <p class="free-note">Free 15-minute practice · no sign-up</p>
+    <p class="m-fine m-only">Free · no sign-up · no card</p>
   </div>
   <div class="scroll-hint" aria-hidden="true"></div>
 </header>
@@ -729,7 +728,7 @@ p,li,.s-text,.lede{text-wrap:pretty}
       <div class="final-grid">
         <div class="rv">
           <h2>Keep your retreat.</h2>
-          <p class="lede">Your first session is free — just your email, no password. After that, continue with a retreat plan or a promo code.</p>
+          <p class="lede">Your first session is free, no sign-up. After that, continue with a retreat plan or a promo code.</p>
           <ul class="gets">
             <li><span class="ic">i</span><span><b>One free session</b>A verse, gentle movement, breath, mantra and silence. No card needed.</span></li>
             <li><span class="ic">ii</span><span><b>Your path, on every device</b>Progress follows you from phone to laptop.</span></li>
@@ -761,6 +760,28 @@ p,li,.s-text,.lede{text-wrap:pretty}
   <div class="m-card">
     <button class="m-x" id="mX" type="button" aria-label="Close">×</button>
     <span class="omk" aria-hidden="true"></span>
+
+    <div class="m-view" data-v="gift">
+      <p class="gift-k">A gift for our first members</p>
+      <h3>7 days of Kailash, free</h3>
+      <p class="why">You're one of our first members, so the full retreat is yours for a week — completely free. No card. Nothing to cancel.</p>
+      <ul class="gift-list"><li>All 50 sessions, no limits</li><li>Both retreats: Burnout Reset and Silence of Mind</li><li>Your path saved on every device</li></ul>
+      <button class="btn btn-glow" type="button" id="giftYes">Accept my 7 days</button>
+      <p class="m-alt"><button type="button" class="js-giftno">No, thanks</button></p>
+    </div>
+
+    <div class="m-view" data-v="giftmail">
+      <p class="gift-k">Almost yours</p>
+      <h3>Where should we send your access?</h3>
+      <p class="why">Enter your email and your 7 days start right now. No password, no card.</p>
+      <form id="fGift" novalidate>
+        <label class="field"><span>Email</span><input type="email" name="email" required autocomplete="email" inputmode="email"></label>
+        <button class="btn btn-glow" type="submit">Activate my 7 days</button>
+        <p class="m-msg" aria-live="polite"></p>
+        <p class="m-legal">By activating, you agree to the <a href="terms.html" target="_blank">Terms of Use</a> and <a href="privacy.html" target="_blank">Privacy Policy</a>. We'll also email you a code, so you can use your access on any device.</p>
+      </form>
+      <p class="m-alt"><button type="button" class="js-giftno">Skip the gift</button></p>
+    </div>
 
     <div class="m-view" data-v="signup">
       <h3 id="mTitle">Save your path</h3>
@@ -1011,7 +1032,6 @@ const KAILASH_CONFIG = {
   },
   FREE_GUEST_EVENINGS: 1,
   FREE_ACCOUNT_EVENINGS: 1,
-  EMAIL_FIRST: true,           // the free session opens after the visitor enters an email (no password)
   OTP_LENGTH: 6,               // must match Supabase → Auth → Email → OTP length
   OPEN_UNTIL_PAYMENTS: false  // no open access: one free session, then plans or promo codes only
 };
@@ -2013,7 +2033,7 @@ x: f478 shivoham 108 floor
     const hs = document.getElementById('heroSub'), hst = document.getElementById('heroStart');
     document.querySelector('.hero').classList.toggle('back', past > 0);
     if (!past){ hs.textContent = HERO0; if (hst) hst.textContent = 'Start'; }
-    else { hs.textContent = `Welcome back. ${past} session${past > 1 ? 's' : ''} completed. Next: “${PATH[Prog.pos()].nm}” — one verse, one breath, fifteen quiet minutes.`; if (hst) hst.textContent = 'Continue your path'; }
+    else { const tu = store.get().trialUntil; hs.textContent = `Welcome back. ${past} session${past > 1 ? 's' : ''} completed.` + (tu && tu > Date.now() ? ` Your free week runs until ${new Date(tu).toLocaleDateString('en-GB', {day:'numeric', month:'long'})}.` : '') + ` Next: “${PATH[Prog.pos()].nm}” — one verse, one breath, fifteen quiet minutes.`; if (hst) hst.textContent = 'Continue your path'; }
   }
   renderHero();
 
@@ -2153,11 +2173,14 @@ x: f478 shivoham 108 floor
     async loadProfile(){
       if (!LIVE) return profile;
       let data = null;
-      for (const cols of ['plan, evenings_used, promo_until, path_pos', 'plan, evenings_used, promo_until', 'plan, evenings_used']){
+      for (const cols of ['plan, evenings_used, promo_until, path_pos, welcome_claimed', 'plan, evenings_used, promo_until, path_pos', 'plan, evenings_used, promo_until', 'plan, evenings_used']){
         const r = await sb.from('profiles').select(cols).eq('id', user.id).single();
         if (!r.error){ data = r.data; break; }
       }
       profile = data || {plan:'free', evenings_used:0};
+      if (store.get().trialAccepted && profile.plan === 'free' && profile.welcome_claimed === false){   // gift accepted as a guest → put it on the account
+        try{ const { data: w } = await sb.rpc('claim_welcome'); if (w && w.ok){ profile.promo_until = w.until; profile.welcome_claimed = true; } }catch(e){}
+      }
       Prog.sync();
       return profile;
     },
@@ -2253,6 +2276,18 @@ x: f478 shivoham 108 floor
     document.getElementById('fCode').dataset.email = email;
   }
 
+  /* founding-member gift: 7 days of full access for an email */
+  const GIFT_DAYS = 7;
+  let giftCont = null, giftShown = false;
+  const trialUntil = () => { const t = store.get().trialUntil; return t && t > Date.now() ? t : 0; };
+  const fmtDate = t => new Date(t).toLocaleDateString('en-GB', {day:'numeric', month:'long'});
+  function giftDue(){
+    if (giftShown) return false;
+    if (!user) return !store.get().trialUntil;
+    return !!(profile && profile.plan === 'free' && !promoActive() && profile.welcome_claimed === false);
+  }
+  function offerGift(cont){ giftShown = true; giftCont = cont || null; Ev.send('gift', 'offer'); showModal('gift'); }
+
   /* modal */
   const modal = document.getElementById('modal'), views = [...modal.querySelectorAll('.m-view')];
   let afterAuth = null, chosenPlan = 'member';
@@ -2278,13 +2313,34 @@ x: f478 shivoham 108 floor
     modal.classList.add('open'); document.body.style.overflow = 'hidden';
     const f = modal.querySelector('.m-view.on input'); if (f) setTimeout(() => f.focus(), 350);
   }
-  function hideModal(){ modal.classList.remove('open'); if (!ses.classList.contains('open')) document.body.style.overflow = ''; }
+  function hideModal(){ modal.classList.remove('open'); if (!ses.classList.contains('open')) document.body.style.overflow = ''; const c = giftCont; giftCont = null; if (c) setTimeout(c, 60); }
   document.getElementById('mX').addEventListener('click', hideModal);
   modal.addEventListener('click', e => { if (e.target === modal) hideModal(); const g = e.target.closest('[data-go]'); if (g) showModal(g.dataset.go); });
   addEventListener('keydown', e => { if (e.key === 'Escape' && modal.classList.contains('open')) hideModal(); });
 
   function msg(form, text, ok){ const m = form.querySelector('.m-msg'); m.textContent = text; m.classList.toggle('ok', !!ok); }
   function runAfterAuth(){ if (afterAuth){ const fn = afterAuth; afterAuth = null; fn(); } }
+  document.getElementById('giftYes').addEventListener('click', async e => {
+    Ev.send('gift', 'yes');
+    if (!user) return showModal('giftmail');
+    const b = e.currentTarget; b.disabled = true;
+    try{
+      const { data } = await sb.rpc('claim_welcome');
+      if (data && data.ok){ profile.promo_until = data.until; profile.welcome_claimed = true; Ev.send('gift', 'activated'); b.textContent = `Done — full access until ${fmtDate(data.until)}`; setTimeout(() => { b.disabled = false; b.textContent = 'Accept my 7 days'; hideModal(); }, 1500); return; }
+    }catch(err){}
+    b.disabled = false; hideModal();
+  });
+  document.querySelectorAll('.js-giftno').forEach(b => b.addEventListener('click', () => { Ev.send('gift', 'no'); hideModal(); }));
+  document.getElementById('fGift').addEventListener('submit', async e => {
+    e.preventDefault(); const f = e.target, b = f.querySelector('button[type=submit]'), email = f.email.value.trim().toLowerCase();
+    if (!EMAIL_RE.test(email)) return msg(f, 'Please enter a valid email.');
+    b.disabled = true; msg(f, 'Activating…', true);
+    try{ await Mail.request(email, 'gift'); }catch(err){ /* access on this device never waits on email delivery */ }
+    const s = store.get(); s.trialUntil = Date.now() + GIFT_DAYS * 864e5; s.trialAccepted = true; store.set(s);
+    Ev.send('gift', 'activated'); renderNav(); renderHero();
+    msg(f, `Done. Full access is yours until ${fmtDate(s.trialUntil)}.`, true);
+    setTimeout(() => { b.disabled = false; f.reset(); hideModal(); }, 1500);
+  });
   document.getElementById('fSignup').addEventListener('submit', async e => {
     e.preventDefault(); const f = e.target, b = f.querySelector('button[type=submit]'), email = f.email.value.trim().toLowerCase();
     if (!EMAIL_RE.test(email)) return msg(f, 'Please enter a valid email.');
@@ -2456,21 +2512,27 @@ x: f478 shivoham 108 floor
   async function startEvening(){
     if (!user){
       const s = store.get();
+      if (trialUntil()){ s.guestUsed = (s.guestUsed || 0) + 1; store.set(s); return open(); }
       if ((s.guestUsed || 0) >= C.FREE_GUEST_EVENINGS){
-        afterAuth = startEvening;
-        if (s.email && s.codeSent) return showCode(s.email, {title:'Welcome back', lead:'Your path is waiting. Enter the code we sent to', tail:' — or send a new one.'});
-        return showModal('signup', {why:'Your free session is done. Save your path with your email to continue with a retreat plan or a promo code.'});
+        Ev.send('gate');
+        const after = () => {
+          afterAuth = startEvening;
+          if (s.email && s.codeSent) return showCode(s.email, {title:'Welcome back', lead:'Your path is waiting. Enter the code we sent to', tail:' — or send a new one.'});
+          showModal('signup', {why:'Your free session is done. Save your path with your email to continue with a retreat plan or a promo code.'});
+        };
+        if (giftDue()) return offerGift(() => trialUntil() ? startEvening() : after());
+        return after();
       }
-      if (C.EMAIL_FIRST && !s.email){ Ev.send('gate'); return showModal('signup', {mode:'start'}); }
       s.guestUsed = (s.guestUsed || 0) + 1; store.set(s);
       return open();
     }
     try{
-      if (profile && profile.plan === 'free' && !promoActive() && (store.get().guestUsed || 0) >= C.FREE_GUEST_EVENINGS) return showModal('paywall');
+      const wall = () => giftDue() ? offerGift(() => promoActive() ? startEvening() : showModal('paywall')) : showModal('paywall');
+      if (profile && profile.plan === 'free' && !promoActive() && (store.get().guestUsed || 0) >= C.FREE_GUEST_EVENINGS) return wall();
       const r = await Auth.useEvening();
       if (!r.ok){
         if (r.reason === 'done') return showDone(r.retreat);
-        return showModal('paywall');
+        return wall();
       }
       open(r.idx);
     }catch(e){ showModal('paywall'); }
@@ -2553,7 +2615,7 @@ x: f478 shivoham 108 floor
     steps.forEach((s,k) => s.classList.toggle('on', k === i));
     bars.forEach((b,k) => b.classList.toggle('on', k <= i));
     next.textContent = labels[i]; next.disabled = false;
-    if (i === steps.length - 1) next.textContent = user ? ((profile && profile.plan !== 'free') ? 'Done' : 'See full retreats') : 'Save my progress — free account';
+    if (i === steps.length - 1) next.textContent = user ? ((profile && (profile.plan !== 'free' || promoActive())) ? 'Done' : 'See full retreats') : (trialUntil() ? 'Done' : 'Save my progress — free account');
     if (steps[i].dataset.kind === 'chant' && !mini.done){ next.disabled = true; next.textContent = `Tap the Om · 0 / ${CH}`; }
     back.style.display = i === 0 || i === steps.length - 1 ? 'none' : '';
     if (steps[i].dataset.kind === 'breath'){ document.getElementById('breathWord').textContent = 'Press begin'; document.getElementById('breathCount').textContent = `${BREATH[cur0.breath].tip} ${breaths()} slow breaths.`; }
@@ -2689,13 +2751,6 @@ x: f478 shivoham 108 floor
     theme = null; renderHero(); Prog.sync();
   }
   document.querySelectorAll('.js-start').forEach(b => b.addEventListener('click', startEvening));
-  document.getElementById('heroForm').addEventListener('submit', async e => {
-    e.preventDefault(); const f = e.target, b = f.querySelector('button'), email = f.email.value.trim().toLowerCase();
-    if (!EMAIL_RE.test(email)) return msg(f, 'Please enter a valid email.');
-    b.disabled = true; b.textContent = 'Opening…'; msg(f, '');
-    try{ await Mail.request(email, 'hero'); }catch(err){ /* the free session never waits on email delivery */ }
-    Ev.send('email', 'hero'); b.disabled = false; b.textContent = 'Start my free session'; startEvening();
-  });
   (() => {
     const bar = document.getElementById('mBar'), hero = document.querySelector('.hero'), fin = document.getElementById('begin');
     if (!('IntersectionObserver' in window)) return;
@@ -2718,10 +2773,14 @@ x: f478 shivoham 108 floor
     if (steps[cur].dataset.kind === 'body' && !moving && next.textContent === 'Begin moving') return runMoves();
     if (steps[cur].dataset.kind === 'silence' && !silent && next.textContent === 'Begin silence') return runSilence();
     if (cur === steps.length - 1){ close();
-      if (!user){ const s = store.get(); if (s.email && s.codeSent) showCode(s.email, {title:'Save your path', lead:'Session complete ✓ To keep your path on any device, enter the code we sent to', tail:'.'}); else showModal('signup', {why:'Session complete ✓ Keep your path on every device — just your email, no password.'}); }
+      if (!user){ const s = store.get();
+        if (trialUntil()){ if (s.email && s.codeSent && !s.codeAsked){ s.codeAsked = 1; store.set(s); showCode(s.email, {title:'Use your 7 days anywhere', lead:'Optional: enter the code we sent to', tail:' to open your access on any device. On this one it already works.'}); } }
+        else if (s.email && s.codeSent) showCode(s.email, {title:'Save your path', lead:'Session complete ✓ To keep your path on any device, enter the code we sent to', tail:'.'});
+        else showModal('signup', {why:'Session complete ✓ Keep your path on every device — just your email, no password.'}); }
       else if (profile && profile.plan === 'free' && !promoActive()) showModal('paywall', {title:'Go deeper', text:'Your free session was a beginning. A full retreat takes you further.'});
       return; }
     if (cur === steps.length - 2){ bell(true); complete(); }
+    if (cur + 1 === steps.length - 2 && giftDue()){ const to = cur + 1; return offerGift(() => show(to)); }
     show(cur + 1);
   });
 
