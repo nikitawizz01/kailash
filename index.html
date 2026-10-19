@@ -2936,7 +2936,7 @@ x: f478 shivoham 108 floor
 
   /* 3-tap check → personal result → free week by email → Home Screen */
   const QUIZ = [
-    ['After work, your mind…', ['Switches off easily', 'Keeps replaying the day', 'Never really stops']],
+    ['How often do you feel tired?', ['Rarely', 'A few times a week', 'Almost every day']],
     ['How do you usually unwind?', ['Scrolling my phone', 'TV or a series', "I don't, really"]],
     ['How much time could you give yourself tonight?', ['Just 1 minute', 'About 15 minutes', 'Even more']]
   ];
@@ -2957,9 +2957,9 @@ x: f478 shivoham 108 floor
     const s = store.get(); s.quiz = qAns.slice(); store.set(s);
     document.body.classList.add('quizzed');
     const score = qAns[0] + (qAns[1] === 2 ? 1 : 0);
-    const R = score >= 2 ? ['Your mind: Always-On', "Your thoughts keep running long after the day is done. You don't need more free time — you need a way to switch off."]
-            : score === 1 ? ['Your mind: Busy & Tired', 'You cope, but the day follows you home. A short evening reset helps you leave it at the door.']
-            : ['Your mind: Steady', 'You switch off well. A few quiet minutes a day keep it that way.'];
+    const R = score >= 2 ? ['Your mind: Always-On', "Tiredness has become your normal. You don't need more free time — you need a way to truly switch off."]
+            : score === 1 ? ['Your mind: Busy & Tired', 'You cope, but tiredness keeps catching up with you. A short daily reset helps you recharge.']
+            : ['Your mind: Steady', 'You recharge well. A few quiet minutes a day keep it that way.'];
     const plan = qAns[2] === 0 ? 'Start with 1 calm minute tonight. Grow to 15 when you are ready.'
                : qAns[2] === 1 ? 'Burnout Reset: 7 evenings, 15 minutes each.'
                : 'Burnout Reset, then the Silence of Mind retreat. 15 minutes a day.';
