@@ -21,6 +21,11 @@
 <meta name="twitter:image" content="https://kailash.day/og.jpg">
 <link rel="icon" type="image/png" sizes="64x64" href="icon-64.png">
 <link rel="apple-touch-icon" href="icon-180.png">
+<link rel="manifest" href="manifest.webmanifest">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-title" content="Kailash">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;1,400;1,500&family=Jost:wght@400;500&display=swap" rel="stylesheet">
@@ -469,6 +474,28 @@ p,li,.s-text,.lede{text-wrap:pretty}
   .hero .cta2 .btn{flex:1;padding:13px 10px;font-size:.92rem;white-space:nowrap}
   .hero .ctas .cta2 .btn-ghost{border:1px solid rgba(228,233,255,.25);text-decoration:none;color:var(--moon);padding:13px 10px;font-size:.92rem}
 }
+[hidden]{display:none!important}
+/* ---------- 3-tap check (phone) + result + home screen ---------- */
+.quiz{display:none}
+@media (max-width:760px){
+  body:not(.quizzed) .quiz{display:block;margin-top:14px;text-align:left;padding:18px 16px 12px;border-radius:22px;background:rgba(10,15,44,.82);border:1px solid rgba(154,166,214,.25);box-shadow:0 20px 50px -20px rgba(0,0,0,.9);animation:rise .35s ease 0s both}
+  body:not(.quizzed) .hero .m-sub,body:not(.quizzed) .hero .m-chips,body:not(.quizzed) .hero .ctas,body:not(.quizzed) .hero .m-fine{display:none}
+  body:not(.quizzed) .hero h1{font-size:clamp(2rem,9.4vw,2.7rem)}
+  .hero p.q-k{margin:0;font-size:.76rem;letter-spacing:.12em;text-transform:uppercase;color:var(--ember);max-width:none;animation:none;opacity:1}
+  .q-bar{height:4px;border-radius:4px;background:rgba(154,166,214,.18);margin:10px 0 14px;overflow:hidden}
+  .q-bar i{display:block;height:100%;width:33%;background:linear-gradient(90deg,#f0b26a,#ffd9ad);border-radius:4px;transition:width .35s}
+  .hero p.q-q{margin:0 0 12px;font-family:var(--serif);font-size:1.45rem;line-height:1.2;color:var(--moon);max-width:none;animation:none;opacity:1;text-align:left}
+  .q-a{display:grid;gap:8px}
+  .q-a button{width:100%;text-align:left;padding:14px 16px;border-radius:14px;font-size:1rem;color:var(--moon);background:rgba(228,233,255,.06);border:1px solid rgba(154,166,214,.28);transition:background .2s,border-color .2s,transform .15s}
+  .q-a button:active{transform:scale(.98)}
+  .q-a button.on{background:rgba(240,178,106,.16);border-color:rgba(240,178,106,.7);color:#ffd9ad}
+  .q-skip{display:block;margin:12px auto 0;font-size:.85rem;color:var(--mist);text-decoration:underline;text-underline-offset:3px}
+}
+.plan{margin-top:14px;padding:12px 14px;border-radius:14px;border:1px solid rgba(154,166,214,.25);background:rgba(228,233,255,.04)}
+.plan span{display:block;font-size:.72rem;letter-spacing:.14em;text-transform:uppercase;color:var(--mist)}
+.plan b{display:block;margin-top:4px;font-weight:500;color:var(--moon)}
+.home-steps{margin:14px 0 4px 20px;display:grid;gap:8px;color:var(--moon)}
+.home-steps li{padding-left:4px}
 /* ---------- monk companion (phone) ---------- */
 .monk,.monk-tg{display:none}
 @media (max-width:760px){
@@ -606,6 +633,13 @@ p,li,.s-text,.lede{text-wrap:pretty}
     <h1><span class="d-only">India's ancient stillness,<br class="br-d"> right at your desk.</span><span class="m-only">Rest your mind.<br>Right where you are.</span></h1>
     <p class="m-sub m-only">A guided pause from Shiva's tradition: one verse, gentle movement, breath, a mantra and silence. Fifteen minutes, on your phone.</p>
     <ul class="m-chips m-only" aria-label="At a glance"><li>15 min</li><li>Guided</li><li>First session free</li></ul>
+    <div class="quiz" id="quiz">
+      <p class="q-k">How tired is your mind? · 3 taps · <span id="qStep">1</span>/3</p>
+      <div class="q-bar"><i id="qBar"></i></div>
+      <p class="q-q" id="qQ"></p>
+      <div class="q-a" id="qA"></div>
+      <button class="q-skip" type="button" id="qSkip">or start a 15-minute session →</button>
+    </div>
     <p id="heroSub">A 15-minute practice for burnout: a verse from the Bhagavad Gita, gentle movement, a guided breath, a mantra and a minute of silence. No flight to the Himalayas needed.</p>
     <div class="ctas">
       <button class="btn btn-glow js-start btn-big" type="button" id="heroStart">Start</button>
@@ -805,6 +839,31 @@ p,li,.s-text,.lede{text-wrap:pretty}
   <div class="m-card">
     <button class="m-x" id="mX" type="button" aria-label="Close">×</button>
     <span class="omk" aria-hidden="true"></span>
+
+    <div class="m-view" data-v="result">
+      <p class="gift-k">Your result</p>
+      <h3 id="rTitle"></h3>
+      <p class="why" id="rText"></p>
+      <div class="plan"><span>Your plan</span><b id="rPlan"></b></div>
+      <p class="gift-price"><s>$7</s><b>$0</b><span>your first week is a gift · no card</span></p>
+      <form id="fQuiz" novalidate>
+        <label class="field"><span>Where should we send your plan?</span><input type="email" name="email" required autocomplete="email" inputmode="email" placeholder="you@email.com"></label>
+        <button class="btn btn-glow" type="submit">🎁 Save my free week</button>
+        <p class="m-msg" aria-live="polite"></p>
+        <p class="m-legal">Takes 20 seconds: we email you a 6-digit code, that's all. By continuing, you agree to the <a href="terms.html" target="_blank">Terms of Use</a> and <a href="privacy.html" target="_blank">Privacy Policy</a>.</p>
+      </form>
+      <p class="m-alt"><button type="button" id="rSkip">Not now, just start a session</button></p>
+    </div>
+
+    <div class="m-view" data-v="home">
+      <p class="gift-k">Your free week is on</p>
+      <h3>Keep Kailash one tap away</h3>
+      <p class="why" id="hHow">Add it to your Home Screen. It opens like an app.</p>
+      <ol class="home-steps" id="hSteps"></ol>
+      <button class="btn btn-glow" type="button" id="hInstall" hidden>Add to Home Screen</button>
+      <button class="btn btn-glow" type="button" id="hStart">Start session 1 now</button>
+      <p class="m-alt"><button type="button" id="hLater">Later</button></p>
+    </div>
 
     <div class="m-view" data-v="mini">
       <p class="gift-k">One minute</p>
@@ -2586,7 +2645,7 @@ x: f478 shivoham 108 floor
   });
   document.getElementById('aUpgrade').addEventListener('click', () => showModal('paywall', {title:'Choose your retreat', text:'Unlock the full retreat on your account.'}));
   const navAcct = document.getElementById('navAcct');
-  function renderNav(){ navAcct.textContent = user ? 'Account' : 'Sign in'; document.body.classList.toggle('known', !!(user || store.get().email)); }
+  function renderNav(){ navAcct.textContent = user ? 'Account' : 'Sign in'; document.body.classList.toggle('known', !!(user || store.get().email)); if (user || store.get().email) document.body.classList.add('quizzed'); }
   navAcct.addEventListener('click', () => user ? showModal('account') : showModal('signin'));
   document.querySelectorAll('.js-signup').forEach(b => b.addEventListener('click', () => user ? showModal('account') : showModal('signup')));
   document.querySelectorAll('.js-signin').forEach(b => b.addEventListener('click', () => user ? showModal('account') : showModal('signin')));
@@ -2880,6 +2939,76 @@ x: f478 shivoham 108 floor
     miniTimers.push(setTimeout(() => miniEnd('done'), t + 600));
   }
   document.querySelectorAll('.js-mini').forEach(b => b.addEventListener('click', startMini));
+
+  /* 3-tap check → personal result → free week by email → Home Screen */
+  const QUIZ = [
+    ['After work, your mind…', ['Switches off easily', 'Keeps replaying the day', 'Never really stops']],
+    ['How do you usually unwind?', ['Scrolling my phone', 'TV or a series', "I don't, really"]],
+    ['How much time could you give yourself tonight?', ['Just 1 minute', 'About 15 minutes', 'Even more']]
+  ];
+  const qQ = document.getElementById('qQ'), qA = document.getElementById('qA'), qStep = document.getElementById('qStep'), qBar = document.getElementById('qBar');
+  let qi = 0, qAns = [];
+  const quizSeen = () => { const s = store.get(); return !!(s.quiz || s.email || user); };
+  function quizRender(){
+    qStep.textContent = qi + 1; qBar.style.width = ((qi + 1) / 3 * 100) + '%';
+    qQ.textContent = QUIZ[qi][0];
+    qA.innerHTML = '';
+    QUIZ[qi][1].forEach((t, k) => { const b = document.createElement('button'); b.type = 'button'; b.textContent = t; b.addEventListener('click', () => quizPick(k, b)); qA.appendChild(b); });
+  }
+  function quizPick(k, b){
+    b.classList.add('on'); qAns[qi] = k; Ev.send('quiz', `q${qi+1}:${k}`);
+    setTimeout(() => { qi++; if (qi < QUIZ.length) quizRender(); else quizDone(); }, 260);
+  }
+  function quizDone(){
+    const s = store.get(); s.quiz = qAns.slice(); store.set(s);
+    document.body.classList.add('quizzed');
+    const score = qAns[0] + (qAns[1] === 2 ? 1 : 0);
+    const R = score >= 2 ? ['Your mind: Always-On', "Your thoughts keep running long after the day is done. You don't need more free time — you need a way to switch off."]
+            : score === 1 ? ['Your mind: Busy & Tired', 'You cope, but the day follows you home. A short evening reset helps you leave it at the door.']
+            : ['Your mind: Steady', 'You switch off well. A few quiet minutes a day keep it that way.'];
+    const plan = qAns[2] === 0 ? 'Start with 1 calm minute tonight. Grow to 15 when you are ready.'
+               : qAns[2] === 1 ? 'Burnout Reset: 7 evenings, 15 minutes each.'
+               : 'Burnout Reset, then the Silence of Mind retreat. 15 minutes a day.';
+    document.getElementById('rTitle').textContent = R[0];
+    document.getElementById('rText').textContent = R[1];
+    document.getElementById('rPlan').textContent = plan;
+    Ev.send('quiz', 'done:' + qAns.join(''));
+    if (user && (promoActive() || (profile && profile.plan !== 'free'))) return;
+    giftCont = null; showModal('result');
+  }
+  document.getElementById('qSkip').addEventListener('click', () => { Ev.send('quiz', 'skip'); document.body.classList.add('quizzed'); startEvening(); });
+  if (quizSeen()) document.body.classList.add('quizzed'); else quizRender();
+  document.getElementById('rSkip').addEventListener('click', () => { Ev.send('gift', 'no'); hideModal(); startEvening(); });
+  document.getElementById('fQuiz').addEventListener('submit', async e => {
+    e.preventDefault(); const f = e.target, b = f.querySelector('button[type=submit]'), email = f.email.value.trim().toLowerCase();
+    if (!EMAIL_RE.test(email)) return msg(f, 'Please enter a valid email.');
+    b.disabled = true; msg(f, 'Sending your code…', true);
+    try{
+      await Mail.request(email, 'quiz');
+      const s = store.get(); s.trialAccepted = true; store.set(s);
+      Ev.send('gift', 'code'); giftPending = true; giftCont = null;
+      afterAuth = showHome;
+      showCode(email, {title:'Check your inbox', lead:'Enter the 6-digit code we sent to', tail:' and your free week opens.'});
+    }catch(err){ msg(f, Mail.nice(err)); }
+    b.disabled = false;
+  });
+  /* Home Screen: native prompt on Android/Chrome, clear steps everywhere else */
+  let installEvt = null;
+  addEventListener('beforeinstallprompt', e => { e.preventDefault(); installEvt = e; });
+  function showHome(){
+    if (!matchMedia('(max-width:760px)').matches || matchMedia('(display-mode: standalone)').matches || navigator.standalone) return startEvening();
+    const ua = navigator.userAgent, ios = /iPhone|iPad|iPod/i.test(ua), inApp = /musical_ly|Bytedance|TikTok|Instagram|FBAN|FBAV|FB_IAB/i.test(ua);
+    const steps = inApp ? ['Tap ••• in the top corner', 'Choose “Open in browser”', ios ? 'Tap Share, then “Add to Home Screen”' : 'Tap ⋮, then “Add to Home screen”', 'Sign in there with the same email, your free week is waiting']
+      : ios ? ['Tap Share at the bottom (the square with an arrow)', 'Tap “Add to Home Screen”', 'Tap “Add”. Kailash appears next to your apps']
+      : ['Tap ⋮ in the top corner', 'Tap “Add to Home screen” or “Install app”', 'Kailash appears next to your apps'];
+    document.getElementById('hSteps').innerHTML = steps.map(x => '<li>' + x + '</li>').join('');
+    document.getElementById('hInstall').hidden = !installEvt;
+    Ev.send('home', inApp ? 'shown-inapp' : ios ? 'shown-ios' : 'shown-android');
+    showModal('home');
+  }
+  document.getElementById('hInstall').addEventListener('click', async () => { if (!installEvt) return; installEvt.prompt(); try{ const r = await installEvt.userChoice; Ev.send('home', 'install-' + r.outcome); }catch(e){} installEvt = null; document.getElementById('hInstall').hidden = true; });
+  document.getElementById('hStart').addEventListener('click', () => { hideModal(); startEvening(); });
+  document.getElementById('hLater').addEventListener('click', () => { Ev.send('home', 'later'); hideModal(); });
   document.getElementById('miniSkip').addEventListener('click', () => miniEnd('skip'));
   /* how long people stay and whether they scroll */
   [10, 30].forEach(sec => setTimeout(() => { if (!document.hidden) Ev.send('stay', sec + 's'); }, sec*1000));

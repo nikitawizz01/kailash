@@ -1,0 +1,27 @@
+{
+ "name": "Kailash — 15-minute retreat",
+ "short_name": "Kailash",
+ "start_url": "/?utm_source=homescreen",
+ "scope": "/",
+ "display": "standalone",
+ "background_color": "#03040c",
+ "theme_color": "#03040c",
+ "icons": [
+  {
+   "src": "icon-192.png",
+   "sizes": "192x192",
+   "type": "image/png"
+  },
+  {
+   "src": "icon-512.png",
+   "sizes": "512x512",
+   "type": "image/png"
+  },
+  {
+   "src": "icon-512.png",
+   "sizes": "512x512",
+   "type": "image/png",
+   "purpose": "maskable"
+  }
+ ]
+}
