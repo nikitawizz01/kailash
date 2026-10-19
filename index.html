@@ -2936,9 +2936,9 @@ x: f478 shivoham 108 floor
 
   /* 3-tap check → personal result → free week by email → Home Screen */
   const QUIZ = [
-    ['How often do you feel tired?', ['Rarely', 'A few times a week', 'Almost every day']],
-    ['How do you usually unwind?', ['Scrolling my phone', 'TV or a series', "I don't, really"]],
-    ['How much time could you give yourself tonight?', ['Just 1 minute', 'About 15 minutes', 'Even more']]
+    ['You sleep 7–8 hours… and still wake up tired?', ['Yes, that’s me', 'Sometimes', 'No, I wake up fresh']],
+    ['When you finally rest, what do you do?', ['Scroll my phone', 'Watch a series', 'Lie there, thinking']],
+    ['Does your mind go quiet when you lie down?', ['Never', 'Sometimes', 'Yes, easily']]
   ];
   const qQ = document.getElementById('qQ'), qA = document.getElementById('qA'), qStep = document.getElementById('qStep'), qBar = document.getElementById('qBar');
   let qi = 0, qAns = [];
@@ -2956,13 +2956,11 @@ x: f478 shivoham 108 floor
   function quizDone(){
     const s = store.get(); s.quiz = qAns.slice(); store.set(s);
     document.body.classList.add('quizzed');
-    const score = qAns[0] + (qAns[1] === 2 ? 1 : 0);
-    const R = score >= 2 ? ['Your mind: Always-On', "Tiredness has become your normal. You don't need more free time — you need a way to truly switch off."]
-            : score === 1 ? ['Your mind: Busy & Tired', 'You cope, but tiredness keeps catching up with you. A short daily reset helps you recharge.']
-            : ['Your mind: Steady', 'You recharge well. A few quiet minutes a day keep it that way.'];
-    const plan = qAns[2] === 0 ? 'Start with 1 calm minute tonight. Grow to 15 when you are ready.'
-               : qAns[2] === 1 ? 'Burnout Reset: 7 evenings, 15 minutes each.'
-               : 'Burnout Reset, then the Silence of Mind retreat. 15 minutes a day.';
+    const tired = qAns[0] < 2 || qAns[2] < 2;
+    const how = ['Scrolling feels like rest, but it keeps your mind busy.', 'A series feels like rest, but it keeps your mind busy.', 'Lying there thinking is not rest for the mind.'][qAns[1]];
+    const R = tired ? ["It's not your body. It's your mind.", `Sleep rests your body, but your mind never gets a break. ${how} What you're missing is real rest for the mind.`]
+                    : ['Your mind: Steady', 'You recharge well. A few quiet minutes a day keep it that way.'];
+    const plan = '15 minutes of real rest for the mind each day: breath, gentle yoga, a mantra and silence.';
     document.getElementById('rTitle').textContent = R[0];
     document.getElementById('rText').textContent = R[1];
     document.getElementById('rPlan').textContent = plan;
