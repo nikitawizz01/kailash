@@ -456,6 +456,19 @@ p,li,.s-text,.lede{text-wrap:pretty}
   .form input{padding:14px 16px}
   .final-grid>*{min-width:0}
 }
+/* ---------- hero second actions + 1-minute calm ---------- */
+.cta2{display:flex;gap:12px;justify-content:center;flex-wrap:wrap}
+.btn-gift{border:1px solid rgba(240,178,106,.6);color:#ffd9ad;background:rgba(240,178,106,.1);box-shadow:0 0 30px -10px rgba(240,178,106,.6)}
+.btn-gift:hover{background:rgba(240,178,106,.18)}
+.hero .cta2 .btn{padding:16px 28px;font-size:1.02rem}
+.mini-orb{width:min(56vw,220px);margin:26px auto 6px}
+.mini-orb span{font-family:var(--serif);font-style:italic;font-size:1.3rem;color:var(--moon);position:relative;z-index:1}
+#miniLeft{text-align:center;margin-top:8px}
+@media (max-width:760px){
+  .hero .cta2{width:100%;flex-wrap:nowrap;gap:8px}
+  .hero .cta2 .btn{flex:1;padding:13px 10px;font-size:.92rem;white-space:nowrap}
+  .hero .ctas .cta2 .btn-ghost{border:1px solid rgba(228,233,255,.25);text-decoration:none;color:var(--moon);padding:13px 10px;font-size:.92rem}
+}
 /* ---------- monk companion (phone) ---------- */
 .monk,.monk-tg{display:none}
 @media (max-width:760px){
@@ -545,6 +558,9 @@ p,li,.s-text,.lede{text-wrap:pretty}
   .m-bar .btn{padding:12px 22px;font-size:.95rem;flex:none}
   footer{padding-bottom:110px}
   .m-card{padding:30px 22px 24px}
+  /* people arrive from a feed: everything readable within ~0.3s */
+  .hero h1,.hero p,.hero .ctas,.hero p.eyebrow,.m-chips{animation:rise .35s ease 0s forwards!important}
+  .shiva img{animation:reveal .6s ease 0s forwards!important}
 }
 @media (prefers-reduced-motion:reduce){
   *,*::before,*::after{animation:none!important;transition:none!important}
@@ -593,7 +609,11 @@ p,li,.s-text,.lede{text-wrap:pretty}
     <p id="heroSub">A 15-minute practice for burnout: a verse from the Bhagavad Gita, gentle movement, a guided breath, a mantra and a minute of silence. No flight to the Himalayas needed.</p>
     <div class="ctas">
       <button class="btn btn-glow js-start btn-big" type="button" id="heroStart">Start</button>
-      <a class="btn btn-ghost btn-big" href="#ritual">How it works</a>
+      <div class="cta2">
+        <button class="btn btn-gift js-gift" type="button" id="heroGift">🎁 Get 7 free days</button>
+        <button class="btn btn-ghost js-mini" type="button" id="heroMini">Try 1 minute</button>
+      </div>
+      <a class="btn btn-ghost btn-big" href="#ritual" id="heroHow">How it works</a>
     </div>
     <p class="free-note">Free 15-minute practice · no sign-up</p>
     <p class="m-fine m-only">Free · no sign-up · no card</p>
@@ -785,6 +805,14 @@ p,li,.s-text,.lede{text-wrap:pretty}
   <div class="m-card">
     <button class="m-x" id="mX" type="button" aria-label="Close">×</button>
     <span class="omk" aria-hidden="true"></span>
+
+    <div class="m-view" data-v="mini">
+      <p class="gift-k">One minute</p>
+      <h3>Just breathe with the circle.</h3>
+      <div class="breath-orb mini-orb" id="miniOrb"><span id="miniWord">Get ready</span></div>
+      <p class="why" id="miniLeft">60 seconds</p>
+      <button class="btn btn-ghost" type="button" id="miniSkip">Skip</button>
+    </div>
 
     <div class="m-view" data-v="gift">
       <div class="gift-badge" aria-hidden="true"><b>FREE</b><span>gift</span></div>
@@ -2346,7 +2374,7 @@ x: f478 shivoham 108 floor
     if (!user) return true;
     return !!(profile && profile.plan === 'free' && !promoActive() && profile.welcome_claimed === false);
   }
-  function offerGift(cont){ giftShown = true; giftCont = cont || null; Ev.send('gift', 'offer'); showModal('gift'); }
+  function offerGift(cont, manual){ if (!manual) giftShown = true; giftCont = cont || null; Ev.send('gift', manual ? 'offer-' + manual : 'offer'); showModal('gift'); }
 
   /* modal */
   const modal = document.getElementById('modal'), views = [...modal.querySelectorAll('.m-view')];
@@ -2373,7 +2401,7 @@ x: f478 shivoham 108 floor
     modal.classList.add('open'); document.body.style.overflow = 'hidden';
     const f = modal.querySelector('.m-view.on input'); if (f) setTimeout(() => f.focus(), 350);
   }
-  function hideModal(){ modal.classList.remove('open'); if (!ses.classList.contains('open')) document.body.style.overflow = ''; const c = giftCont; giftCont = null; if (c) setTimeout(c, 60); }
+  function hideModal(){ if (window.__miniStop) window.__miniStop(); modal.classList.remove('open'); if (!ses.classList.contains('open')) document.body.style.overflow = ''; const c = giftCont; giftCont = null; if (c) setTimeout(c, 60); }
   document.getElementById('mX').addEventListener('click', hideModal);
   modal.addEventListener('click', e => { if (e.target === modal) hideModal(); const g = e.target.closest('[data-go]'); if (g) showModal(g.dataset.go); });
   addEventListener('keydown', e => { if (e.key === 'Escape' && modal.classList.contains('open')) hideModal(); });
@@ -2817,7 +2845,45 @@ x: f478 shivoham 108 floor
     document.getElementById('nextUp').innerHTML = `Next session: <b>${nx.nm}</b> — ${nx.src}.`;
     theme = null; renderHero(); Prog.sync();
   }
-  document.querySelectorAll('.js-start').forEach(b => b.addEventListener('click', startEvening));
+  document.querySelectorAll('.js-start').forEach(b => b.addEventListener('click', () => { Ev.send('tap', b.id || 'start'); startEvening(); }));
+  document.getElementById('heroHow').addEventListener('click', () => Ev.send('tap', 'how'));
+  /* gift straight from the first screen (optional, never blocks Start) */
+  document.querySelectorAll('.js-gift').forEach(b => b.addEventListener('click', () => {
+    Ev.send('tap', 'gift');
+    if (user && (promoActive() || (profile && profile.plan !== 'free'))) return showModal('account');
+    if (user && profile && profile.welcome_claimed) return showModal('paywall');
+    offerGift(() => { if (promoActive()) startEvening(); }, 'hero');
+  }));
+  /* one-minute calm: a tiny taste for people who came from the feed */
+  const miniOrb = document.getElementById('miniOrb'), miniWord = document.getElementById('miniWord'), miniLeft = document.getElementById('miniLeft');
+  let miniTimers = [], miniRunning = false;
+  window.__miniStop = () => { miniTimers.forEach(clearTimeout); miniTimers = []; miniRunning = false; miniOrb.classList.remove('in','out'); };
+  function miniEnd(how){
+    window.__miniStop(); Ev.send('mini', how);
+    if (how === 'done') bell(true);
+    const next = () => startEvening();
+    if (giftDue() && !(user && promoActive())) offerGift(() => { if (promoActive()) startEvening(); }, 'mini');
+    else { hideModal(); next(); }
+  }
+  function startMini(){
+    Ev.send('tap', 'mini'); Ev.send('mini', 'start');
+    showModal('mini'); window.__miniStop(); miniRunning = true;
+    miniWord.textContent = 'Get ready'; miniLeft.textContent = '60 seconds';
+    bell(false);
+    let t = 1500;
+    for (let c = 0; c < 6; c++){
+      miniTimers.push(setTimeout(() => { miniOrb.style.transitionDuration = '4s'; miniOrb.classList.remove('out'); miniOrb.classList.add('in'); miniWord.textContent = 'Breathe in'; }, t));
+      miniTimers.push(setTimeout(() => { miniOrb.style.transitionDuration = '6s'; miniOrb.classList.remove('in'); miniOrb.classList.add('out'); miniWord.textContent = 'Breathe out'; }, t + 4000));
+      t += 10000;
+    }
+    for (let k = 1; k <= 60; k++) miniTimers.push(setTimeout(() => { miniLeft.textContent = (60 - k) > 0 ? `${60 - k} seconds` : 'Well done.'; }, 1500 + k*1000));
+    miniTimers.push(setTimeout(() => miniEnd('done'), t + 600));
+  }
+  document.querySelectorAll('.js-mini').forEach(b => b.addEventListener('click', startMini));
+  document.getElementById('miniSkip').addEventListener('click', () => miniEnd('skip'));
+  /* how long people stay and whether they scroll */
+  [10, 30].forEach(sec => setTimeout(() => { if (!document.hidden) Ev.send('stay', sec + 's'); }, sec*1000));
+  let scrolled = false; addEventListener('scroll', () => { if (!scrolled && scrollY > innerHeight*.6){ scrolled = true; Ev.send('scroll', 'past-hero'); } }, {passive:true});
   (() => {
     const bar = document.getElementById('mBar'), hero = document.querySelector('.hero'), fin = document.getElementById('begin');
     if (!('IntersectionObserver' in window)) return;
@@ -2826,7 +2892,10 @@ x: f478 shivoham 108 floor
     new IntersectionObserver(es => { es.forEach(x => { if (x.target === hero) heroIn = x.isIntersecting; else finIn = x.isIntersecting; }); upd(); }, {threshold:0.05}).observe(hero);
     const io2 = new IntersectionObserver(es => { es.forEach(x => finIn = x.isIntersecting); upd(); }, {threshold:0.25}); if (fin) io2.observe(fin);
   })();
-  document.getElementById('sClose').addEventListener('click', close);
+  document.getElementById('sClose').addEventListener('click', () => {
+    if (cur < steps.length - 1 && giftDue() && !(user && promoActive())) return offerGift(() => { if (!promoActive()) close(); }, 'exit');
+    close();
+  });
   addEventListener('keydown', e => { if (e.key === 'Escape' && ses.classList.contains('open')) close(); });
   back.addEventListener('click', () => cur > 0 && show(cur - 1));
   document.getElementById('prompts').addEventListener('click', e => {
