@@ -2949,9 +2949,12 @@ x: f478 shivoham 108 floor
     qA.innerHTML = '';
     QUIZ[qi][1].forEach((t, k) => { const b = document.createElement('button'); b.type = 'button'; b.textContent = t; b.addEventListener('click', () => quizPick(k, b)); qA.appendChild(b); });
   }
+  let qBusy = false;
   function quizPick(k, b){
+    if (qBusy) return; qBusy = true;
+    [...qA.children].forEach(x => x.disabled = true);
     b.classList.add('on'); qAns[qi] = k; Ev.send('quiz', `q${qi+1}:${k}`);
-    setTimeout(() => { qi++; if (qi < QUIZ.length) quizRender(); else quizDone(); }, 260);
+    setTimeout(() => { qi++; qBusy = false; if (qi < QUIZ.length) quizRender(); else quizDone(); }, 260);
   }
   function quizDone(){
     const s = store.get(); s.quiz = qAns.slice(); store.set(s);
@@ -2973,9 +2976,9 @@ x: f478 shivoham 108 floor
   document.getElementById('mX').addEventListener('click', () => { if (document.querySelector('.m-view.on')?.dataset.v === 'quiz') quizSkip(); });
   /* pops up in the middle of the first screen, once, for new phone visitors */
   setTimeout(() => {
-    if (quizSeen() || !matchMedia('(max-width:760px)').matches) return;
+    if ((quizSeen() && location.hash !== '#quiz') || !matchMedia('(max-width:760px)').matches) return;
     if (modal.classList.contains('open') || ses.classList.contains('open')) return;
-    qi = 0; qAns = []; quizRender(); Ev.send('quiz', 'shown'); showModal('quiz');
+    qi = 0; qAns = []; qBusy = false; quizRender(); Ev.send('quiz', 'shown'); showModal('quiz');
   }, 1500);
   document.getElementById('rSkip').addEventListener('click', () => { Ev.send('gift', 'no'); hideModal(); startEvening(); });
   document.getElementById('fQuiz').addEventListener('submit', async e => {
