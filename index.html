@@ -840,7 +840,10 @@ p,li,.s-text,.lede{text-wrap:pretty}
       <p class="why" id="rText"></p>
       <div class="plan"><span>Your plan</span><b id="rPlan"></b></div>
       <p class="gift-price"><s>$7</s><b>$0</b><span>your first week is a gift · no card</span></p>
-      <form id="fQuiz" novalidate>
+      <button class="btn btn-glow" type="button" id="rClaim">🎁 Start my free week</button>
+      <p class="m-msg" id="rMsg" aria-live="polite"></p>
+      <p class="m-legal" id="rLegal">No email, no card, opens right away. By continuing, you agree to the <a href="terms.html" target="_blank">Terms of Use</a> and <a href="privacy.html" target="_blank">Privacy Policy</a>.</p>
+      <form id="fQuiz" novalidate hidden>
         <label class="field"><span>Where should we send your plan?</span><input type="email" name="email" required autocomplete="email" inputmode="email" placeholder="you@email.com"></label>
         <button class="btn btn-glow" type="submit">🎁 Save my free week</button>
         <p class="m-msg" aria-live="polite"></p>
@@ -872,8 +875,8 @@ p,li,.s-text,.lede{text-wrap:pretty}
       <p class="gift-k" style="padding-right:96px">A gift for our first members</p>
       <h3>7 days of Kailash,<br>on us</h3>
       <p class="gift-price"><s>$7</s><b>$0</b><span>100% free · no card · nothing to cancel</span></p>
-      <p class="why">You're one of our first members, so the full retreat is yours for a week. We just send a code to your email to unlock it.</p>
-      <ul class="gift-list"><li>All 50 sessions, no limits</li><li>Both retreats: Burnout Reset and Silence of Mind</li><li>Your path saved on every device</li></ul>
+      <p class="why">You're one of our first members, so the full retreat is yours for a week. No email, no card. It opens right away.</p>
+      <ul class="gift-list"><li>All 50 sessions, no limits</li><li>Both retreats: Burnout Reset and Silence of Mind</li><li>Your path saved, no sign-up needed</li></ul>
       <button class="btn btn-glow" type="button" id="giftYes">Claim my free week</button>
       <p class="m-alt"><button type="button" class="js-giftno">No, thanks</button></p>
     </div>
@@ -2304,8 +2307,29 @@ x: f478 shivoham 108 floor
       if (recovery && user) wantNewPw = true;
       sb.auth.onAuthStateChange(async (e, session) => {
         if (e === 'PASSWORD_RECOVERY') showModal('newpw');
-        user = session ? session.user : null; profile = null; if (user) await Auth.loadProfile(); renderNav();
+        const same = !!(user && session && session.user.id === user.id);
+        user = session ? session.user : null; if (!same) profile = null; if (user && !same) await Auth.loadProfile(); renderNav();
       });
+    },
+    ensureAnon(){
+      if (user) return Promise.resolve(true);
+      if (!LIVE) return Promise.resolve(false);
+      if (anonP) return anonP;
+      anonP = (async () => {
+        try{
+          if (!sb && authReady) await authReady.catch(() => {});
+          if (!sb) return false;
+          if (user) return true;
+          const { data, error } = await sb.auth.signInAnonymously({ options: { data: { source: 'anon', terms_accepted_at: new Date().toISOString() } } });
+          if (error || !data || !data.user) return false;
+          user = data.user; await Auth.loadProfile();
+          await new Promise(r => setTimeout(r, 30)); if (!profile) await Auth.loadProfile();
+          Ev.send('anon', 'created'); renderNav();
+          return true;
+        }catch(e){ return false; }
+        finally{ anonP = null; }
+      })();
+      return anonP;
     },
     async loadProfile(){
       if (!LIVE) return profile;
@@ -2363,6 +2387,9 @@ x: f478 shivoham 108 floor
       return data;
     }
   };
+  let anonP = null;
+  const isAnon = () => !!(user && user.is_anonymous);
+  const hasEmail = () => !!(user && !user.is_anonymous);
   const promoActive = () => !!(profile && profile.promo_until && new Date(profile.promo_until) > new Date());
   const promoDate = () => new Date(profile.promo_until).toLocaleDateString('en-GB', {day:'numeric', month:'long'});
 
@@ -2463,11 +2490,11 @@ x: f478 shivoham 108 floor
   function runAfterAuth(){ if (afterAuth){ const fn = afterAuth; afterAuth = null; fn(); } }
   document.getElementById('giftYes').addEventListener('click', async e => {
     Ev.send('gift', 'yes');
-    if (!user) return showModal('giftmail');
     const b = e.currentTarget; b.disabled = true;
+    if (!user && !(await Auth.ensureAnon())){ b.disabled = false; return showModal('giftmail'); }
     try{
       const { data } = await sb.rpc('claim_welcome');
-      if (data && data.ok){ profile.promo_until = data.until; profile.welcome_claimed = true; Ev.send('gift', 'activated'); b.textContent = `Done — full access until ${fmtDate(data.until)}`; setTimeout(() => { b.disabled = false; b.textContent = 'Claim my free week'; hideModal(); }, 1500); return; }
+      if (data && data.ok){ profile.promo_until = data.until; profile.welcome_claimed = true; const st = store.get(); st.trialAccepted = true; store.set(st); Ev.send('gift', 'activated'); renderHero(); b.textContent = `Done — full access until ${fmtDate(data.until)}`; setTimeout(() => { b.disabled = false; b.textContent = 'Claim my free week'; hideModal(); }, 1500); return; }
     }catch(err){}
     b.disabled = false; hideModal();
   });
@@ -2582,7 +2609,7 @@ x: f478 shivoham 108 floor
   });
   function buy(plan){
     if (!C.PAYMENT_LINKS[plan]) return showModal('soon');
-    if (!user){ afterAuth = () => showModal('paywall', {plan, title:'Choose your retreat', text:'Your account is ready. One step left.'}); return showModal('signup', {why:'Create a free account first — your purchase will be linked to it.'}); }
+    if (!hasEmail()){ afterAuth = () => showModal('paywall', {plan, title:'Choose your retreat', text:'Your account is ready. One step left.'}); return showModal('signup', {why:'Create a free account first — your purchase will be linked to it.'}); }
     showModal('paywall', {plan, title:'Choose your retreat', text:'Unlock the full retreat on your account.'});
   }
   document.querySelectorAll('.js-buy').forEach(b => b.addEventListener('click', () => buy(b.dataset.plan)));
@@ -2639,10 +2666,10 @@ x: f478 shivoham 108 floor
   });
   document.getElementById('aUpgrade').addEventListener('click', () => showModal('paywall', {title:'Choose your retreat', text:'Unlock the full retreat on your account.'}));
   const navAcct = document.getElementById('navAcct');
-  function renderNav(){ navAcct.textContent = user ? 'Account' : 'Sign in'; document.body.classList.toggle('known', !!(user || store.get().email)); if (user || store.get().email) document.body.classList.add('quizzed'); }
-  navAcct.addEventListener('click', () => user ? showModal('account') : showModal('signin'));
-  document.querySelectorAll('.js-signup').forEach(b => b.addEventListener('click', () => user ? showModal('account') : showModal('signup')));
-  document.querySelectorAll('.js-signin').forEach(b => b.addEventListener('click', () => user ? showModal('account') : showModal('signin')));
+  function renderNav(){ navAcct.textContent = hasEmail() ? 'Account' : 'Sign in'; document.body.classList.toggle('known', !!(hasEmail() || store.get().email)); if (hasEmail() || store.get().email) document.body.classList.add('quizzed'); }
+  navAcct.addEventListener('click', () => hasEmail() ? showModal('account') : showModal('signin'));
+  document.querySelectorAll('.js-signup').forEach(b => b.addEventListener('click', () => hasEmail() ? showModal('account') : showModal('signup')));
+  document.querySelectorAll('.js-signin').forEach(b => b.addEventListener('click', () => hasEmail() ? showModal('account') : showModal('signin')));
   authReady = Auth.init();
   authReady.then(renderNav).catch(() => renderNav()).then(() => {
     Ev.flush(); renderHero();
@@ -2655,6 +2682,7 @@ x: f478 shivoham 108 floor
 
   /* access gate: one free session in total, then plan or promo only */
   async function startEvening(){
+    if (!user && !trialUntil() && LIVE && await Auth.ensureAnon()) return startEvening();
     if (!user){
       const s = store.get();
       if (trialUntil()){ s.guestUsed = (s.guestUsed || 0) + 1; store.set(s); return open(); }
@@ -2679,6 +2707,7 @@ x: f478 shivoham 108 floor
         if (r.reason === 'done') return showDone(r.retreat);
         return wall();
       }
+      if (isAnon() && profile && profile.plan === 'free' && !promoActive()){ const g = store.get(); g.guestUsed = (g.guestUsed || 0) + 1; store.set(g); }
       open(r.idx);
     }catch(e){ showModal('paywall'); }
   }
@@ -2760,7 +2789,7 @@ x: f478 shivoham 108 floor
     steps.forEach((s,k) => s.classList.toggle('on', k === i));
     bars.forEach((b,k) => b.classList.toggle('on', k <= i));
     next.textContent = labels[i]; next.disabled = false;
-    if (i === steps.length - 1) next.textContent = user ? ((profile && (profile.plan !== 'free' || promoActive())) ? 'Done' : 'See full retreats') : (trialUntil() ? 'Done' : 'Save my progress — free account');
+    if (i === steps.length - 1) next.textContent = user ? ((isAnon() && promoActive()) ? 'Done' : (profile && (profile.plan !== 'free' || promoActive())) ? 'Done' : 'See full retreats') : (trialUntil() ? 'Done' : 'Save my progress — free account');
     if (steps[i].dataset.kind === 'chant' && !mini.done){ next.disabled = true; next.textContent = `Tap the Om · 0 / ${CH}`; }
     back.style.display = i === 0 || i === steps.length - 1 ? 'none' : '';
     if (steps[i].dataset.kind === 'breath'){ document.getElementById('breathWord').textContent = 'Press begin'; document.getElementById('breathCount').textContent = `${BREATH[cur0.breath].tip} ${breaths()} slow breaths.`; }
@@ -2981,6 +3010,17 @@ x: f478 shivoham 108 floor
     qi = 0; qAns = []; qBusy = false; quizRender(); Ev.send('quiz', 'shown'); showModal('quiz');
   }, 1500);
   document.getElementById('rSkip').addEventListener('click', () => { Ev.send('gift', 'no'); hideModal(); startEvening(); });
+  document.getElementById('rClaim').addEventListener('click', async e => {
+    const b = e.currentTarget, m = document.getElementById('rMsg'); Ev.send('gift', 'yes');
+    b.disabled = true; m.textContent = 'Opening your week…'; m.classList.add('ok');
+    const ok = await Auth.ensureAnon();
+    if (!ok){ b.disabled = false; m.textContent = ''; b.hidden = true; document.getElementById('rLegal').hidden = true; document.getElementById('fQuiz').hidden = false; return; }
+    try{
+      const { data } = await sb.rpc('claim_welcome');
+      if (data && data.ok){ profile.promo_until = data.until; profile.welcome_claimed = true; const st = store.get(); st.trialAccepted = true; store.set(st); Ev.send('gift', 'activated'); renderHero(); }
+    }catch(err){}
+    b.disabled = false; m.textContent = ''; giftCont = null; showHome();
+  });
   document.getElementById('fQuiz').addEventListener('submit', async e => {
     e.preventDefault(); const f = e.target, b = f.querySelector('button[type=submit]'), email = f.email.value.trim().toLowerCase();
     if (!EMAIL_RE.test(email)) return msg(f, 'Please enter a valid email.');
@@ -3000,6 +3040,7 @@ x: f478 shivoham 108 floor
   function showHome(){
     if (!matchMedia('(max-width:760px)').matches || matchMedia('(display-mode: standalone)').matches || navigator.standalone) return startEvening();
     const ua = navigator.userAgent, ios = /iPhone|iPad|iPod/i.test(ua), inApp = /musical_ly|Bytedance|TikTok|Instagram|FBAN|FBAV|FB_IAB/i.test(ua);
+    if (inApp && isAnon()){ hideModal(); return startEvening(); }   // a no-email account lives in this browser only
     const steps = inApp ? ['Tap ••• in the top corner', 'Choose “Open in browser”', ios ? 'Tap Share, then “Add to Home Screen”' : 'Tap ⋮, then “Add to Home screen”', 'Sign in there with the same email, your free week is waiting']
       : ios ? ['Tap Share at the bottom (the square with an arrow)', 'Tap “Add to Home Screen”', 'Tap “Add”. Kailash appears next to your apps']
       : ['Tap ⋮ in the top corner', 'Tap “Add to Home screen” or “Install app”', 'Kailash appears next to your apps'];
@@ -3040,6 +3081,11 @@ x: f478 shivoham 108 floor
     if (steps[cur].dataset.kind === 'body' && !moving && next.textContent === 'Begin moving') return runMoves();
     if (steps[cur].dataset.kind === 'silence' && !silent && next.textContent === 'Begin silence') return runSilence();
     if (cur === steps.length - 1){ close();
+      if (isAnon()){ const s = store.get();
+        if (promoActive() && (s.evenings || 0) >= 2 && !s.saveAsked){ s.saveAsked = 1; store.set(s); Ev.send('save', 'asked');
+          showModal('signup', {title:'Keep your path safe', why:`${s.evenings} sessions done. Add your email so your progress and your free week stay with you, even on a new phone. No password.`}); }
+        else if (!promoActive() && profile && profile.plan === 'free') showModal('paywall', {title:'Go deeper', text:'Your free session was a beginning. A full retreat takes you further.'});
+        return; }
       if (!user){ const s = store.get();
         if (trialUntil()){ if (s.email && s.codeSent && !s.codeAsked){ s.codeAsked = 1; store.set(s); showCode(s.email, {title:'Use your 7 days anywhere', lead:'Optional: enter the code we sent to', tail:' to open your access on any device. On this one it already works.'}); } }
         else if (s.email && s.codeSent) showCode(s.email, {title:'Save your path', lead:'Session complete ✓ To keep your path on any device, enter the code we sent to', tail:'.'});
