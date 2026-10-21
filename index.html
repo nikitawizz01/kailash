@@ -903,7 +903,8 @@ p,li,.s-text,.lede{text-wrap:pretty}
         <p class="m-msg" aria-live="polite"></p>
         <p class="m-legal">No password · no card · no spam. By continuing, you agree to the <a href="terms.html" target="_blank">Terms of Use</a> and <a href="privacy.html" target="_blank">Privacy Policy</a>.</p>
       </form>
-      <p class="m-alt">Already have an account? <button type="button" data-go="signin">Sign in</button></p>
+      <p class="m-alt" id="suAlt">Already have an account? <button type="button" data-go="signin">Sign in</button></p>
+      <p class="m-alt" id="suLaterP" hidden><button type="button" id="suLater">Not now</button></p>
     </div>
 
     <div class="m-view" data-v="code">
@@ -2469,6 +2470,7 @@ x: f478 shivoham 108 floor
       document.getElementById('mWhy').textContent = opts.why || (start ? 'Where should we keep your path? Enter your email — no password, nothing to install.' : "Just your email — no password. We'll send you a 6-digit code.");
       document.getElementById('suBtn').textContent = start ? 'Open my free session' : 'Send me a code';
       const e = store.get().email; if (e && !f.email.value) f.email.value = e;
+      document.getElementById('suLaterP').hidden = !opts.later; document.getElementById('suAlt').hidden = !!opts.later;
     }
     if (v === 'paywall') Ev.send('paywall', opts.title || '');
     if (v === 'paywall'){
@@ -2523,6 +2525,7 @@ x: f478 shivoham 108 floor
     catch(err){ msg(f, Mail.nice(err)); }
     b.disabled = false;
   });
+  document.getElementById('suLater').addEventListener('click', () => { Ev.send('save', 'later'); hideModal(); });
   document.getElementById('fSignin').addEventListener('submit', async e => {
     e.preventDefault(); const f = e.target, b = f.querySelector('button[type=submit]'), email = f.email.value.trim().toLowerCase();
     if (!EMAIL_RE.test(email)) return msg(f, 'Please enter a valid email.');
@@ -3082,8 +3085,8 @@ x: f478 shivoham 108 floor
     if (steps[cur].dataset.kind === 'silence' && !silent && next.textContent === 'Begin silence') return runSilence();
     if (cur === steps.length - 1){ close();
       if (isAnon()){ const s = store.get();
-        if (promoActive() && (s.evenings || 0) >= 2 && !s.saveAsked){ s.saveAsked = 1; store.set(s); Ev.send('save', 'asked');
-          showModal('signup', {title:'Keep your path safe', why:`${s.evenings} sessions done. Add your email so your progress and your free week stay with you, even on a new phone. No password.`}); }
+        if ((s.evenings || 0) >= 1 && !s.saveAsked){ s.saveAsked = 1; store.set(s); Ev.send('save', 'asked');
+          showModal('signup', {later:true, title:'Session complete ✓', why: promoActive() ? 'Add your email so your progress and your free week stay with you, even on a new phone or browser. No password.' : 'Add your email so your progress stays with you, even on a new phone or browser. No password.'}); }
         else if (!promoActive() && profile && profile.plan === 'free') showModal('paywall', {title:'Go deeper', text:'Your free session was a beginning. A full retreat takes you further.'});
         return; }
       if (!user){ const s = store.get();
